@@ -1,3 +1,5 @@
+
+
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
@@ -9,18 +11,23 @@ context.fillRect(100,100,canvas.width,canvas.height);
 
 //garden map
 const map = new Image();
-map.src = 'img/gardenMap2.png';
+map.src = 'img/tilemapExpanded.png';
 //bee player
 const bee = new Image();
 bee.src = 'img/bee.png';
 //beehive spawnpoint
 const hive = new Image();
 hive.src = 'img/hive.png';
+//wall
+// const wall = new Image();
+// wall.src = 'img/heart.png';
 
 class Sprite{
-    constructor({position, speed, image}){
+    constructor({position, image, height, width}){
         this.position = position;
         this.image = image;
+        this.height = height;
+        this.width = width;
     }
 
     draw(){
@@ -39,20 +46,34 @@ const background = new Sprite({
 const beeSprite = new Sprite({
     position: {
         x: canvas.width/2,
-        y: canvas.height/3
+        y: canvas.height/2.5
     },
-    image: bee
+    image: bee,
+    width: 16,
+    height: 16
 });
 
 const hiveSprite = new Sprite({
     position:{
-        x: -450,
-        y: -450
+        x: -300,
+        y: -300
     },
-    image: hive
+    image: hive,
+    width: 380,
+    height: 350
 });
 
+// const wallSprite = new Sprite({
+//     position:{
+//         x: -500,
+//         y: -500
+//     },
+//     image: wall
+// });
+
 //--------------- movement ----------------- //
+
+const movables = [background, hiveSprite]//, wallSprite];
 
 const keys = {
     w: { pressed: false},
@@ -67,26 +88,49 @@ function animate(){
     background.draw();
     hiveSprite.draw();
     beeSprite.draw();
+    // wallSprite.draw();
+    
 
+    // TESTings
+    // context.strokeStyle = 'blue';
+    // context.strokeRect(
+    //     hiveSprite.position.x+80,
+    //     hiveSprite.position.y+50,
+    //     hiveSprite.width,
+    //     hiveSprite.height
+    // );
+
+    //collision
+    inHive(hiveSprite)
+    
     if(keys.w.pressed){
-        background.position.y += 5;
-        hiveSprite.position.y += 5;
+        movables.forEach(movable => { movable.position.y += 20 });
     }
     else if(keys.a.pressed){
-        background.position.x += 5;
-        hiveSprite.position.x += 5;
+        movables.forEach(movable => { movable.position.x += 20 });
     }
     else if(keys.s.pressed){
-        background.position.y -= 5;
-        hiveSprite.position.y -= 5;
+        movables.forEach(movable => { movable.position.y -= 20 });
     }
     else if(keys.d.pressed){
-        background.position.x -= 5;
-        hiveSprite.position.x -= 5;
+        movables.forEach(movable => { movable.position.x -= 20 });
     }
 
 }
 animate();
+
+function inHive(sprite){
+    if(
+        beeSprite.position.x + beeSprite.width >= sprite.position.x   &&
+        beeSprite.position.x <= sprite.position.x + sprite.width  &&
+        beeSprite.position.y <= sprite.position.y + sprite.height &&
+        beeSprite.position.y + beeSprite.height >= sprite.position.y 
+    ){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 window.addEventListener('keydown', (e) => {
     // move the bee ten pixels depending on what key was pressed
@@ -98,19 +142,19 @@ window.addEventListener('keydown', (e) => {
     }
     switch(e.key){
         case 'ArrowUp':
-            background.position.y -= 5;
+            background.position.y -= 20;
             keys.w.pressed = true;
             break;
         case 'ArrowDown':
-            background.position.y += 5;
+            background.position.y += 20;
             keys.s.pressed = true;
             break;
         case 'ArrowLeft':
-            background.position.x -= 5;
+            background.position.x -= 20;
             keys.a.pressed = true;
             break;
         case 'ArrowRight':
-            background.position.x += 5;
+            background.position.x += 20;
             keys.d.pressed = true;
             break;
     }
@@ -232,7 +276,7 @@ createQuest();
 //     //reset variables
 //     pinkcount = 0;
 //     suncount = 0;
-//     space = 15;
+//     space = 1;
 // });
 
 // const pauseScreen = document.querySelector('.pause-container');
