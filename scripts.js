@@ -146,11 +146,43 @@ function emptyInventory(item, quantity){
     }
 }
 
+
+// ------------ quests -------------------------
+
+let pinkGoal;
+let sunGoal;
+// give a random quest
+function createQuest(){
+    pinkGoal = Math.floor(Math.random() * 10) + 1;
+    sunGoal = Math.floor(Math.random() * 3) + 1;
+    document.querySelector('.quest-description').innerHTML = `collect ${pinkGoal} pink flowers and ${sunGoal} sunflowers.`;
+}
+
+// check if quest is fufilled
+// function checkQuest(pinkGoal, sunGoal){
+//     if(pinkcount >= pinkGoal && suncount >= sunGoal){
+//         completeQuest();
+//     }
+// }
+
+// win quest
+// function completeQuest(){
+//     questcount++;
+//     level++;
+//     document.querySelector('.quest-description').innerHTML = 'you win';
+//     document.querySelector('.quest-title').innerHTML = `Quest #${questcount}:`;
+//     createQuest();
+//     spawnRandom(level, 'bee', hive);
+
+//     //todo - need better / more obvious win screen
+// }
+
 // -------------- start game ------------- //
 
 let level = 1;
 let inventorySpace = 14;
 createInventorySlots(inventorySpace);
+createQuest();
 
 // todo:
 // drawHive()
@@ -161,3 +193,77 @@ createInventorySlots(inventorySpace);
 // collision map - create in Tiled
 // collision items - addToInventory()
 // collision enemies - takeDamage()
+
+
+// ----------------- buttons -------------------
+
+// todo - limit inventory
+// drop inventory
+// const dropButton = document.querySelector('.drop-button');
+// dropButton.addEventListener('click', () => {
+//     emptyInventory();
+//     spawnRandom(pinkcount, 'pinkflower', garden);
+//     spawnRandom(suncount, 'sunflower', garden);
+
+//     //reset variables
+//     pinkcount = 0;
+//     suncount = 0;
+//     space = 15;
+// });
+
+// const pauseScreen = document.querySelector('.pause-container');
+const pauseButton = document.querySelector('.pause-button');
+pauseButton.addEventListener('click', () => {
+    // pauseScreen.classList.toggle('hidden');
+    pauseButton.classList.add('active');
+    stopTimer();
+});
+
+// todo - pause banner instead of resume button
+// todo - stop all movement
+const resumeButton = document.querySelector('.resume-button');
+resumeButton.addEventListener('click', () => {
+    pauseButton.classList.remove('active');
+    startTimer();
+});
+
+// const reloadButton = document.querySelector('.play-button');
+// reloadButton.addEventListener('click', () =>{
+//     location.reload();
+// });
+
+
+// ---------------- timer ----------------------
+
+let startTime;
+let timerInterval;
+let elapsedTime = 0;
+const timerDisplay = document.querySelector('.timer');
+
+startTimer();
+
+function formatTime(ms) {
+    let date = new Date(ms);
+    let hours = date.getUTCHours().toString().padStart(2, '0');
+    let minutes = date.getUTCMinutes().toString().padStart(2, '0');
+    let seconds = date.getUTCSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+}
+
+function startTimer() {
+    startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(function() {
+        elapsedTime = Date.now() - startTime;
+        timerDisplay.textContent = formatTime(elapsedTime);
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    elapsedTime = 0;
+    timerDisplay.textContent = '00:00:00';
+}
