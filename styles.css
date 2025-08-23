@@ -79,6 +79,7 @@ canvas{
 
 .health-container{
     border: 2px solid rgb(255, 104, 104);
+    background-color: rgb(255 104 104 / 35%);
     border-radius: 10px;
     align-items: center;
     display: flex;
