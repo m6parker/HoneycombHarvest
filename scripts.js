@@ -2,6 +2,7 @@
 
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
+context.imageSmoothingEnabled = false;
 
 canvas.width = 1024;
 canvas.height = 576;
@@ -18,15 +19,19 @@ bee.src = 'img/bee.png';
 //beehive spawnpoint
 const hive = new Image();
 hive.src = 'img/hive.png';
-// sunflower
+// flowers
 const sunflowerImage = new Image();
 sunflowerImage.src = 'img/sunflower.png';
+const pinkFlowerImage = new Image();
+pinkFlowerImage.src = 'img/pinkflower.png';
+const carrotImage = new Image();
+carrotImage.src = 'img/carrot.png';
 
 
 // x, y, length, height
 let flowerGarden = [750, 100, 850, 200];
 let veggieGarden = [650, 500, 500, 350];
-let speed = 20;
+let speed = 10;
 
 
 class Sprite{
@@ -86,7 +91,7 @@ function spawnItems(itemImage, quantity, location){
     for (let i = 0; i < quantity; i++) {
         const item = spawnRandom(location, itemImage);
         items.push(item);
-        movables.push(item)
+        movables.push(item);
     }
 }
 
@@ -144,19 +149,18 @@ function animate(){
     items.forEach(item => item.draw());
 
     //testing
-    drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
+    // drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
+
     // Check collisions
-    if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
-    if (inGarden(veggieGarden)) console.log('Bee is in veggie garden!');
-    if (inSprite(hiveSprite)) console.log('Bee is in the hive!');
+    // if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
+    // if (inGarden(veggieGarden)) console.log('Bee is in veggie garden!');
+    // if (inSprite(hiveSprite)) console.log('Bee is in the hive!');
 
     // testing
-    context.strokeStyle = 'blue';
-    context.strokeRect(flowerGarden[0], flowerGarden[1], flowerGarden[2], flowerGarden[3]);
-    context.strokeRect(veggieGarden[0], veggieGarden[1], veggieGarden[2], veggieGarden[3]);
+    // context.strokeStyle = 'blue';
+    // context.strokeRect(flowerGarden[0], flowerGarden[1], flowerGarden[2], flowerGarden[3]);
+    // context.strokeRect(veggieGarden[0], veggieGarden[1], veggieGarden[2], veggieGarden[3]);
 
-    //collision
-    inSprite(hiveSprite)
     // console.log(inGarden(veggieGarden))
 
     
@@ -175,6 +179,19 @@ function animate(){
     else if(keys.d.pressed){
         movables.forEach(movable => { movable.position.x -= speed });
         moveableBoundaries.forEach(coordinate => { coordinate[0] -= speed });
+    }
+
+    //collecting 
+    for (let i = items.length - 1; i >= 0; i--) {
+        const item = items[i];
+        if (inSprite(item)) {
+            items.splice(i, 1);
+            const indexInMovables = movables.indexOf(item);
+            if (indexInMovables !== -1) {
+                movables.splice(indexInMovables, 1);
+            }
+            console.log(`item collected!`);
+        }
     }
 
 }
@@ -339,6 +356,8 @@ createInventorySlots(inventorySpace);
 createQuest();
 //put flowers in the garden
 spawnItems(sunflowerImage, 10, flowerGarden);
+spawnItems(pinkFlowerImage, 10, flowerGarden);
+spawnItems(carrotImage, 20, veggieGarden);
 
 // todo:
 // drawHive()
