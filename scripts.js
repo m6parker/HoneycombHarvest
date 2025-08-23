@@ -18,9 +18,16 @@ bee.src = 'img/bee.png';
 //beehive spawnpoint
 const hive = new Image();
 hive.src = 'img/hive.png';
-//wall
-// const wall = new Image();
-// wall.src = 'img/heart.png';
+// sunflower
+const sunflowerImage = new Image();
+sunflowerImage.src = 'img/sunflower.png';
+
+
+// x, y, length, height
+let flowerGarden = [750, 100, 850, 200];
+let veggieGarden = [650, 500, 500, 350];
+let speed = 20;
+
 
 class Sprite{
     constructor({position, image, height, width}){
@@ -63,17 +70,58 @@ const hiveSprite = new Sprite({
     height: 350
 });
 
-// const wallSprite = new Sprite({
-//     position:{
-//         x: -500,
-//         y: -500
-//     },
-//     image: wall
-// });
+const sunflower = new Sprite({
+    position:{
+        x: 450,
+        y: 250
+    },
+    image: sunflowerImage
+});
 
 //--------------- movement ----------------- //
 
-const movables = [background, hiveSprite]//, wallSprite];
+
+const items = [];
+function spawnItems(itemImage, quantity, location){    
+    for (let i = 0; i < quantity; i++) {
+        const item = spawnRandom(location, itemImage);
+        items.push(item);
+        movables.push(item)
+    }
+}
+
+
+//TESTING
+function drawGrid(context, canvas, cellSize = 50, color = 'rgba(200, 200, 200, 0.5)') {
+    context.strokeStyle = color;
+    context.lineWidth = 0.5;
+    
+    // Draw vertical lines
+    for (let x = 0; x < canvas.width; x += cellSize) {
+        context.beginPath();
+        context.moveTo(x, 0);
+        context.lineTo(x, canvas.height);
+        context.stroke();
+    }
+    
+    // Draw horizontal lines
+    for (let y = 0; y < canvas.height; y += cellSize) {
+        context.beginPath();
+        context.moveTo(0, y);
+        context.lineTo(canvas.width, y);
+        context.stroke();
+    }
+    
+    // Draw coordinate labels (optional)
+    context.fillStyle = 'black';
+    context.font = '10px Arial';
+    for (let x = 0; x < canvas.width; x += cellSize) {
+        context.fillText(x, x, 10);
+    }
+    for (let y = 0; y < canvas.height; y += cellSize) {
+        context.fillText(y, 0, y + 10);
+    }
+}
 
 const keys = {
     w: { pressed: false},
@@ -82,55 +130,93 @@ const keys = {
     d: { pressed: false}
 }
 
+const movables = [background, hiveSprite]; // sprites
+const moveableBoundaries = [flowerGarden, veggieGarden] // images
+
 function animate(){
     window.requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
     background.draw();
     hiveSprite.draw();
     beeSprite.draw();
-    // wallSprite.draw();
-    
+    // sunflower.draw();
 
-    // TESTings
-    // context.strokeStyle = 'blue';
-    // context.strokeRect(
-    //     hiveSprite.position.x+80,
-    //     hiveSprite.position.y+50,
-    //     hiveSprite.width,
-    //     hiveSprite.height
-    // );
+    items.forEach(item => item.draw());
+
+    //testing
+    drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
+    // Check collisions
+    if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
+    if (inGarden(veggieGarden)) console.log('Bee is in veggie garden!');
+    if (inSprite(hiveSprite)) console.log('Bee is in the hive!');
+
+    // testing
+    context.strokeStyle = 'blue';
+    context.strokeRect(flowerGarden[0], flowerGarden[1], flowerGarden[2], flowerGarden[3]);
+    context.strokeRect(veggieGarden[0], veggieGarden[1], veggieGarden[2], veggieGarden[3]);
 
     //collision
-    inHive(hiveSprite)
+    inSprite(hiveSprite)
+    // console.log(inGarden(veggieGarden))
+
     
     if(keys.w.pressed){
-        movables.forEach(movable => { movable.position.y += 20 });
+        movables.forEach(movable => { movable.position.y += speed });
+        moveableBoundaries.forEach(coordinate => { coordinate[1] += speed });
     }
     else if(keys.a.pressed){
-        movables.forEach(movable => { movable.position.x += 20 });
+        movables.forEach(movable => { movable.position.x += speed });
+        moveableBoundaries.forEach(coordinate => { coordinate[0] += speed });
     }
     else if(keys.s.pressed){
-        movables.forEach(movable => { movable.position.y -= 20 });
+        movables.forEach(movable => { movable.position.y -= speed });
+        moveableBoundaries.forEach(coordinate => { coordinate[1] -= speed });
     }
     else if(keys.d.pressed){
-        movables.forEach(movable => { movable.position.x -= 20 });
+        movables.forEach(movable => { movable.position.x -= speed });
+        moveableBoundaries.forEach(coordinate => { coordinate[0] -= speed });
     }
 
 }
 animate();
 
-function inHive(sprite){
-    if(
-        beeSprite.position.x + beeSprite.width >= sprite.position.x   &&
-        beeSprite.position.x <= sprite.position.x + sprite.width  &&
-        beeSprite.position.y <= sprite.position.y + sprite.height &&
+// if bee is in another sprite such as the hive
+function inSprite(sprite){
+    return (
+        beeSprite.position.x + beeSprite.width >= sprite.position.x  &&
+        beeSprite.position.x <= sprite.position.x + sprite.width     &&
+        beeSprite.position.y <= sprite.position.y + sprite.height    &&
         beeSprite.position.y + beeSprite.height >= sprite.position.y 
-    ){
-        return true;
-    }else{
-        return false;
-    }
+    );
 }
+
+// if bee is in a certain location in the canvas such as a garden 
+function inGarden(gardenBounds){
+    return (
+        beeSprite.position.x + beeSprite.width >= gardenBounds[0] &&
+        beeSprite.position.x <= gardenBounds[0] + gardenBounds[2] &&
+        beeSprite.position.y <= gardenBounds[1] + gardenBounds[3] &&
+        beeSprite.position.y + beeSprite.height >= gardenBounds[1]
+    );
+}
+
+
+function spawnRandom(gardenBounds, flowerImage) {
+    const x = gardenBounds[0] + Math.random() * (gardenBounds[2] - 30);
+    const y = gardenBounds[1] + Math.random() * (gardenBounds[3] - 30);
+
+    const flower = new Sprite({
+        position: { x, y },
+        image: flowerImage,
+        width: 30,
+        height: 30
+    });
+
+    return flower;
+}
+
+
+// movement
 
 window.addEventListener('keydown', (e) => {
     // move the bee ten pixels depending on what key was pressed
@@ -142,19 +228,19 @@ window.addEventListener('keydown', (e) => {
     }
     switch(e.key){
         case 'ArrowUp':
-            background.position.y -= 20;
+            background.position.y -= speed;
             keys.w.pressed = true;
             break;
         case 'ArrowDown':
-            background.position.y += 20;
+            background.position.y += speed;
             keys.s.pressed = true;
             break;
         case 'ArrowLeft':
-            background.position.x -= 20;
+            background.position.x -= speed;
             keys.a.pressed = true;
             break;
         case 'ArrowRight':
-            background.position.x += 20;
+            background.position.x += speed;
             keys.d.pressed = true;
             break;
     }
@@ -251,6 +337,8 @@ let level = 1;
 let inventorySpace = 14;
 createInventorySlots(inventorySpace);
 createQuest();
+//put flowers in the garden
+spawnItems(sunflowerImage, 10, flowerGarden);
 
 // todo:
 // drawHive()
