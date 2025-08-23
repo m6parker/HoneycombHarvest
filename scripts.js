@@ -13,6 +13,9 @@ map.src = 'img/gardenMap2.png';
 //bee player
 const bee = new Image();
 bee.src = 'img/bee.png';
+//beehive spawnpoint
+const hive = new Image();
+hive.src = 'img/hive.png';
 
 class Sprite{
     constructor({position, speed, image}){
@@ -33,13 +36,20 @@ const background = new Sprite({
     image: map
 });
 
-
 const beeSprite = new Sprite({
     position: {
         x: canvas.width/2,
         y: canvas.height/3
     },
     image: bee
+});
+
+const hiveSprite = new Sprite({
+    position:{
+        x: -450,
+        y: -450
+    },
+    image: hive
 });
 
 //--------------- movement ----------------- //
@@ -55,12 +65,26 @@ function animate(){
     window.requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
     background.draw();
+    hiveSprite.draw();
     beeSprite.draw();
 
-    if(keys.w.pressed){background.position.y += 5}
-    else if(keys.a.pressed){background.position.x += 5}
-    else if(keys.s.pressed){background.position.y -= 5}
-    else if(keys.d.pressed){background.position.x -= 5}
+    if(keys.w.pressed){
+        background.position.y += 5;
+        hiveSprite.position.y += 5;
+    }
+    else if(keys.a.pressed){
+        background.position.x += 5;
+        hiveSprite.position.x += 5;
+    }
+    else if(keys.s.pressed){
+        background.position.y -= 5;
+        hiveSprite.position.y -= 5;
+    }
+    else if(keys.d.pressed){
+        background.position.x -= 5;
+        hiveSprite.position.x -= 5;
+    }
+
 }
 animate();
 
