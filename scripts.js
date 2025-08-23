@@ -36,8 +36,8 @@ const background = new Sprite({
 
 const beeSprite = new Sprite({
     position: {
-        x: canvas.width/2 - bee.width/2,
-        y: canvas.height/2 - bee.height/2
+        x: canvas.width/2,
+        y: canvas.height/3
     },
     image: bee
 });
@@ -148,4 +148,16 @@ function emptyInventory(item, quantity){
 
 // -------------- start game ------------- //
 
-createInventorySlots(14);
+let level = 1;
+let inventorySpace = 14;
+createInventorySlots(inventorySpace);
+
+// todo:
+// drawHive()
+// spawnRandom(10, flowers, garden)
+// spawnRandom(level, drones, hive)
+// spawnRandom(level, enemy, garden)
+
+// collision map - create in Tiled
+// collision items - addToInventory()
+// collision enemies - takeDamage()
