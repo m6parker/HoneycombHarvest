@@ -14,8 +14,8 @@ context.fillRect(100,100,canvas.width,canvas.height);
 const map = new Image();
 map.src = 'img/tilemapExpanded.png';
 //bee player
-const bee = new Image();
-bee.src = 'img/bee.png';
+const beeImage = new Image();
+beeImage.src = 'img/bee.png';
 //beehive spawnpoint
 const hive = new Image();
 hive.src = 'img/hive.png';
@@ -31,6 +31,7 @@ carrotImage.src = 'img/carrot.png';
 // x, y, length, height
 let flowerGarden = [750, 100, 850, 200];
 let veggieGarden = [650, 500, 500, 350];
+let honeycomb = [-400, -400, 400, 400];
 let speed = 10;
 
 
@@ -60,7 +61,7 @@ const beeSprite = new Sprite({
         x: canvas.width/2,
         y: canvas.height/2.5
     },
-    image: bee,
+    image: beeImage,
     width: 16,
     height: 16
 });
@@ -75,13 +76,13 @@ const hiveSprite = new Sprite({
     height: 350
 });
 
-const sunflower = new Sprite({
-    position:{
-        x: 450,
-        y: 250
-    },
-    image: sunflowerImage
-});
+// const sunflower = new Sprite({
+//     position:{
+//         x: 450,
+//         y: 250
+//     },
+//     image: sunflowerImage
+// });
 
 //--------------- movement ----------------- //
 
@@ -181,16 +182,20 @@ function animate(){
         moveableBoundaries.forEach(coordinate => { coordinate[0] -= speed });
     }
 
-    //collecting 
+    //collecting items, removing image from canvas
     for (let i = items.length - 1; i >= 0; i--) {
         const item = items[i];
-        if (inSprite(item)) {
+        if (inSprite(item) && inventorySpace) {
             items.splice(i, 1);
             const indexInMovables = movables.indexOf(item);
             if (indexInMovables !== -1) {
                 movables.splice(indexInMovables, 1);
             }
-            console.log(`item collected!`);
+            const itemName = ((item.image.src).split('/').pop()).split('.').slice(0, -1).join('');
+            console.log(`${itemName} collected!`);
+            // get the name of the item from the image path 
+            // todo - make this not so stupid
+            addToInventory(itemName);
         }
     }
 
@@ -298,7 +303,7 @@ function addToInventory(itemType){
         if(slots[i].classList.contains('empty')){
             slots[i].appendChild(item);
             slots[i].classList.remove('empty');
-            space--;
+            inventorySpace--;
             break;
         }
     };
@@ -350,23 +355,31 @@ function createQuest(){
 
 // -------------- start game ------------- //
 
-let level = 1;
+
+// todo - level defines how many drones you have and the wieght you can carry back
+let level = 1; 
 let inventorySpace = 14;
 createInventorySlots(inventorySpace);
 createQuest();
+
 //put flowers in the garden
 spawnItems(sunflowerImage, 10, flowerGarden);
 spawnItems(pinkFlowerImage, 10, flowerGarden);
 spawnItems(carrotImage, 20, veggieGarden);
 
+// put drones in hive
+// function callSpawn(){
+//     // put drones in the hive
+//     spawnItems(beeImage, level, hive)
+// }
+//bees buzzing
+// setInterval(callSpawn, 1000);
+
 // todo:
 // drawHive()
-// spawnRandom(10, flowers, garden)
 // spawnRandom(level, drones, hive)
 // spawnRandom(level, enemy, garden)
 
-// collision map - create in Tiled
-// collision items - addToInventory()
 // collision enemies - takeDamage()
 
 
@@ -383,7 +396,7 @@ spawnItems(carrotImage, 20, veggieGarden);
 //     //reset variables
 //     pinkcount = 0;
 //     suncount = 0;
-//     space = 1;
+//     inventorySpace = 1;
 // });
 
 // const pauseScreen = document.querySelector('.pause-container');
