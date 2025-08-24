@@ -105,4 +105,5 @@ button:hover, button.active{
     width: 150px;
     image-rendering: pixelated;
     margin: 0 40px 0 0;
+    background-color: #616161;
 }

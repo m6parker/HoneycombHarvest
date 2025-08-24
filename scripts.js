@@ -18,7 +18,7 @@ const beeImage = new Image();
 beeImage.src = 'img/bee.png';
 //beehive spawnpoint
 const hive = new Image();
-hive.src = 'img/hive.png';
+hive.src = 'img/beehive.png';
 // flowers
 const sunflowerImage = new Image();
 sunflowerImage.src = 'img/sunflower.png';
@@ -31,9 +31,13 @@ carrotImage.src = 'img/carrot.png';
 // x, y, length, height
 let flowerGarden = [750, 100, 850, 200];
 let veggieGarden = [650, 500, 500, 350];
-let honeycomb = [-400, -400, 400, 400];
+let honeycomb = [-200, -200, 130, 130];
 let speed = 10;
-
+// let inventoryItems = [];
+//inventory items
+let pinkCount = 0;
+let suncount = 0;
+let carrotCount = 0;
 
 class Sprite{
     constructor({position, image, height, width}){
@@ -68,12 +72,12 @@ const beeSprite = new Sprite({
 
 const hiveSprite = new Sprite({
     position:{
-        x: -300,
-        y: -300
+        x: -200,
+        y: -200
     },
     image: hive,
-    width: 380,
-    height: 350
+    width: 100,
+    height: 100
 });
 
 // const sunflower = new Sprite({
@@ -137,7 +141,7 @@ const keys = {
 }
 
 const movables = [background, hiveSprite]; // sprites
-const moveableBoundaries = [flowerGarden, veggieGarden] // images
+const moveableBoundaries = [flowerGarden, veggieGarden, honeycomb] // images
 
 function animate(){
     window.requestAnimationFrame(animate);
@@ -150,17 +154,18 @@ function animate(){
     items.forEach(item => item.draw());
 
     //testing
-    // drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
+    drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
 
     // Check collisions
-    // if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
-    // if (inGarden(veggieGarden)) console.log('Bee is in veggie garden!');
-    // if (inSprite(hiveSprite)) console.log('Bee is in the hive!');
+    if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
+    if (inGarden(veggieGarden)) console.log('Bee is in veggie garden!');
+    if (inSprite(hiveSprite)) console.log('Bee is in the hive!');
 
     // testing
-    // context.strokeStyle = 'blue';
-    // context.strokeRect(flowerGarden[0], flowerGarden[1], flowerGarden[2], flowerGarden[3]);
-    // context.strokeRect(veggieGarden[0], veggieGarden[1], veggieGarden[2], veggieGarden[3]);
+    context.strokeStyle = 'blue';
+    context.strokeRect(flowerGarden[0], flowerGarden[1], flowerGarden[2], flowerGarden[3]);
+    context.strokeRect(veggieGarden[0], veggieGarden[1], veggieGarden[2], veggieGarden[3]);
+    context.strokeRect(honeycomb[0], honeycomb[1], honeycomb[2], honeycomb[3]);
 
     // console.log(inGarden(veggieGarden))
 
@@ -196,6 +201,9 @@ function animate(){
             // get the name of the item from the image path 
             // todo - make this not so stupid
             addToInventory(itemName);
+            if(itemName === 'sunflower'){ suncount++; }
+            if(itemName === 'pinkflower'){ pinkCount++; }
+            if(itemName === 'count'){ carrot++; }
         }
     }
 
@@ -325,8 +333,10 @@ function emptyInventory(item, quantity){
 
 // ------------ quests -------------------------
 
-let pinkGoal;
-let sunGoal;
+let pinkGoal = 0;
+let sunGoal = 0;
+let carrotGoal = 0;
+let questcount = 1;
 // give a random quest
 function createQuest(){
     pinkGoal = Math.floor(Math.random() * 10) + 1;
@@ -335,23 +345,30 @@ function createQuest(){
 }
 
 // check if quest is fufilled
-// function checkQuest(pinkGoal, sunGoal){
-//     if(pinkcount >= pinkGoal && suncount >= sunGoal){
-//         completeQuest();
-//     }
-// }
+function checkQuest(pinkCount, suncount){
+    console.log(pinkCount, suncount)
+    if(
+        pinkCount >= pinkGoal && 
+        suncount >= sunGoal   &&
+        carrotCount >= carrotGoal
+    ){
+        completeQuest();
+    }else{
+        console.log('need to drop off items in hive')
+    }
+}
 
 // win quest
-// function completeQuest(){
-//     questcount++;
-//     level++;
-//     document.querySelector('.quest-description').innerHTML = 'you win';
-//     document.querySelector('.quest-title').innerHTML = `Quest #${questcount}:`;
-//     createQuest();
-//     spawnRandom(level, 'bee', hive);
+function completeQuest(){
+    questcount++;
+    level++;
+    document.querySelector('.quest-description').innerHTML = 'quest completed!';
+    // document.querySelector('.quest-title').innerHTML = `Quest #${questcount}:`;
+    // createQuest();
+    // spawnRandom(level, 'bee', hive);
 
-//     //todo - need better / more obvious win screen
-// }
+    //todo - need better / more obvious win screen
+}
 
 // -------------- start game ------------- //
 
@@ -387,17 +404,22 @@ spawnItems(carrotImage, 20, veggieGarden);
 
 // todo - limit inventory
 // drop inventory
-// const dropButton = document.querySelector('.drop-button');
-// dropButton.addEventListener('click', () => {
-//     emptyInventory();
-//     spawnRandom(pinkcount, 'pinkflower', garden);
-//     spawnRandom(suncount, 'sunflower', garden);
+const dropButton = document.querySelector('.drop-button');
+dropButton.addEventListener('click', () => {
+    if(inSprite(hiveSprite)){
+        checkQuest(pinkCount, suncount);
+        emptyInventory();
 
-//     //reset variables
-//     pinkcount = 0;
-//     suncount = 0;
-//     inventorySpace = 1;
-// });
+        //reset variables
+        pinkCount = 0;
+        suncount = 0;
+        inventorySpace = 14;
+    }
+
+    // spawnRandom(pinkCount, 'pinkflower', garden);
+    // spawnRandom(suncount, 'sunflower', garden);
+    // spawnRandom([500,250,200,200], pinkFlowerImage) // todo drop items being held
+});
 
 // const pauseScreen = document.querySelector('.pause-container');
 const pauseButton = document.querySelector('.pause-button');
