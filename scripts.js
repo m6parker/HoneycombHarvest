@@ -155,7 +155,7 @@ function animate(){
     items.forEach(item => item.draw());
 
     //testing
-    drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
+    // drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
 
     // Check collisions
     // if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
@@ -163,10 +163,10 @@ function animate(){
     // if (inSprite(hiveSprite)) console.log('Bee is in the hive!');
 
     // testing
-    context.strokeStyle = 'blue';
-    context.strokeRect(flowerGarden[0], flowerGarden[1], flowerGarden[2], flowerGarden[3]);
-    context.strokeRect(veggieGarden[0], veggieGarden[1], veggieGarden[2], veggieGarden[3]);
-    context.strokeRect(honeycomb[0], honeycomb[1], honeycomb[2], honeycomb[3]);
+    // context.strokeStyle = 'blue';
+    // context.strokeRect(flowerGarden[0], flowerGarden[1], flowerGarden[2], flowerGarden[3]);
+    // context.strokeRect(veggieGarden[0], veggieGarden[1], veggieGarden[2], veggieGarden[3]);
+    // context.strokeRect(honeycomb[0], honeycomb[1], honeycomb[2], honeycomb[3]);
 
     // console.log(inGarden(veggieGarden))
 
