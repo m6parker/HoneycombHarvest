@@ -101,6 +101,12 @@ button:hover, button.active{
     background-color:rgb(255, 196, 0);
 }
 
+button:disabled{
+    border: 2px solid rgb(47, 47, 47);
+    background-color: #6161619e;
+    color: black;
+}
+
 .quests img{
     width: 150px;
     image-rendering: pixelated;

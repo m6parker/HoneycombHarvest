@@ -92,7 +92,8 @@ const hiveSprite = new Sprite({
 
 
 const items = [];
-function spawnItems(itemImage, quantity, location){    
+function spawnItems(itemImage, quantity, location){
+    if(itemImage === beeImage){  }
     for (let i = 0; i < quantity; i++) {
         const item = spawnRandom(location, itemImage);
         items.push(item);
@@ -157,9 +158,9 @@ function animate(){
     drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
 
     // Check collisions
-    if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
-    if (inGarden(veggieGarden)) console.log('Bee is in veggie garden!');
-    if (inSprite(hiveSprite)) console.log('Bee is in the hive!');
+    // if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
+    // if (inGarden(veggieGarden)) console.log('Bee is in veggie garden!');
+    // if (inSprite(hiveSprite)) console.log('Bee is in the hive!');
 
     // testing
     context.strokeStyle = 'blue';
@@ -353,16 +354,20 @@ function checkQuest(pinkCount, suncount){
         carrotCount >= carrotGoal
     ){
         completeQuest();
+        return true;
     }else{
-        console.log('need to drop off items in hive')
+        console.log('missing items')
+        return false;
     }
 }
 
 // win quest
 function completeQuest(){
+    emptyInventory();
     questcount++;
     level++;
     document.querySelector('.quest-description').innerHTML = 'quest completed!';
+    document.querySelector('.quest-button').removeAttribute('disabled');
     // document.querySelector('.quest-title').innerHTML = `Quest #${questcount}:`;
     // createQuest();
     // spawnRandom(level, 'bee', hive);
@@ -385,12 +390,12 @@ spawnItems(pinkFlowerImage, 10, flowerGarden);
 spawnItems(carrotImage, 20, veggieGarden);
 
 // put drones in hive
-// function callSpawn(){
-//     // put drones in the hive
-//     spawnItems(beeImage, level, hive)
-// }
+function callSpawn(){
+    // put drones in the hive
+    spawnItems(beeImage, level, honeycomb)
+}
 //bees buzzing
-// setInterval(callSpawn, 1000);
+setInterval(callSpawn, 1000);
 
 // todo:
 // drawHive()
@@ -407,13 +412,14 @@ spawnItems(carrotImage, 20, veggieGarden);
 const dropButton = document.querySelector('.drop-button');
 dropButton.addEventListener('click', () => {
     if(inSprite(hiveSprite)){
-        checkQuest(pinkCount, suncount);
-        emptyInventory();
-
-        //reset variables
-        pinkCount = 0;
-        suncount = 0;
-        inventorySpace = 14;
+        if(checkQuest(pinkCount, suncount)){
+            // emptyInventory();
+    
+            //reset variables
+            pinkCount = 0;
+            suncount = 0;
+            inventorySpace = 14;
+        }
     }
 
     // spawnRandom(pinkCount, 'pinkflower', garden);
@@ -441,6 +447,12 @@ resumeButton.addEventListener('click', () => {
 // reloadButton.addEventListener('click', () =>{
 //     location.reload();
 // });
+
+const questButton = document.querySelector('.quest-button')
+questButton.addEventListener('click', () => {
+    createQuest();
+    questButton.disabled = true;
+});
 
 
 // ---------------- timer ----------------------
