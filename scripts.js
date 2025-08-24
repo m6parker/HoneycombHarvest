@@ -93,7 +93,7 @@ const hiveSprite = new Sprite({
 
 const items = [];
 function spawnItems(itemImage, quantity, location){
-    if(itemImage === beeImage){  }
+    // if(itemImage === beeImage){  }
     for (let i = 0; i < quantity; i++) {
         const item = spawnRandom(location, itemImage);
         items.push(item);
@@ -395,7 +395,7 @@ function callSpawn(){
     spawnItems(beeImage, level, honeycomb)
 }
 //bees buzzing
-setInterval(callSpawn, 1000);
+// setInterval(callSpawn, 1000);
 
 // todo:
 // drawHive()
