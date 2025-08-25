@@ -17,19 +17,15 @@ window.addEventListener('keydown', (e) => {
     }
     switch(e.key){
         case 'ArrowUp':
-            background.position.y -= speed;
             keys.w.pressed = true;
             break;
         case 'ArrowDown':
-            background.position.y += speed;
             keys.s.pressed = true;
             break;
         case 'ArrowLeft':
-            background.position.x -= speed;
             keys.a.pressed = true;
             break;
         case 'ArrowRight':
-            background.position.x += speed;
             keys.d.pressed = true;
             break;
     }
