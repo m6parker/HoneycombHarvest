@@ -1,4 +1,5 @@
-
+const selectedHiveImage = 'img/beehive_selected.png';
+const unselectedHiveImage = 'img/beehive.png';
 
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
@@ -6,8 +7,18 @@ context.imageSmoothingEnabled = false;
 
 // canvas.width = 1024;
 // canvas.height = 576;
-canvas.width = 1280;
-canvas.height = 960;
+// canvas.width = 1280;
+// canvas.height = 960;
+const ResizeCanvas = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // if(window.innerWidth > STATIC_PAGE_WIDTH){ STATIC_PAGE_WIDTH = window.innerWidth; }
+    // if(window.innerHeight > STATIC_PAGE_HEIGHT){ STATIC_PAGE_HEIGHT = window.innerHeight; }
+};
+ResizeCanvas();
+
+window.addEventListener("resize", () => ResizeCanvas());
 
 let offsetX = 0, offsetY = 0;
 
@@ -54,12 +65,15 @@ const hiveSprite = new Sprite({
     },
     image: hiveImage,
     width: 100,
-    height: 100
+    height: 100,
+    name: 'beehive',
+    hovered: false
 });
 
 let cameraOffset = { x: 0, y: 0 };
 let mouseX = 0, mouseY = 0;
 let worldX = 0, worldY = 0;
+const mouseLocation = { x: 0, y: 0};
 
 const movables = [background, hiveSprite, ...items]; // sprites
 const moveableBoundaries = [flowerGarden, veggieGarden, honeycomb] // images
@@ -78,10 +92,10 @@ function animate(){
     
     
     // TESTING
-    // drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
+    drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
     context.fillStyle = 'red';
-    context.fillRect(worldX - 2, worldY - 2, 4, 4);
-    console.log(mouseX, mouseY)
+    context.fillRect(mouseLocation.x - 5, mouseLocation.y - 5, 10, 10);
+    // console.log(mouseX, mouseY)
 
 
     // Check collisions
@@ -136,53 +150,80 @@ function animate(){
             if(itemName === 'count'){ carrot++; }
         }
     }
-
+    
 }
 animate();
 
 
-canvas.addEventListener('mousemove', (event) => {
-    const rect = canvas.getBoundingClientRect();
-    const screenX = event.clientX - rect.left;
-    const screenY = event.clientY - rect.top;
-    worldX = screenX + cameraOffset.x;
-    worldY = screenY + cameraOffset.y;
+document.addEventListener('mousemove', (e) => {
+    mouseLocation.x = e.clientX;
+    mouseLocation.y = e.clientY;
+    
+    // hovering sprites
+    movables.forEach(movable => {
+        if (
+            mouseLocation.x >= movable.position.x &&
+            mouseLocation.x <= movable.position.x + movable.width &&
+            mouseLocation.y >= movable.position.y &&
+            mouseLocation.y <= movable.position.y + movable.height
+        ) {
+            if (movable.name === 'beehive'){
+                hiveImage.src === selectedHiveImage;
+            }
+    
+        }
+    });
 });
+
+canvas.addEventListener('onmouseover', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const screenX = e.clientX - rect.left;
+    const screenY = e.clientY - rect.top;
+            
+
+});
+
 
 canvas.addEventListener('click', (event) => {
     const rect = canvas.getBoundingClientRect();
     const screenX = event.clientX - rect.left;
     const screenY = event.clientY - rect.top;
-    worldX = screenX + cameraOffset.x;
-    worldY = screenY + cameraOffset.y;
-
     console.log("Screen Mouse:", screenX, screenY);
     console.log("Camera Offset:", cameraOffset.x, cameraOffset.y);
-    console.log("World Mouse:", worldX, worldY);
 
     // clicking items
     items.forEach(item => {
         if (
-            worldX >= item.position.x &&
-            worldX <= item.position.x + item.width &&
-            worldY >= item.position.y &&
-            worldY <= item.position.y + item.height
+            mouseLocation.x >= item.position.x &&
+            mouseLocation.x <= item.position.x + item.width &&
+            mouseLocation.y >= item.position.y &&
+            mouseLocation.y <= item.position.y + item.height
         ) {
-            console.log(`${item} CLICKED`);
+            console.log(`CLICKED ${JSON.stringify(item)}`);
             // Handle item click logic here
+            
+            
         }
     });
-
+    
     // clicking sprites
     movables.forEach(movable => {
         if (
-            worldX >= movable.position.x &&
-            worldX <= movable.position.x + movable.width &&
-            worldY >= movable.position.y &&
-            worldY <= movable.position.y + movable.height
+            mouseLocation.x >= movable.position.x &&
+            mouseLocation.x <= movable.position.x + movable.width &&
+            mouseLocation.y >= movable.position.y &&
+            mouseLocation.y <= movable.position.y + movable.height
         ) {
-            console.log(`${movable} CLICKED`);
-            // Handle movable click logic here
+            console.log(`CLICKED ${JSON.stringify(movable.name)}`);
+            
+            if (movable.name === 'beehive' && hiveImage.src !== selectedHiveImage){
+                hiveImage.src = selectedHiveImage;
+                hiveInvenotry.classList.toggle('hidden');
+            }else{
+                hiveImage.src = unselectedHiveImage;
+
+            }
+
         }
     });
 });

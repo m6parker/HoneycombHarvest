@@ -1,9 +1,11 @@
 class Sprite{
-    constructor({position, image, height, width}){
+    constructor({position, image, height, width, name, hovered}){
         this.position = position;
         this.image = image;
         this.height = height;
         this.width = width;
+        this.name = name;
+        this.hovered = hovered;
     }
 
     draw(){
