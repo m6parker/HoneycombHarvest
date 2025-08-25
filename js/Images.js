@@ -1,7 +1,8 @@
 
 // background world
 const mapImage = new Image();
-mapImage.src = 'img/tilemapExpanded.png';
+// mapImage.src = 'img/tilemapExpanded.png';
+mapImage.src = 'img/HoneycombHarvest_map(400x).png';
 
 // bee player
 const beeImage = new Image();

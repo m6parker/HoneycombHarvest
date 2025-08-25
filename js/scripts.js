@@ -1,17 +1,23 @@
+
+
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 context.imageSmoothingEnabled = false;
 
-canvas.width = 1024;
-canvas.height = 576;
+// canvas.width = 1024;
+// canvas.height = 576;
+canvas.width = 1280;
+canvas.height = 960;
+
+let offsetX = 0, offsetY = 0;
 
 context.fillStyle = 'black';
-context.fillRect(100,100,canvas.width,canvas.height);
+context.fillRect(0,0,canvas.width,canvas.height);
 
 
 // x, y, length, height
-let flowerGarden = [750, 100, 850, 200];
-let veggieGarden = [650, 500, 500, 350];
+let flowerGarden = [1350, -100, 650, 200];
+let veggieGarden = [800, 200, 300, 250];
 let honeycomb = [-200, -200, 130, 130];
 let speed = 10;
 // let inventoryItems = [];
@@ -43,21 +49,40 @@ const beeSprite = new Sprite({
 
 const hiveSprite = new Sprite({
     position:{
-        x: -200,
-        y: -200
+        x: -100,
+        y: -100
     },
     image: hiveImage,
     width: 100,
     height: 100
 });
 
+let cameraOffset = { x: 0, y: 0 };
+let mouseX = 0, mouseY = 0;
+let worldX = 0, worldY = 0;
 
-const movables = [background, hiveSprite]; // sprites
+const movables = [background, hiveSprite, ...items]; // sprites
 const moveableBoundaries = [flowerGarden, veggieGarden, honeycomb] // images
 function animate(){
-
+    window.requestAnimationFrame(animate);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    //testing
+    context.fillStyle = 'green';
+    context.fillRect(0, 0, 10, 10);
+    // add images
+    background.draw();
+    hiveSprite.draw();
+    beeSprite.draw();
+    // add items
+    items.forEach(item => item.draw());
+    
+    
     // TESTING
     // drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
+    context.fillStyle = 'red';
+    context.fillRect(worldX - 2, worldY - 2, 4, 4);
+    console.log(mouseX, mouseY)
+
 
     // Check collisions
     // if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
@@ -69,32 +94,26 @@ function animate(){
     // context.strokeRect(veggieGarden[0], veggieGarden[1], veggieGarden[2], veggieGarden[3]);
     // context.strokeRect(honeycomb[0], honeycomb[1], honeycomb[2], honeycomb[3]);
 
-
-    window.requestAnimationFrame(animate);
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    // add images
-    background.draw();
-    hiveSprite.draw();
-    beeSprite.draw();
-    // add items
-    items.forEach(item => item.draw());
-
     // move background + stagnant objects when bee moves
     if(keys.w.pressed){
         movables.forEach(movable => { movable.position.y += speed });
         moveableBoundaries.forEach(coordinate => { coordinate[1] += speed });
+        cameraOffset.y -= speed;
     }
     else if(keys.a.pressed){
         movables.forEach(movable => { movable.position.x += speed });
         moveableBoundaries.forEach(coordinate => { coordinate[0] += speed });
+        cameraOffset.x -= speed;
     }
     else if(keys.s.pressed){
         movables.forEach(movable => { movable.position.y -= speed });
         moveableBoundaries.forEach(coordinate => { coordinate[1] -= speed });
+        cameraOffset.y += speed;
     }
     else if(keys.d.pressed){
         movables.forEach(movable => { movable.position.x -= speed });
         moveableBoundaries.forEach(coordinate => { coordinate[0] -= speed });
+        cameraOffset.x += speed;
     }
 
     //collecting items, removing image from canvas
@@ -121,6 +140,74 @@ function animate(){
 }
 animate();
 
+
+canvas.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const screenX = event.clientX - rect.left;
+    const screenY = event.clientY - rect.top;
+    worldX = screenX + cameraOffset.x;
+    worldY = screenY + cameraOffset.y;
+});
+
+canvas.addEventListener('click', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const screenX = event.clientX - rect.left;
+    const screenY = event.clientY - rect.top;
+    worldX = screenX + cameraOffset.x;
+    worldY = screenY + cameraOffset.y;
+
+    console.log("Screen Mouse:", screenX, screenY);
+    console.log("Camera Offset:", cameraOffset.x, cameraOffset.y);
+    console.log("World Mouse:", worldX, worldY);
+
+    // clicking items
+    items.forEach(item => {
+        if (
+            worldX >= item.position.x &&
+            worldX <= item.position.x + item.width &&
+            worldY >= item.position.y &&
+            worldY <= item.position.y + item.height
+        ) {
+            console.log(`${item} CLICKED`);
+            // Handle item click logic here
+        }
+    });
+
+    // clicking sprites
+    movables.forEach(movable => {
+        if (
+            worldX >= movable.position.x &&
+            worldX <= movable.position.x + movable.width &&
+            worldY >= movable.position.y &&
+            worldY <= movable.position.y + movable.height
+        ) {
+            console.log(`${movable} CLICKED`);
+            // Handle movable click logic here
+        }
+    });
+});
+
+
+
+
+
+// function clickedSprite(mousex, mousey, sprite){
+
+//     console.log(mousex, mousey)
+//     console.log(sprite.position, sprite.width)
+//     if(
+//         mousex > sprite.position.x &&
+//         mousex < sprite.position.x + sprite.width &&
+//         mousey > sprite.position.y &&
+//         mousey < sprite.position.y + sprite.height
+//     ){
+//         console.log('clciked sprite');
+//     }
+// }
+
+// canvas.addEventListener('mouseover', (e) => { // update on mouse move
+//     console.log('hover canvas');
+// });
 
 // ----------------- buttons -------------------
 
