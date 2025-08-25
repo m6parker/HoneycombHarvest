@@ -81,8 +81,8 @@ function animate(){
     window.requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
     //testing
-    context.fillStyle = 'green';
-    context.fillRect(0, 0, 10, 10);
+    // context.fillStyle = 'green';
+    // context.fillRect(0, 0, 10, 10);
     // add images
     background.draw();
     hiveSprite.draw();
@@ -92,9 +92,9 @@ function animate(){
     
     
     // TESTING
-    drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
-    context.fillStyle = 'red';
-    context.fillRect(mouseLocation.x - 5, mouseLocation.y - 5, 10, 10);
+    // drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
+    // context.fillStyle = 'red';
+    // context.fillRect(mouseLocation.x - 5, mouseLocation.y - 5, 10, 10);
     // console.log(mouseX, mouseY)
 
 
