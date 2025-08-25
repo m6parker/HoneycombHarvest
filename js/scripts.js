@@ -40,7 +40,7 @@ const background = new Sprite({
 const beeSprite = new Sprite({
     position: {
         x: canvas.width/2,
-        y: canvas.height/2.5
+        y: canvas.height/3.5
     },
     image: beeImage,
     width: 16,
