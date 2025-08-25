@@ -231,6 +231,19 @@ dropButton.addEventListener('click', () => {
     // spawnRandom([500,250,200,200], pinkFlowerImage) // todo drop items being held
 });
 
+//openhive
+const openButton = document.querySelector('.open-button');
+const hiveInvenotry = document.querySelector('.hive-inventory-container');
+openButton.addEventListener('click', () => {
+    if(onSprite(hiveSprite)){
+        hiveInvenotry.classList.toggle('hidden');
+        // openButton.textContent = 'Close';
+    }else{
+        hiveInvenotry.classList.add('hidden');
+    }
+
+});
+
 // const pauseScreen = document.querySelector('.pause-container');
 const pauseButton = document.querySelector('.pause-button');
 pauseButton.addEventListener('click', () => {

@@ -39,3 +39,13 @@ function emptyInventory(item, quantity){
         slots[i].classList.add('empty');
     }
 }
+
+//hive inventory 
+function createHiveInventorySlots(size){
+    for(let i = 0; i < size; i++){
+        const slot = document.createElement('div');
+        slot.className = 'itemSlot';
+        slot.classList.add('empty');
+        document.querySelector('.hive-inventory').appendChild(slot);
+    }
+}

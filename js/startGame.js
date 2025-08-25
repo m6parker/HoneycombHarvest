@@ -4,6 +4,7 @@
 let level = 1; 
 let inventorySpace = 14;
 createInventorySlots(inventorySpace);
+createHiveInventorySlots(24);
 createQuest();
 
 //put flowers in the garden
