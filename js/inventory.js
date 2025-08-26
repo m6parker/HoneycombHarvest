@@ -38,7 +38,7 @@ function emptyInventory(item, quantity){
         slots[i].classList.add('empty');
     }
 
-    console.log()
+    console.log(currentInventory)
 }
 
 //hive inventory 
