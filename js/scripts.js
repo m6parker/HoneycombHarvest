@@ -1,6 +1,3 @@
-const selectedHiveImage = 'img/beehive_selected.png';
-const unselectedHiveImage = 'img/beehive.png';
-
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 context.imageSmoothingEnabled = false;
@@ -30,7 +27,7 @@ context.fillRect(0,0,canvas.width,canvas.height);
 let flowerGarden = [1350, -100, 650, 200];
 let veggieGarden = [800, 200, 300, 250];
 let honeycomb = [-200, -200, 130, 130];
-let speed = 10;
+let speed = 20;
 // let inventoryItems = [];
 //inventory items
 let pinkCount = 0;
@@ -67,7 +64,34 @@ const hiveSprite = new Sprite({
     width: 100,
     height: 100,
     name: 'beehive',
-    hovered: false
+    selected: false,
+    selectedImg: selectedHiveImage
+});
+
+const greenhouseSprite = new Sprite({
+    position:{
+        x: 3750,
+        y: 100
+    },
+    image: greenhouseImage,
+    width: 400,
+    height: 400,
+    name: 'greenhouse',
+    selected: false,
+    selectedImg: selectedGreenhouseImage
+});
+
+const boxSprite = new Sprite({
+    position:{
+        x: 2345,
+        y: 2770
+    },
+    image: box,
+    width: 100,
+    height: 100,
+    name: 'box',
+    selected: false,
+    selectedImg: selectedbox
 });
 
 let cameraOffset = { x: 0, y: 0 };
@@ -75,8 +99,9 @@ let mouseX = 0, mouseY = 0;
 let worldX = 0, worldY = 0;
 const mouseLocation = { x: 0, y: 0};
 
-const movables = [background, hiveSprite, ...items]; // sprites
-const moveableBoundaries = [flowerGarden, veggieGarden, honeycomb] // images
+const movables = [background, hiveSprite, ...items, greenhouseSprite, boxSprite]; // sprites
+const moveableBoundaries = [flowerGarden, veggieGarden, honeycomb]; // images
+const selectables = [hiveSprite, greenhouseSprite, boxSprite]; // sprites only rn
 function animate(){
     window.requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -86,6 +111,8 @@ function animate(){
     // add images
     background.draw();
     hiveSprite.draw();
+    greenhouseSprite.draw();
+    boxSprite.draw();
     beeSprite.draw();
     // add items
     items.forEach(item => item.draw());
@@ -158,29 +185,18 @@ animate();
 document.addEventListener('mousemove', (e) => {
     mouseLocation.x = e.clientX;
     mouseLocation.y = e.clientY;
-    
-    // hovering sprites
-    movables.forEach(movable => {
-        if (
+
+    //hover sprites       
+    selectables.forEach(movable => {
+        if(
             mouseLocation.x >= movable.position.x &&
             mouseLocation.x <= movable.position.x + movable.width &&
             mouseLocation.y >= movable.position.y &&
             mouseLocation.y <= movable.position.y + movable.height
-        ) {
-            if (movable.name === 'beehive'){
-                hiveImage.src === selectedHiveImage;
-            }
-    
+        ){
+            canvas.style.cursor = 'pointer';
         }
     });
-});
-
-canvas.addEventListener('onmouseover', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const screenX = e.clientX - rect.left;
-    const screenY = e.clientY - rect.top;
-            
-
 });
 
 
@@ -188,26 +204,27 @@ canvas.addEventListener('click', (event) => {
     const rect = canvas.getBoundingClientRect();
     const screenX = event.clientX - rect.left;
     const screenY = event.clientY - rect.top;
-    console.log("Screen Mouse:", screenX, screenY);
-    console.log("Camera Offset:", cameraOffset.x, cameraOffset.y);
+    // console.log("Screen Mouse:", screenX, screenY);
+    // console.log("Camera Offset:", cameraOffset.x, cameraOffset.y);
+    console.log(mouseLocation.x, mouseLocation.y)
 
-    // clicking items
-    items.forEach(item => {
-        if (
-            mouseLocation.x >= item.position.x &&
-            mouseLocation.x <= item.position.x + item.width &&
-            mouseLocation.y >= item.position.y &&
-            mouseLocation.y <= item.position.y + item.height
-        ) {
-            console.log(`CLICKED ${JSON.stringify(item)}`);
-            // Handle item click logic here
+    // // clicking items  - todo this
+    // items.forEach(item => {
+    //     if (
+    //         mouseLocation.x >= item.position.x &&
+    //         mouseLocation.x <= item.position.x + item.width &&
+    //         mouseLocation.y >= item.position.y &&
+    //         mouseLocation.y <= item.position.y + item.height
+    //     ) {
+    //         console.log(`CLICKED ${JSON.stringify(item)}`);
+    //         // Handle item click logic here
             
             
-        }
-    });
+    //     }
+    // });
     
     // clicking sprites
-    movables.forEach(movable => {
+    selectables.forEach(movable => {
         if (
             mouseLocation.x >= movable.position.x &&
             mouseLocation.x <= movable.position.x + movable.width &&
@@ -215,14 +232,9 @@ canvas.addEventListener('click', (event) => {
             mouseLocation.y <= movable.position.y + movable.height
         ) {
             console.log(`CLICKED ${JSON.stringify(movable.name)}`);
-            
-            if (movable.name === 'beehive' && hiveImage.src !== selectedHiveImage){
-                hiveImage.src = selectedHiveImage;
-                hiveInvenotry.classList.toggle('hidden');
-            }else{
-                hiveImage.src = unselectedHiveImage;
 
-            }
+            movable.selected = movable.selected ? false : true;
+            movable.selectSprite();
 
         }
     });
@@ -230,27 +242,16 @@ canvas.addEventListener('click', (event) => {
 
 
 
-
-
-// function clickedSprite(mousex, mousey, sprite){
-
-//     console.log(mousex, mousey)
-//     console.log(sprite.position, sprite.width)
-//     if(
-//         mousex > sprite.position.x &&
-//         mousex < sprite.position.x + sprite.width &&
-//         mousey > sprite.position.y &&
-//         mousey < sprite.position.y + sprite.height
-//     ){
-//         console.log('clciked sprite');
-//     }
-// }
-
-// canvas.addEventListener('mouseover', (e) => { // update on mouse move
-//     console.log('hover canvas');
-// });
-
 // ----------------- buttons -------------------
+const greenhouseContainer = document.querySelector('.greenhouse-container');
+const hiveInvenotry = document.querySelector('.hive-inventory-container');
+const boxContainer = document.querySelector('.box-container');
+const sellButton = document.querySelector('.sell-button');
+
+
+sellButton.addEventListener('click', () => {
+    console.log('todo sell you thingies');
+});
 
 // todo - limit inventory
 // drop inventory
@@ -272,18 +273,6 @@ dropButton.addEventListener('click', () => {
     // spawnRandom([500,250,200,200], pinkFlowerImage) // todo drop items being held
 });
 
-//openhive
-const openButton = document.querySelector('.open-button');
-const hiveInvenotry = document.querySelector('.hive-inventory-container');
-openButton.addEventListener('click', () => {
-    if(onSprite(hiveSprite)){
-        hiveInvenotry.classList.toggle('hidden');
-        // openButton.textContent = 'Close';
-    }else{
-        hiveInvenotry.classList.add('hidden');
-    }
-
-});
 
 // const pauseScreen = document.querySelector('.pause-container');
 const pauseButton = document.querySelector('.pause-button');

@@ -136,3 +136,35 @@ button:disabled{
     padding: 5px;
     justify-content: space-around;
 }
+
+.greenhouse-container{
+    height: 300px;
+    width: 500px;
+    background-color: rgba(80, 129, 255, 0.45);
+    position: fixed;
+    top: 10%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    left: 30%;
+    border-radius: 10px;
+    border: 2px solid rgb(67, 92, 255);
+    flex-direction: column;
+    color: white;
+}
+
+.box-container{
+    height: 300px;
+    width: 500px;
+    background-color: rgba(255, 144, 75, 0.45);
+    position: fixed;
+    top: 10%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    left: 30%;
+    border-radius: 10px;
+    border: 2px solid rgb(150, 90, 0);
+    flex-direction: column;
+    color: white;
+}
