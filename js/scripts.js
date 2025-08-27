@@ -24,8 +24,9 @@ context.fillRect(0,0,canvas.width,canvas.height);
 
 
 // x, y, length, height
-let flowerGarden = [1350, -100, 650, 200];
-let veggieGarden = [800, 200, 300, 250];
+// let flowerGarden = [1350, -100, 650, 200];
+let flowerGarden = [2650, 850, 650, 200];
+let veggieGarden = [2060, 1160, 300, 250];
 let honeycomb = [-200, -200, 130, 130];
 let speed = 20;
 // let inventoryItems = [];
@@ -57,8 +58,8 @@ const beeSprite = new Sprite({
 
 const hiveSprite = new Sprite({
     position:{
-        x: -100,
-        y: -100
+        x: 1225,
+        y: 820
     },
     image: hiveImage,
     width: 100,
@@ -70,8 +71,8 @@ const hiveSprite = new Sprite({
 
 const greenhouseSprite = new Sprite({
     position:{
-        x: 3750,
-        y: 100
+        x: 5030,
+        y: 1050
     },
     image: greenhouseImage,
     width: 400,
@@ -83,7 +84,7 @@ const greenhouseSprite = new Sprite({
 
 const boxSprite = new Sprite({
     position:{
-        x: 2345,
+        x: 2335,
         y: 2770
     },
     image: box,
@@ -94,14 +95,27 @@ const boxSprite = new Sprite({
     selectedImg: selectedbox
 });
 
+const buyBoxSprite = new Sprite({
+    position:{
+        x: 2410,
+        y: 2770
+    },
+    image: buybox,
+    width: 100,
+    height: 100,
+    name: 'buybox',
+    selected: false,
+    selectedImg: selectedbuybox
+});
+
 let cameraOffset = { x: 0, y: 0 };
 let mouseX = 0, mouseY = 0;
 let worldX = 0, worldY = 0;
 const mouseLocation = { x: 0, y: 0};
 
-const movables = [background, hiveSprite, ...items, greenhouseSprite, boxSprite]; // sprites
+const movables = [background, hiveSprite, ...items, greenhouseSprite, boxSprite, buyBoxSprite]; // sprites
 const moveableBoundaries = [flowerGarden, veggieGarden, honeycomb]; // images
-const selectables = [hiveSprite, greenhouseSprite, boxSprite]; // sprites only rn
+const selectables = [hiveSprite, greenhouseSprite, boxSprite, buyBoxSprite]; // sprites only rn
 function animate(){
     window.requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -113,6 +127,7 @@ function animate(){
     hiveSprite.draw();
     greenhouseSprite.draw();
     boxSprite.draw();
+    buyBoxSprite.draw();
     beeSprite.draw();
     // add items
     items.forEach(item => item.draw());
@@ -207,6 +222,7 @@ canvas.addEventListener('click', (event) => {
     // console.log("Screen Mouse:", screenX, screenY);
     // console.log("Camera Offset:", cameraOffset.x, cameraOffset.y);
     console.log(mouseLocation.x, mouseLocation.y)
+    console.log(cameraOffset.x + mouseLocation.x, cameraOffset.y + mouseLocation.y)
 
     // // clicking items  - todo this
     // items.forEach(item => {

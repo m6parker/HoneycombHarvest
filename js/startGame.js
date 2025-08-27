@@ -32,6 +32,8 @@ function callSpawn(){
 
 // collision enemies - takeDamage()
 
+
+
 // --------- start screen ------------------------------------
 
 function animateBee(imageId, imageUrls) {
@@ -47,4 +49,3 @@ function animateBee(imageId, imageUrls) {
 const imageUrls = ['img/bee1.png', 'img/bee2.png'];
 animateBee('animatedBee', imageUrls);
 animateBee('animatedBee2', imageUrls);
-

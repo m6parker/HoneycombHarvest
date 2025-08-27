@@ -2,7 +2,8 @@
 // background world
 const mapImage = new Image();
 // mapImage.src = 'img/tilemapExpanded.png';
-mapImage.src = 'img/HoneycombHarvest_map(400x).png';
+// mapImage.src = 'img/HoneycombHarvest_map(400x).png';
+mapImage.src = 'img/HoneycombHarvest_map(400x-expanded).png';
 
 // bee player
 const beeImage = new Image();
@@ -26,6 +27,12 @@ const box = new Image();
 box.src = 'img/box.png';
 const selectedbox = new Image();
 selectedbox.src = 'img/box_selected.png';
+
+//buy box
+const buybox = new Image();
+buybox.src = 'img/buybox.png';
+const selectedbuybox = new Image();
+selectedbuybox.src = 'img/buybox_selected.png';
 
 // items
 const sunflowerImage = new Image();
