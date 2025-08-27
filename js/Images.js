@@ -41,3 +41,5 @@ const pinkFlowerImage = new Image();
 pinkFlowerImage.src = 'img/pinkflower.png';
 const carrotImage = new Image();
 carrotImage.src = 'img/carrot.png';
+const pumpkinImage = new Image();
+pumpkinImage.src = 'img/pumpkin.png';

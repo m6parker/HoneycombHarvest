@@ -16,6 +16,7 @@ createQuest();
 spawnItems(sunflowerImage, 10, flowerGarden);
 spawnItems(pinkFlowerImage, 10, flowerGarden);
 spawnItems(carrotImage, 20, veggieGarden);
+spawnItems(pumpkinImage, 40, pumpkinPatch);
 
 // put drones in hive
 function callSpawn(){

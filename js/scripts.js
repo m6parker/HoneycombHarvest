@@ -27,6 +27,7 @@ context.fillRect(0,0,canvas.width,canvas.height);
 // let flowerGarden = [1350, -100, 650, 200];
 let flowerGarden = [2650, 850, 650, 200];
 let veggieGarden = [2060, 1160, 300, 250];
+let pumpkinPatch = [3675, 1555, 800, 300]
 let honeycomb = [-200, -200, 130, 130];
 let speed = 20;
 // let inventoryItems = [];
@@ -34,6 +35,7 @@ let speed = 20;
 let pinkCount = 0;
 let suncount = 0;
 let carrotCount = 0;
+pumpkinCount = 0;
 
 
 // Sprites
@@ -84,12 +86,12 @@ const greenhouseSprite = new Sprite({
 
 const boxSprite = new Sprite({
     position:{
-        x: 2335,
-        y: 2770
+        x: 3613,
+        y: 3730
     },
     image: box,
-    width: 100,
-    height: 100,
+    width: 64,
+    height: 64,
     name: 'box',
     selected: false,
     selectedImg: selectedbox
@@ -97,12 +99,12 @@ const boxSprite = new Sprite({
 
 const buyBoxSprite = new Sprite({
     position:{
-        x: 2410,
-        y: 2770
+        x: 3700,
+        y: 3730
     },
     image: buybox,
-    width: 100,
-    height: 100,
+    width: 64,
+    height: 64,
     name: 'buybox',
     selected: false,
     selectedImg: selectedbuybox
@@ -189,7 +191,8 @@ function animate(){
             addToInventory(itemName);
             if(itemName === 'sunflower'){ suncount++; }
             if(itemName === 'pinkflower'){ pinkCount++; }
-            if(itemName === 'count'){ carrot++; }
+            // if(itemName === 'carrot'){ carrotCount++; }
+            if(itemName === 'pumpkin'){ pumpkinCount++; }
         }
     }
     
@@ -219,10 +222,9 @@ canvas.addEventListener('click', (event) => {
     const rect = canvas.getBoundingClientRect();
     const screenX = event.clientX - rect.left;
     const screenY = event.clientY - rect.top;
-    // console.log("Screen Mouse:", screenX, screenY);
-    // console.log("Camera Offset:", cameraOffset.x, cameraOffset.y);
-    console.log(mouseLocation.x, mouseLocation.y)
-    console.log(cameraOffset.x + mouseLocation.x, cameraOffset.y + mouseLocation.y)
+    //testing
+    // console.log(mouseLocation.x, mouseLocation.y)
+    console.log(cameraOffset.x + mouseLocation.x, cameraOffset.y + mouseLocation.y) // sprite coords
 
     // // clicking items  - todo this
     // items.forEach(item => {
