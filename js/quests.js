@@ -8,10 +8,10 @@ let questcount = 1;
 // give a random quest
 function createQuest(){
     //testing 
-    pinkGoal = 1;
-    sunGoal = 1;
-    // pinkGoal = Math.floor(Math.random() * 10) + 1;
-    // sunGoal = Math.floor(Math.random() * 3) + 1;
+    // pinkGoal = 1;
+    // sunGoal = 1;
+    pinkGoal = Math.floor(Math.random() * 10) + 1;
+    sunGoal = Math.floor(Math.random() * 3) + 1;
     document.querySelector('.quest-title').innerHTML = `Quest #${level}:`;
     document.querySelector('.quest-description').innerHTML = `collect ${pinkGoal} pink flowers and ${sunGoal} sunflowers.`;
 }

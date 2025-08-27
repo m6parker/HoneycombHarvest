@@ -29,7 +29,7 @@ let flowerGarden = [2650, 850, 650, 200];
 let veggieGarden = [2060, 1160, 300, 250];
 let pumpkinPatch = [3675, 1555, 800, 300]
 let honeycomb = [-200, -200, 130, 130];
-let speed = 20;
+let speed = 10;
 // let inventoryItems = [];
 //inventory items
 let pinkCount = 0;
