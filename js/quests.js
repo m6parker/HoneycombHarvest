@@ -7,8 +7,11 @@ let carrotGoal = 0;
 let questcount = 1;
 // give a random quest
 function createQuest(){
-    pinkGoal = Math.floor(Math.random() * 10) + 1;
-    sunGoal = Math.floor(Math.random() * 3) + 1;
+    //testing 
+    pinkGoal = 1;
+    sunGoal = 1;
+    // pinkGoal = Math.floor(Math.random() * 10) + 1;
+    // sunGoal = Math.floor(Math.random() * 3) + 1;
     document.querySelector('.quest-title').innerHTML = `Quest #${level}:`;
     document.querySelector('.quest-description').innerHTML = `collect ${pinkGoal} pink flowers and ${sunGoal} sunflowers.`;
 }
@@ -31,6 +34,7 @@ function checkQuest(pinkCount, suncount){
 
 // win quest
 function completeQuest(){
+    if(hiveSpace){ addToHive(); }
     emptyInventory();
     questcount++;
     level++;

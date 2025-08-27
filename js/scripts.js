@@ -244,10 +244,17 @@ canvas.addEventListener('click', (event) => {
 
 // ----------------- buttons -------------------
 const greenhouseContainer = document.querySelector('.greenhouse-container');
-const hiveInvenotry = document.querySelector('.hive-inventory-container');
+const hiveInvenotryContainer = document.querySelector('.hive-inventory-container');
 const boxContainer = document.querySelector('.box-container');
 const sellButton = document.querySelector('.sell-button');
 
+const playButton = document.querySelector('.play-button');
+const backdrop = document.querySelector('.backdrop');
+const startGamePanel = document.querySelector('.start-game-panel');
+playButton.addEventListener('click', () => {
+    backdrop.classList.add('hidden');
+    startGamePanel.classList.add('hidden');
+});
 
 sellButton.addEventListener('click', () => {
     console.log('todo sell you thingies');
@@ -257,7 +264,7 @@ sellButton.addEventListener('click', () => {
 // drop inventory
 const dropButton = document.querySelector('.drop-button');
 dropButton.addEventListener('click', () => {
-    if(onSprite(hiveSprite)){
+    if(onSprite(hiveSprite) && hiveSpace){
         if(checkQuest(pinkCount, suncount)){
             // emptyInventory();
     
@@ -271,6 +278,20 @@ dropButton.addEventListener('click', () => {
     // spawnRandom(pinkCount, 'pinkflower', garden);
     // spawnRandom(suncount, 'sunflower', garden);
     // spawnRandom([500,250,200,200], pinkFlowerImage) // todo drop items being held
+});
+
+// close hive
+const closeButtons = document.querySelectorAll('.close-button');
+closeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        hiveInvenotryContainer.classList.add('hidden');
+        greenhouseContainer.classList.add('hidden');
+        boxContainer.classList.add('hidden');
+
+        selectables.forEach(sprite => {
+            sprite.closeInventory(sprite);
+        });
+    });
 });
 
 

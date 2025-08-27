@@ -3,8 +3,13 @@
 // todo - level defines how many drones you have and the wieght you can carry back
 let level = 1; 
 let inventorySpace = 14;
+let hiveSpace = 24;
+let currentInventory = [];
+let hiveInventory = [];
+let greenhouseInvenotry = [];
 createInventorySlots(inventorySpace);
-createHiveInventorySlots(24);
+createHiveInventorySlots(hiveSpace);
+createGreenhouseInventorySlots(36);
 createQuest();
 
 //put flowers in the garden
@@ -26,4 +31,20 @@ function callSpawn(){
 // spawnRandom(level, enemy, garden)
 
 // collision enemies - takeDamage()
+
+// --------- start screen ------------------------------------
+
+function animateBee(imageId, imageUrls) {
+    const imgElement = document.getElementById(imageId);
+    let currentIndex = 0;
+
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % imageUrls.length;
+        imgElement.src = imageUrls[currentIndex];
+    }, 1000);
+}
+
+const imageUrls = ['img/bee1.png', 'img/bee2.png'];
+animateBee('animatedBee', imageUrls);
+animateBee('animatedBee2', imageUrls);
 

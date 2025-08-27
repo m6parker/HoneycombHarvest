@@ -3,6 +3,7 @@ body{
     overflow: hidden;
     background-color: black;
     font-family: 'Devin Chavez Font', sans-serif;
+    user-select: none;
 }
 
 .hidden{
@@ -62,7 +63,7 @@ canvas{
     gap: 1px;
 }
 
-.itemSlot{
+.itemSlot, .hiveSlot, .greenhouseSlot{
     border: 2px solid rgb(255, 255, 255);
     border-radius: 10px;
     height: 45px;
@@ -153,6 +154,15 @@ button:disabled{
     color: white;
 }
 
+.greenhouse{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 7px;
+
+}
+
 .box-container{
     height: 300px;
     width: 500px;
@@ -166,5 +176,49 @@ button:disabled{
     border-radius: 10px;
     border: 2px solid rgb(150, 90, 0);
     flex-direction: column;
+    color: white;
+}
+
+.start-game-panel{
+    height: 200px;
+    width: 600px;
+    position: fixed;
+    top: 10%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    left: 30vw;
+    border-radius: 10px;
+    border: 3px solid rgb(0, 0, 0);
+    flex-direction: column;
+    color: black;
+    padding: 5px;
+    background-image: url(img/honeycomb.png);
+}
+
+.backdrop{
+    top:0;
+    bottom: 0;
+    margin: 0;
+    backdrop-filter: blur(10px);
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+}
+
+.start-game-panel .description{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.start-game-panel button{
+    border: 2px solid black;
+    color: black;
+    background-color: rgba(0, 0, 0, 0.41);
+}
+
+.start-game-panel button:hover{
+    background-color: black;
     color: white;
 }

@@ -17,10 +17,16 @@ class Sprite{
     // selecting image
     selectSprite(){
         this.selected ? this.image = this.selectedImg : this.image = this.unselectedImg;
-        if(this.name === 'beehive'){ hiveInvenotry.classList.toggle('hidden'); }
+        if(this.name === 'beehive'){ hiveInvenotryContainer.classList.toggle('hidden'); }
         if(this.name === 'greenhouse'){ greenhouseContainer.classList.toggle('hidden'); }
         if(this.name === 'box'){ boxContainer.classList.toggle('hidden'); }
         
+    }
+
+    // closing with the close button to prevent toggle getting messed up
+    closeInventory(sprite){
+        sprite.selected = false;
+        this.image = this.unselectedImg;
     }
 
 
