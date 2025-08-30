@@ -12,8 +12,22 @@ function createQuest(){
     // sunGoal = 1;
     pinkGoal = Math.floor(Math.random() * 10) + 1;
     sunGoal = Math.floor(Math.random() * 3) + 1;
-    document.querySelector('.quest-title').innerHTML = `Quest #${level}:`;
-    document.querySelector('.quest-description').innerHTML = `collect ${pinkGoal} pink flowers and ${sunGoal} sunflowers.`;
+
+    const quest = {
+        level: level,
+        itemRequirements: [
+            sunGoal,
+            pinkGoal    
+        ],
+        time: 120000, // 2 minutes
+        reward: 1
+    }
+
+    console.log(quest)
+
+    document.querySelector('.quest-title').innerHTML = `Quest #${quest.level}:`;
+    // document.querySelector('.quest-description').innerHTML = `collect ${pinkCount} pink flowers and ${sunGoal} sunflowers.`;
+    document.querySelector('.quest-description').innerHTML = `collect ${quest.itemRequirements[0]} sunflowers and ${quest.itemRequirements[1]} pink flowers.`;
 }
 
 // check if quest is fufilled
