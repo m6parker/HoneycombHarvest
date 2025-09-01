@@ -193,15 +193,14 @@ function animate(){
     for (let i = items.length - 1; i >= 0; i--) {
         const item = items[i];
         // if bee collides with item and has space to carry it
-        if (onSprite(item) && inventorySpace) {
+        if (onSprite(item) && beeSprite.space) {
             items.splice(i, 1);
             const indexInMovables = movables.indexOf(item);
             if (indexInMovables !== -1) {
                 movables.splice(indexInMovables, 1);
             }
-            console.log(`${item.name} collected!`);
+            // console.log(`${item.name} collected!`);
             addToInventory(item.name);
-            inventorySpace--;
             if(item.name === 'sunflower'){ suncount++; }
             if(item.name === 'pinkflower'){ pinkCount++; }
             // if(itemName === 'carrot'){ carrotCount++; }
@@ -238,21 +237,6 @@ canvas.addEventListener('click', (event) => {
     //testing
     // console.log(mouseLocation.x, mouseLocation.y)
     console.log(cameraOffset.x + mouseLocation.x, cameraOffset.y + mouseLocation.y) // sprite coords
-
-    // // clicking items  - todo this
-    // items.forEach(item => {
-    //     if (
-    //         mouseLocation.x >= item.position.x &&
-    //         mouseLocation.x <= item.position.x + item.width &&
-    //         mouseLocation.y >= item.position.y &&
-    //         mouseLocation.y <= item.position.y + item.height
-    //     ) {
-    //         console.log(`CLICKED ${JSON.stringify(item)}`);
-    //         // Handle item click logic here
-            
-            
-    //     }
-    // });
     
     // clicking sprites
     selectables.forEach(movable => {

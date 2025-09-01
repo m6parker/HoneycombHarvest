@@ -10,10 +10,8 @@ createInventorySlots(inventorySpace, 'inventory');
 createInventorySlots(hiveSpace, 'hive');
 createInventorySlots(greenhouseSpace, 'greenhouse');
 createInventorySlots(boxSpace, 'box');
-// createInventorySlots(inventorySpace);
-// createHiveInventorySlots(hiveSpace);
-// createGreenhouseInventorySlots(greenhouseSpace);
-// createBoxInventorySlots(boxSpace);
+createInventorySlots(8, 'honeycomb');
+createInventorySlots(8, 'egg');
 const quest = createQuest();
 
 //put flowers in the garden
@@ -21,6 +19,8 @@ spawnItems(sunflowerImage, 10, flowerGarden);
 spawnItems(pinkFlowerImage, 10, flowerGarden);
 spawnItems(carrotImage, 20, veggieGarden);
 spawnItems(pumpkinImage, 40, pumpkinPatch);
+// spawnItems(honeycombClusterImage, 3, veggieGarden)
+addItemToLocationInventory(honeycombClusterImage, hiveSprite)
 
 // put drones in hive
 function callSpawn(){
@@ -51,19 +51,19 @@ slots.forEach(slot => {
     })
 });
 
-// move back into bee
+// move back into bee from greenhouse
 const greenhouseSlots = document.querySelectorAll('.greenhouseSlot');
 greenhouseSlots.forEach(slot => {
     slot.addEventListener('click', ()=> {
-        takeItem(slot, currentInventory);
+        takeItem(slot, greenhouseSprite, greenhouseInvenotry);
     });
 });
 
-// move back into bee
+// move back into bee from hive
 const hiveSlots = document.querySelectorAll('.hiveSlot');
 hiveSlots.forEach(slot => {
     slot.addEventListener('click', ()=> {
-        takeItem(slot, currentInventory);
+        takeItem(slot, hiveSprite, hiveInventory);
     });
 });
 

@@ -63,7 +63,7 @@ canvas{
     gap: 1px;
 }
 
-.itemSlot, .hiveSlot, .greenhouseSlot, .boxSlot{
+.itemSlot, .hiveSlot, .greenhouseSlot, .boxSlot, .eggSlot, .honeycombSlot{
     border: 2px solid rgb(255, 255, 255);
     background-color: #0000008c;
     border-radius: 10px;
@@ -74,7 +74,7 @@ canvas{
     justify-content: center;
 }
 
-.itemSlot.empty, .hiveSlot.empty, .greenhouseSlot.empty, .boxSlot.empty{
+.itemSlot.empty, .hiveSlot.empty, .greenhouseSlot.empty, .boxSlot.empty, .eggSlot.empty, .honeycombSlot.empty{
     background-color: #00000000;
 }
 
@@ -101,6 +101,7 @@ button{
     border-radius: 5px;
     cursor: pointer;
     color: white;
+    margin: 5px;
 }
 
 button:hover, button.active{
@@ -121,7 +122,6 @@ button:disabled{
 }
 
 .hive-inventory-container{
-    height: 300px;
     width: 500px;
     background-color: rgb(225 196 150 / 0.45);
     position: fixed;
@@ -135,7 +135,7 @@ button:disabled{
     flex-direction: column;
 }
 
-.hive-inventory{
+.hive-inventory, .honeycomb-inventory, .egg-inventory{
     display: flex;
     flex-wrap: wrap;
     gap: 10px;

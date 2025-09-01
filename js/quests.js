@@ -38,9 +38,8 @@ function checkQuest(quest, pinkCount, suncount){
 
     // check currentInv
     // compare quantities with quest
-console.log('quest req: ', quest.itemRequirements)
+// console.log('quest req: ', quest.itemRequirements)
     if(
-
         pinkCount >= quest.itemRequirements[1] && 
         suncount >= quest.itemRequirements[0]
     ){

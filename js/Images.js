@@ -43,3 +43,7 @@ const carrotImage = new Image();
 carrotImage.src = 'img/carrot.png';
 const pumpkinImage = new Image();
 pumpkinImage.src = 'img/pumpkin.png';
+const honeycombImage = new Image();
+honeycombImage.src = 'img/honeycomb_item.png';
+const honeycombClusterImage = new Image();
+honeycombClusterImage.src = 'img/honeycomb_cluster.png';

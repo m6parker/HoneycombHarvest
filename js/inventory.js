@@ -1,3 +1,15 @@
+// // spawnItems in invenotries
+// function spawnInInventories(itemType, location){
+//     if(location.space){
+//         // ui
+//         addItemToLocationInventory(item, location); // pass in location to reuse for other inv
+//         slot.firstChild.remove()
+//         slot.classList.add('empty');
+//         beeSprite.space++;
+//     }
+// }
+
+
 // put item in oprn inventory
 function moveItem(slot, location){
     for (const [index, item] of currentInventory.entries()) {
@@ -10,24 +22,22 @@ function moveItem(slot, location){
                 addItemToLocationInventory(item, location); // pass in location to reuse for other inv
                 slot.firstChild.remove()
                 slot.classList.add('empty');
-                inventorySpace++;
+                beeSprite.space++;
             }
             break;
         }
     }
 }
 
-function takeItem(slot, slots){
-    for (const [index, item] of slots.entries()) {
+function takeItem(slot, location, inventory){
+    for (const [index, item] of inventory.entries()) {
         if(slot.firstChild && item.src === slot.firstChild.src){
             if(beeSprite.space){
-                slots.splice(index, 1);
                 // ui
                 addToInventory(item.name); // pass in bee 
                 slot.firstChild.remove()
                 slot.classList.add('empty');
-                inventorySpace--;
-                // hivespace++; // switch for each inv
+                location.space++;
             }
             break;
         }
@@ -45,13 +55,12 @@ function addToInventory(itemType){
         if(slots[i].classList.contains('empty')){
             slots[i].appendChild(item);
             slots[i].classList.remove('empty');
-            // currentInventory.push(item);
-
             currentInventory.push(Object.assign({}, {name:itemType, src:item.src}));
             break;
         }
     };
-    console.log('currentInventory: ', currentInventory)
+    beeSprite.space--;
+    // console.log('currentInventory: ', currentInventory)
 }
 
 //empty inventory
@@ -78,6 +87,16 @@ function createInventorySlots(size, location){
         case 'hive': { 
             slotType = 'hiveSlot';
             inventoryDiv = '.hive-inventory';
+            break;
+        }
+        case 'honeycomb': { 
+            slotType = 'honeycombSlot';
+            inventoryDiv = '.honeycomb-inventory';
+            break;
+        }
+        case 'egg': { 
+            slotType = 'eggSlot';
+            inventoryDiv = '.egg-inventory';
             break;
         }
         case 'greenhouse': {
@@ -139,5 +158,5 @@ function addItemToLocationInventory(item, location){
             break;
         }
     };
-    hiveSpace--;
+    location.space--;
 }
