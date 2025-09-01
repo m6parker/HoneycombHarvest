@@ -61,7 +61,8 @@ const beeSprite = new Sprite({
     },
     image: beeImage,
     width: 16,
-    height: 16
+    height: 16,
+    space: inventorySpace
 });
 
 const hiveSprite = new Sprite({

@@ -39,7 +39,7 @@ function callSpawn(){
 
 
 
-// click each item in hive to move
+// click each item in bee inventory to other inventories
 const slots = document.querySelectorAll('.itemSlot');
 slots.forEach(slot => {
     slot.addEventListener('click', ()=> {
@@ -49,6 +49,22 @@ slots.forEach(slot => {
             }
         });
     })
+});
+
+// move back into bee
+const greenhouseSlots = document.querySelectorAll('.greenhouseSlot');
+greenhouseSlots.forEach(slot => {
+    slot.addEventListener('click', ()=> {
+        takeItem(slot, currentInventory);
+    });
+});
+
+// move back into bee
+const hiveSlots = document.querySelectorAll('.hiveSlot');
+hiveSlots.forEach(slot => {
+    slot.addEventListener('click', ()=> {
+        takeItem(slot, currentInventory);
+    });
 });
 
 

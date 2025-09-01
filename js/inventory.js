@@ -1,7 +1,7 @@
 // put item in oprn inventory
 function moveItem(slot, location){
     for (const [index, item] of currentInventory.entries()) {
-        console.log(`Index: ${index}, Value: ${item.name}`);
+        // console.log(`Index: ${index}, Value: ${item.name}`);
         if(slot.firstChild && item.src === slot.firstChild.src){
             
             if(location.space){
@@ -11,6 +11,23 @@ function moveItem(slot, location){
                 slot.firstChild.remove()
                 slot.classList.add('empty');
                 inventorySpace++;
+            }
+            break;
+        }
+    }
+}
+
+function takeItem(slot, slots){
+    for (const [index, item] of slots.entries()) {
+        if(slot.firstChild && item.src === slot.firstChild.src){
+            if(beeSprite.space){
+                slots.splice(index, 1);
+                // ui
+                addToInventory(item.name); // pass in bee 
+                slot.firstChild.remove()
+                slot.classList.add('empty');
+                inventorySpace--;
+                // hivespace++; // switch for each inv
             }
             break;
         }
