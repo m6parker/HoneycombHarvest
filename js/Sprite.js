@@ -28,20 +28,4 @@ class Sprite{
         sprite.selected = false;
         this.image = this.unselectedImg;
     }
-
-
-    // clickedSprite(mousex, mousey){
-
-    //     console.log(mousex, mousey)
-    //     console.log(this.position, this.width)
-    //     if(
-    //         mousex > this.position.x &&
-    //         mousex < this.position.x + this.width &&
-    //         mousey > this.position.y &&
-    //         mousey < this.position.y + this.height
-    //     ){
-    //         console.log('beehive');
-    //     }
-
-    // }
 }

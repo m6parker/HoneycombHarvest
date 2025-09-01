@@ -29,7 +29,7 @@ let flowerGarden = [2650, 850, 650, 200];
 let veggieGarden = [2060, 1160, 300, 250];
 let pumpkinPatch = [3675, 1555, 800, 300]
 let honeycomb = [-200, -200, 130, 130];
-let speed = 10;
+let speed = 20;
 // let inventoryItems = [];
 //inventory items
 let pinkCount = 0;
@@ -184,15 +184,13 @@ function animate(){
             if (indexInMovables !== -1) {
                 movables.splice(indexInMovables, 1);
             }
-            // get the name of the item from the image path 
-            // todo - make this not so stupid
-            const itemName = ((item.image.src).split('/').pop()).split('.').slice(0, -1).join('');
-            console.log(`${itemName} collected!`);
-            addToInventory(itemName);
-            if(itemName === 'sunflower'){ suncount++; }
-            if(itemName === 'pinkflower'){ pinkCount++; }
+            console.log(`${item.name} collected!`);
+            addToInventory(item.name);
+            inventorySpace--;
+            if(item.name === 'sunflower'){ suncount++; }
+            if(item.name === 'pinkflower'){ pinkCount++; }
             // if(itemName === 'carrot'){ carrotCount++; }
-            if(itemName === 'pumpkin'){ pumpkinCount++; }
+            if(item.name === 'pumpkin'){ pumpkinCount++; }
         }
     }
     
@@ -283,7 +281,7 @@ sellButton.addEventListener('click', () => {
 const dropButton = document.querySelector('.drop-button');
 dropButton.addEventListener('click', () => {
     if(onSprite(hiveSprite) && hiveSpace){
-        if(checkQuest(pinkCount, suncount)){
+        if(checkQuest(quest, pinkCount, suncount)){
             // emptyInventory();
     
             //reset variables
@@ -336,7 +334,7 @@ resumeButton.addEventListener('click', () => {
 
 const questButton = document.querySelector('.quest-button')
 questButton.addEventListener('click', () => {
-    createQuest();
+    const quest = createQuest();
     questButton.disabled = true;
 });
 

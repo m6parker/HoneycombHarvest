@@ -8,16 +8,16 @@ let questcount = 1;
 // give a random quest
 function createQuest(){
     //testing 
-    // pinkGoal = 1;
-    // sunGoal = 1;
-    pinkGoal = Math.floor(Math.random() * 10) + 1;
-    sunGoal = Math.floor(Math.random() * 3) + 1;
+    pinkGoal = 1;
+    sunGoal = 1;
+    // pinkGoal = Math.floor(Math.random() * 3) + 1;
+    // sunGoal = Math.floor(Math.random() * 3) + 1;
 
     const quest = {
         level: level,
         itemRequirements: [
             sunGoal,
-            pinkGoal    
+            pinkGoal
         ],
         time: 120000, // 2 minutes
         reward: 1
@@ -28,15 +28,21 @@ function createQuest(){
     document.querySelector('.quest-title').innerHTML = `Quest #${quest.level}:`;
     // document.querySelector('.quest-description').innerHTML = `collect ${pinkCount} pink flowers and ${sunGoal} sunflowers.`;
     document.querySelector('.quest-description').innerHTML = `collect ${quest.itemRequirements[0]} sunflowers and ${quest.itemRequirements[1]} pink flowers.`;
+
+    return quest;
 }
 
 // check if quest is fufilled
-function checkQuest(pinkCount, suncount){
+function checkQuest(quest, pinkCount, suncount){
     console.log(pinkCount, suncount)
+
+    // check currentInv
+    // compare quantities with quest
+console.log('quest req: ', quest.itemRequirements)
     if(
-        pinkCount >= pinkGoal && 
-        suncount >= sunGoal   &&
-        carrotCount >= carrotGoal
+
+        pinkCount >= quest.itemRequirements[1] && 
+        suncount >= quest.itemRequirements[0]
     ){
         completeQuest();
         return true;
@@ -49,7 +55,7 @@ function checkQuest(pinkCount, suncount){
 // win quest
 function completeQuest(){
     if(hiveSpace){ addToHive(); }
-    emptyInventory();
+    // emptyInventory();
     questcount++;
     level++;
     document.querySelector('.quest-description').innerHTML = 'quest completed!';

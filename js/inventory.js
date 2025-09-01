@@ -19,8 +19,9 @@ function addToInventory(itemType){
         if(slots[i].classList.contains('empty')){
             slots[i].appendChild(item);
             slots[i].classList.remove('empty');
-            currentInventory.push(item);
-            inventorySpace--;
+            // currentInventory.push(item);
+
+            currentInventory.push(Object.assign({}, {name:itemType, src:item.src}));
             break;
         }
     };
@@ -39,7 +40,33 @@ function emptyInventory(item, quantity){
     for(let i = 0; i < slots.length; i++){
         slots[i].classList.add('empty');
     }
+
+    currentInventory = [];
+    // resetCurrentInventory();
 }
+
+// inventory update UI
+function resetCurrentInventoryUI(){
+    currentInventory.forEach(item => {
+        addToInventory(item.name);
+    });
+}
+
+//removes one item at a time
+function removeFromInventory(itemName){
+    // const slots = document.querySelectorAll('.itemSlot');
+    const itemToRemove = (item) => item.name === itemName;
+    console.log(currentInventory.findIndex(itemToRemove));
+    console.log(currentInventory.indexOf(itemToRemove));
+
+    currentInventory.splice(currentInventory.indexOf(itemToRemove), 1);
+    console.log(currentInventory)
+
+    // update ui
+    //reflect currentInventpry updated
+}
+
+
 
 // ---------------------------- hive inventory ----------------------------
 function createHiveInventorySlots(size){
@@ -51,24 +78,42 @@ function createHiveInventorySlots(size){
     }
 }
 
-function addToHive(){
+//individual items into hive
+function addItemToHive(item){
     const slots = document.querySelectorAll('.hiveSlot');
-    // let item = document.createElement('img');
-    currentInventory.forEach(itemType => {
-        // item = itemType;
-        itemType.className = `inv-${itemType}`;
+    let itemImage = document.createElement('img');
+    item.className = `inv-${item.name}`;
+    itemImage.src = item.src
+    for(let i = 0; i < slots.length; i++){
+        if(slots[i].classList.contains('empty')){
+            slots[i].appendChild(itemImage);
+            slots[i].classList.remove('empty');
+            hiveInventory.push(Object.assign({}, {name:item.name, src:item.src}));
+            break;
+        }
+    };
+    hiveSpace--;
+}
+
+function addAllToHive(){
+    const slots = document.querySelectorAll('.hiveSlot');
+    currentInventory.forEach(item => {
+        let itemImage = document.createElement('img');
+        item.className = `inv-${item.name}`;
+        itemImage.src = item.src
         for(let i = 0; i < slots.length; i++){
             if(slots[i].classList.contains('empty')){
-                hiveSpace--;
-                slots[i].appendChild(itemType);
+                
+                slots[i].appendChild(itemImage);
                 slots[i].classList.remove('empty');
-                inventorySpace--;
+                
+                // currentInventory.pop(item);
+                hiveInventory.push(Object.assign({}, {name:item.name, src:item.src}));
+                // removeFromInventory(item.name);
                 break;
             }
         };
     });
-    hiveInvenotry = currentInventory;
-    currentInventory = [];
 }
 
 // ---------------------------- greenhouse inventory ----------------------------
@@ -90,7 +135,7 @@ function addToGreenHouse(){
         itemType.className = `inv-${itemType}`;
         for(let i = 0; i < slots.length; i++){
             if(slots[i].classList.contains('empty')){
-                hiveSpace--;
+                // hiveSpace--;
                 slots[i].appendChild(itemType);
                 slots[i].classList.remove('empty');
                 inventorySpace--;

@@ -10,7 +10,7 @@ let greenhouseInvenotry = [];
 createInventorySlots(inventorySpace);
 createHiveInventorySlots(hiveSpace);
 createGreenhouseInventorySlots(36);
-createQuest();
+const quest = createQuest();
 
 //put flowers in the garden
 spawnItems(sunflowerImage, 10, flowerGarden);
@@ -32,6 +32,39 @@ function callSpawn(){
 // spawnRandom(level, enemy, garden)
 
 // collision enemies - takeDamage()
+
+
+
+// click each item in hive to move
+const slots = document.querySelectorAll('.itemSlot');
+console.log(slots)
+slots.forEach(slot => {
+    slot.addEventListener('click', ()=> {
+
+        // removed from currentInv
+        // added to hiveInventory(individual item)
+
+        for (const [index, item] of currentInventory.entries()) {
+            console.log(`Index: ${index}, Value: ${item.name}`);
+            if(slot.firstChild && item.src === slot.firstChild.src){
+                currentInventory.splice(index, 1);
+                
+                // ui
+                if(hiveSpace){
+                    addItemToHive(item);
+                    slot.firstChild.remove()
+                    slot.classList.add('empty');
+                    inventorySpace++;
+                }
+                break;
+            }
+        }
+
+        console.log('inv after removal', currentInventory)
+
+
+    })
+});
 
 
 

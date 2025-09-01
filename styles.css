@@ -65,12 +65,17 @@ canvas{
 
 .itemSlot, .hiveSlot, .greenhouseSlot{
     border: 2px solid rgb(255, 255, 255);
+    background-color: #0000008c;
     border-radius: 10px;
     height: 45px;
     width: 45px;
     align-items: center;
     display: flex;
     justify-content: center;
+}
+
+.itemSlot.empty, .hiveSlot.empty, .greenhouseSlot.empty{
+    background-color: #00000000;
 }
 
 .heart{
