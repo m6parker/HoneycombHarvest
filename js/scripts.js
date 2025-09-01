@@ -37,6 +37,12 @@ let suncount = 0;
 let carrotCount = 0;
 pumpkinCount = 0;
 
+let level = 1; 
+let inventorySpace = 14;
+let hiveSpace = 24;
+let greenhouseSpace = 36;
+let boxSpace = 18;
+
 
 // Sprites
 
@@ -68,7 +74,8 @@ const hiveSprite = new Sprite({
     height: 100,
     name: 'beehive',
     selected: false,
-    selectedImg: selectedHiveImage
+    selectedImg: selectedHiveImage,
+    space: hiveSpace
 });
 
 const greenhouseSprite = new Sprite({
@@ -81,7 +88,8 @@ const greenhouseSprite = new Sprite({
     height: 400,
     name: 'greenhouse',
     selected: false,
-    selectedImg: selectedGreenhouseImage
+    selectedImg: selectedGreenhouseImage,
+    space: greenhouseSpace
 });
 
 const boxSprite = new Sprite({
@@ -94,7 +102,8 @@ const boxSprite = new Sprite({
     height: 64,
     name: 'box',
     selected: false,
-    selectedImg: selectedbox
+    selectedImg: selectedbox,
+    space: boxSpace
 });
 
 const buyBoxSprite = new Sprite({
@@ -107,7 +116,8 @@ const buyBoxSprite = new Sprite({
     height: 64,
     name: 'buybox',
     selected: false,
-    selectedImg: selectedbuybox
+    selectedImg: selectedbuybox,
+    space: boxSpace
 });
 
 let cameraOffset = { x: 0, y: 0 };
@@ -157,21 +167,25 @@ function animate(){
         movables.forEach(movable => { movable.position.y += speed });
         moveableBoundaries.forEach(coordinate => { coordinate[1] += speed });
         cameraOffset.y -= speed;
+        hideAll(); // close any open inventories
     }
     else if(keys.a.pressed){
         movables.forEach(movable => { movable.position.x += speed });
         moveableBoundaries.forEach(coordinate => { coordinate[0] += speed });
         cameraOffset.x -= speed;
+        hideAll();
     }
     else if(keys.s.pressed){
         movables.forEach(movable => { movable.position.y -= speed });
         moveableBoundaries.forEach(coordinate => { coordinate[1] -= speed });
         cameraOffset.y += speed;
+        hideAll();
     }
     else if(keys.d.pressed){
         movables.forEach(movable => { movable.position.x -= speed });
         moveableBoundaries.forEach(coordinate => { coordinate[0] -= speed });
         cameraOffset.x += speed;
+        hideAll();
     }
 
     //collecting items, removing image from canvas
@@ -280,7 +294,7 @@ sellButton.addEventListener('click', () => {
 // drop inventory
 const dropButton = document.querySelector('.drop-button');
 dropButton.addEventListener('click', () => {
-    if(onSprite(hiveSprite) && hiveSpace){
+    if(onSprite(hiveSprite) && hiveSpace.space){
         if(checkQuest(quest, pinkCount, suncount)){
             // emptyInventory();
     
@@ -296,17 +310,21 @@ dropButton.addEventListener('click', () => {
     // spawnRandom([500,250,200,200], pinkFlowerImage) // todo drop items being held
 });
 
+function hideAll(){
+    hiveInvenotryContainer.classList.add('hidden');
+    greenhouseContainer.classList.add('hidden');
+    boxContainer.classList.add('hidden');
+
+    selectables.forEach(sprite => {
+        sprite.closeInventory(sprite);
+    });
+}
+
 // close hive
 const closeButtons = document.querySelectorAll('.close-button');
 closeButtons.forEach(button => {
     button.addEventListener('click', () => {
-        hiveInvenotryContainer.classList.add('hidden');
-        greenhouseContainer.classList.add('hidden');
-        boxContainer.classList.add('hidden');
-
-        selectables.forEach(sprite => {
-            sprite.closeInventory(sprite);
-        });
+        hideAll();
     });
 });
 

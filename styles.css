@@ -55,7 +55,7 @@ canvas{
     font-family: 'Devin Chavez Font', sans-serif;
 }
 
-.inventory{
+.inventory, .box{
     display: flex;
     flex-direction: row;
     flex-flow: wrap;
@@ -63,7 +63,7 @@ canvas{
     gap: 1px;
 }
 
-.itemSlot, .hiveSlot, .greenhouseSlot{
+.itemSlot, .hiveSlot, .greenhouseSlot, .boxSlot{
     border: 2px solid rgb(255, 255, 255);
     background-color: #0000008c;
     border-radius: 10px;
@@ -74,7 +74,7 @@ canvas{
     justify-content: center;
 }
 
-.itemSlot.empty, .hiveSlot.empty, .greenhouseSlot.empty{
+.itemSlot.empty, .hiveSlot.empty, .greenhouseSlot.empty, .boxSlot.empty{
     background-color: #00000000;
 }
 

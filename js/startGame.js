@@ -1,15 +1,19 @@
 // ------------- begins the game -------------------- //
 
 // todo - level defines how many drones you have and the wieght you can carry back
-let level = 1; 
-let inventorySpace = 14;
-let hiveSpace = 24;
+
 let currentInventory = [];
 let hiveInventory = [];
 let greenhouseInvenotry = [];
-createInventorySlots(inventorySpace);
-createHiveInventorySlots(hiveSpace);
-createGreenhouseInventorySlots(36);
+let boxInventory = [];
+createInventorySlots(inventorySpace, 'inventory');
+createInventorySlots(hiveSpace, 'hive');
+createInventorySlots(greenhouseSpace, 'greenhouse');
+createInventorySlots(boxSpace, 'box');
+// createInventorySlots(inventorySpace);
+// createHiveInventorySlots(hiveSpace);
+// createGreenhouseInventorySlots(greenhouseSpace);
+// createBoxInventorySlots(boxSpace);
 const quest = createQuest();
 
 //put flowers in the garden
@@ -37,32 +41,13 @@ function callSpawn(){
 
 // click each item in hive to move
 const slots = document.querySelectorAll('.itemSlot');
-console.log(slots)
 slots.forEach(slot => {
     slot.addEventListener('click', ()=> {
-
-        // removed from currentInv
-        // added to hiveInventory(individual item)
-
-        for (const [index, item] of currentInventory.entries()) {
-            console.log(`Index: ${index}, Value: ${item.name}`);
-            if(slot.firstChild && item.src === slot.firstChild.src){
-                currentInventory.splice(index, 1);
-                
-                // ui
-                if(hiveSpace){
-                    addItemToHive(item);
-                    slot.firstChild.remove()
-                    slot.classList.add('empty');
-                    inventorySpace++;
-                }
-                break;
+        selectables.forEach(location => {
+            if(location.selected){
+                moveItem(slot, location);
             }
-        }
-
-        console.log('inv after removal', currentInventory)
-
-
+        });
     })
 });
 

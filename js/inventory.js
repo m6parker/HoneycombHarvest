@@ -1,13 +1,22 @@
-
-//create inventory slots
-function createInventorySlots(size){
-    for(let i = 0; i < size; i++){
-        const slot = document.createElement('div');
-        slot.className = 'itemSlot';
-        slot.classList.add('empty');
-        document.querySelector('.inventory').appendChild(slot);
+// put item in oprn inventory
+function moveItem(slot, location){
+    for (const [index, item] of currentInventory.entries()) {
+        console.log(`Index: ${index}, Value: ${item.name}`);
+        if(slot.firstChild && item.src === slot.firstChild.src){
+            
+            if(location.space){
+                currentInventory.splice(index, 1);
+                // ui
+                addItemToLocationInventory(item, location); // pass in location to reuse for other inv
+                slot.firstChild.remove()
+                slot.classList.add('empty');
+                inventorySpace++;
+            }
+            break;
+        }
     }
 }
+
 
 // pace in inventory
 function addToInventory(itemType){
@@ -29,7 +38,7 @@ function addToInventory(itemType){
 }
 
 //empty inventory
-function emptyInventory(item, quantity){
+function emptyInventory(){
     const slots = document.querySelectorAll('.itemSlot');
     slots.forEach(slot => {
         while(slot.firstChild){ 
@@ -45,42 +54,63 @@ function emptyInventory(item, quantity){
     // resetCurrentInventory();
 }
 
-// inventory update UI
-function resetCurrentInventoryUI(){
-    currentInventory.forEach(item => {
-        addToInventory(item.name);
-    });
-}
-
-//removes one item at a time
-function removeFromInventory(itemName){
-    // const slots = document.querySelectorAll('.itemSlot');
-    const itemToRemove = (item) => item.name === itemName;
-    console.log(currentInventory.findIndex(itemToRemove));
-    console.log(currentInventory.indexOf(itemToRemove));
-
-    currentInventory.splice(currentInventory.indexOf(itemToRemove), 1);
-    console.log(currentInventory)
-
-    // update ui
-    //reflect currentInventpry updated
-}
-
-
-
-// ---------------------------- hive inventory ----------------------------
-function createHiveInventorySlots(size){
+// creates all inventory grids ui
+function createInventorySlots(size, location){
+    let slotType, inventoryDiv;
+    switch(location){
+        case 'hive': { 
+            slotType = 'hiveSlot';
+            inventoryDiv = '.hive-inventory';
+            break;
+        }
+        case 'greenhouse': {
+            slotType = 'greenhouseSlot';
+            inventoryDiv = '.greenhouse';
+            break; 
+        }
+        case 'box': {
+            slotType = 'boxSlot';
+            inventoryDiv = '.box';
+            break;
+        }
+        case 'inventory': {
+            slotType = 'itemSlot';
+            inventoryDiv = '.inventory';
+        }
+    }
     for(let i = 0; i < size; i++){
         const slot = document.createElement('div');
-        slot.className = 'hiveSlot';
+        slot.className = slotType;
         slot.classList.add('empty');
-        document.querySelector('.hive-inventory').appendChild(slot);
+        document.querySelector(inventoryDiv).appendChild(slot);
     }
 }
 
-//individual items into hive
-function addItemToHive(item){
-    const slots = document.querySelectorAll('.hiveSlot');
+//individual items into open invenory
+function addItemToLocationInventory(item, location){
+    let slots, inventory;
+    switch(location){
+        case hiveSprite: { 
+            slots = document.querySelectorAll('.hiveSlot');
+            inventory = hiveInventory;
+            break;
+        }
+        case greenhouseSprite: {
+            slots = document.querySelectorAll('.greenhouseSlot'); 
+            inventory = greenhouseInvenotry;
+            break; 
+        }
+        case boxSprite: {
+            slots = document.querySelectorAll('.boxSlot');
+            inventory = boxInventory
+            break;
+        }
+        default: { // put in bee
+            slots = document.querySelectorAll('.itemSlot'); 
+            inventory = currentInventory;
+        }
+    }
+    
     let itemImage = document.createElement('img');
     item.className = `inv-${item.name}`;
     itemImage.src = item.src
@@ -88,61 +118,9 @@ function addItemToHive(item){
         if(slots[i].classList.contains('empty')){
             slots[i].appendChild(itemImage);
             slots[i].classList.remove('empty');
-            hiveInventory.push(Object.assign({}, {name:item.name, src:item.src}));
+            inventory.push(Object.assign({}, {name:item.name, src:item.src}));
             break;
         }
     };
     hiveSpace--;
-}
-
-function addAllToHive(){
-    const slots = document.querySelectorAll('.hiveSlot');
-    currentInventory.forEach(item => {
-        let itemImage = document.createElement('img');
-        item.className = `inv-${item.name}`;
-        itemImage.src = item.src
-        for(let i = 0; i < slots.length; i++){
-            if(slots[i].classList.contains('empty')){
-                
-                slots[i].appendChild(itemImage);
-                slots[i].classList.remove('empty');
-                
-                // currentInventory.pop(item);
-                hiveInventory.push(Object.assign({}, {name:item.name, src:item.src}));
-                // removeFromInventory(item.name);
-                break;
-            }
-        };
-    });
-}
-
-// ---------------------------- greenhouse inventory ----------------------------
-
-function createGreenhouseInventorySlots(size){
-    for(let i = 0; i < size; i++){
-        const slot = document.createElement('div');
-        slot.className = 'greenhouseSlot';
-        slot.classList.add('empty');
-        document.querySelector('.greenhouse').appendChild(slot);
-    }
-}
-
-function addToGreenHouse(){
-    const slots = document.querySelectorAll('.greenhouseSlot');
-    // let item = document.createElement('img');
-    currentInventory.forEach(itemType => {
-        // item = itemType;
-        itemType.className = `inv-${itemType}`;
-        for(let i = 0; i < slots.length; i++){
-            if(slots[i].classList.contains('empty')){
-                // hiveSpace--;
-                slots[i].appendChild(itemType);
-                slots[i].classList.remove('empty');
-                inventorySpace--;
-                break;
-            }
-        };
-    });
-    greenhouseInvenotry = currentInventory;
-    currentInventory = [];
 }

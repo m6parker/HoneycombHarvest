@@ -54,7 +54,7 @@ console.log('quest req: ', quest.itemRequirements)
 
 // win quest
 function completeQuest(){
-    if(hiveSpace){ addToHive(); }
+    if(hiveSprite.space){ addToHive(); }
     // emptyInventory();
     questcount++;
     level++;
