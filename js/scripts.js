@@ -164,22 +164,25 @@ function animate(){
     // context.strokeRect(honeycomb[0], honeycomb[1], honeycomb[2], honeycomb[3]);
 
     // move background + stagnant objects when bee moves
+    // up and down movement
     if(keys.w.pressed){
         movables.forEach(movable => { movable.position.y += speed });
         moveableBoundaries.forEach(coordinate => { coordinate[1] += speed });
         cameraOffset.y -= speed;
         hideAll(); // close any open inventories
     }
-    else if(keys.a.pressed){
-        movables.forEach(movable => { movable.position.x += speed });
-        moveableBoundaries.forEach(coordinate => { coordinate[0] += speed });
-        cameraOffset.x -= speed;
-        hideAll();
-    }
     else if(keys.s.pressed){
         movables.forEach(movable => { movable.position.y -= speed });
         moveableBoundaries.forEach(coordinate => { coordinate[1] -= speed });
-        cameraOffset.y += speed;
+        cameraOffset.x += speed;
+        hideAll();
+    }
+
+    // side to side movement
+    if(keys.a.pressed){
+        movables.forEach(movable => { movable.position.x += speed });
+        moveableBoundaries.forEach(coordinate => { coordinate[0] += speed });
+        cameraOffset.y -= speed;
         hideAll();
     }
     else if(keys.d.pressed){

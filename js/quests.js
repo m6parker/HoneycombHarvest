@@ -15,10 +15,10 @@ function createQuest(){
 
     const quest = {
         level: level,
-        itemRequirements: [
-            sunGoal,
-            pinkGoal
-        ],
+        itemRequirements: {
+            'sunflower':sunGoal,
+            'pinkflower':pinkGoal
+        },
         time: 120000, // 2 minutes
         reward: 1
     }
@@ -33,22 +33,38 @@ function createQuest(){
 }
 
 // check if quest is fufilled
-function checkQuest(quest, pinkCount, suncount){
-    console.log(pinkCount, suncount)
+function checkQuest(quest){
+    
+    // check hiveinventory everytime item is added
+    
+    for (const [questItem, questQuantity] of Object.entries(quest.itemRequirements)) {
+        // console.log(`${questItem}: ${questQuantity}`);
+        
+        const hiveQuantity = hiveInventory.filter(item => item.name === questItem ).length
+        questProgress[questItem] = hiveQuantity;
+        
+        if (quest.itemRequirements[questItem].quantity === questProgress[questItem].quantity){
+            console.log('quest point')
+        }
+    }
+        
+    console.log('quest Requirements: ', quest.itemRequirements)
+    console.log('hive Inventory: ', hiveInventory)
+    console.log('questProgress: ', questProgress);
+
 
     // check currentInv
     // compare quantities with quest
-// console.log('quest req: ', quest.itemRequirements)
-    if(
-        pinkCount >= quest.itemRequirements[1] && 
-        suncount >= quest.itemRequirements[0]
-    ){
-        completeQuest();
-        return true;
-    }else{
-        console.log('missing items')
-        return false;
-    }
+    // if(
+    //     pinkCount >= quest.itemQuantities[1] && 
+    //     suncount >= quest.itemQuantities[0]
+    // ){
+    //     completeQuest();
+    //     return true;
+    // }else{
+    //     console.log('missing items')
+    //     return false;
+    // }
 }
 
 // win quest

@@ -6,6 +6,9 @@ let currentInventory = [];
 let hiveInventory = [];
 let greenhouseInvenotry = [];
 let boxInventory = [];
+
+let questProgress = {};
+
 createInventorySlots(inventorySpace, 'inventory');
 createInventorySlots(hiveSpace, 'hive');
 createInventorySlots(greenhouseSpace, 'greenhouse');
@@ -46,6 +49,11 @@ slots.forEach(slot => {
         selectables.forEach(location => {
             if(location.selected){
                 moveItem(slot, location);
+
+                // everytime an item is placed in the hive, check the quest status
+                if(location === hiveSprite){
+                    checkQuest(quest);
+                }
             }
         });
     })
