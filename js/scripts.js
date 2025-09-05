@@ -239,7 +239,7 @@ canvas.addEventListener('click', (event) => {
     const screenY = event.clientY - rect.top;
     //testing
     // console.log(mouseLocation.x, mouseLocation.y)
-    console.log(cameraOffset.x + mouseLocation.x, cameraOffset.y + mouseLocation.y) // sprite coords
+    // console.log(cameraOffset.x + mouseLocation.x, cameraOffset.y + mouseLocation.y) // sprite coords
     
     // clicking sprites
     selectables.forEach(movable => {
@@ -249,7 +249,7 @@ canvas.addEventListener('click', (event) => {
             mouseLocation.y >= movable.position.y &&
             mouseLocation.y <= movable.position.y + movable.height
         ) {
-            console.log(`CLICKED ${JSON.stringify(movable.name)}`);
+            // console.log(`CLICKED ${JSON.stringify(movable.name)}`);
 
             movable.selected = movable.selected ? false : true;
             movable.selectSprite();
