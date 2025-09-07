@@ -1,5 +1,5 @@
 class Sprite{
-    constructor({position, image, height, width, name, selected, selectedImg, space}){
+    constructor({position, image, height, width, name, selected, selectedImg, space, quality}){
         this.position = position;
         this.image = image;
         this.height = height;
@@ -9,6 +9,7 @@ class Sprite{
         this.selectedImg = selectedImg;
         this.unselectedImg = image;
         this.space = space;
+        this.quality = quality;
     }
 
     draw(){

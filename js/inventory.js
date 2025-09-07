@@ -46,7 +46,7 @@ function takeItem(slot, location, inventory){
 
 
 // pace in inventory
-function addToInventory(itemType){
+function addToInventory(itemType, itemQuality){
     const slots = document.querySelectorAll('.itemSlot');
     const item = document.createElement('img');
     item.src = `img/${itemType}.png`;
@@ -55,7 +55,7 @@ function addToInventory(itemType){
         if(slots[i].classList.contains('empty')){
             slots[i].appendChild(item);
             slots[i].classList.remove('empty');
-            currentInventory.push(Object.assign({}, {name:itemType, src:item.src}));
+            currentInventory.push(Object.assign({}, {name:itemType, src:item.src, quality:itemQuality}));
             break;
         }
     };
@@ -154,7 +154,7 @@ function addItemToLocationInventory(item, location){
         if(slots[i].classList.contains('empty')){
             slots[i].appendChild(itemImage);
             slots[i].classList.remove('empty');
-            inventory.push(Object.assign({}, {name:item.name, src:item.src}));
+            inventory.push(Object.assign({}, {name:item.name, src:item.src, quality:item.quality}));
             break;
         }
     };

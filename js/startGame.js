@@ -23,7 +23,7 @@ spawnItems(pinkFlowerImage, 10, flowerGarden);
 spawnItems(carrotImage, 20, veggieGarden);
 spawnItems(pumpkinImage, 40, pumpkinPatch);
 // spawnItems(honeycombClusterImage, 3, veggieGarden)
-addItemToLocationInventory(honeycombClusterImage, hiveSprite)
+// addItemToLocationInventory(honeycombClusterImage, hiveSprite)
 
 // put drones in hive
 function callSpawn(){

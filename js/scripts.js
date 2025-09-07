@@ -211,17 +211,12 @@ function animate(){
                 movables.splice(indexInMovables, 1);
             }
             // console.log(`${item.name} collected!`);
-            addToInventory(item.name);
-            if(item.name === 'sunflower'){ suncount++; }
-            if(item.name === 'pinkflower'){ pinkCount++; }
-            // if(itemName === 'carrot'){ carrotCount++; }
-            if(item.name === 'pumpkin'){ pumpkinCount++; }
+            addToInventory(item.name, item.quality);
         }
     }
     
 }
 animate();
-
 
 document.addEventListener('mousemove', (e) => {
     mouseLocation.x = e.clientX;
@@ -281,6 +276,10 @@ playButton.addEventListener('click', () => {
     backdrop.classList.add('hidden');
     startGamePanel.classList.add('hidden');
 });
+
+//testing 
+backdrop.classList.add('hidden');
+startGamePanel.classList.add('hidden');
 
 sellButton.addEventListener('click', () => {
     console.log('todo sell you thingies');

@@ -25,17 +25,12 @@ const expertItemCatelog = [
 let totalItemsCount = 0;
 // give a random quest
 function createQuest(){
-    // determine item types based off level = itemTypes
-    // if level = 1 => 1 item
-    // if (1 < level < 3) => 2 items 
-    // if (3 < level < 5) => 3 items 
+    //todo - need to remove old quest items in the hive from the count
     
     // determine quantity of each item = itemQuantity 
     // Math.floor(Math.random() * 10) + 1;
     
     // // level =5 // testing 
-
-    console.log('create', quest)
     
     let itemsNeeded = [];
     let itemAmounts = [];
@@ -55,68 +50,72 @@ function createQuest(){
             itemAmounts.push(Math.floor(Math.random() * 10) + 1);
         };
     }
-
+    
     for(let i = 0; i < itemsNeeded.length; i++){
         Object.assign(quest.itemRequirements, {[`${itemsNeeded[i]}`]:itemAmounts[i]})
     }
     
-    console.log(quest.itemRequirements)
-
     let message = 'collect: ';
     for (const [questItem, questQuantity] of Object.entries(quest.itemRequirements)){
         message += `<li>${questQuantity} ${questItem}</li>`;
+        totalItemsCount = parseInt(totalItemsCount) + parseInt(questQuantity);
     };
     
     document.querySelector('.quest-title').innerHTML = `Quest #${quest.level}:`;
     document.querySelector('.quest-description').innerHTML = message;
-    
-    // return quest;
 }
-let questPoints = 0;
-let hiveItem;
+
+let honeycombIngredients = [];
+let hiveItems;
 let hiveQuantity;
 // check if quest is fufilled
 function checkQuest(){
-    console.log('check', quest)
-    
+    // console.log(hiveInventory)
+    // console.log("items", items)
+    // console.log("hive inventory", hiveInventory)
     // check hiveinventory everytime item is added
     // check how many items it has of each 
     // remove from available quest requirements
     
     for (const [questItem, questQuantity] of Object.entries(quest.itemRequirements)) {
-        
         // if the hive contains any quest items
-        hiveItem = hiveInventory.filter(item => item.name === questItem ).length
-        
-        // if you all the item types
-        if (hiveItem === quest.itemRequirements[questItem]){
-            // if you have the correct amounts
-            if(hiveQuantity >= quest.itemRequirements[questQuantity]){
-                questPoints++;
-            }
-        }
-
-        //if you have enough of the items
-        // console.log(questQuantity)
-        // todo move to cReateQuest not check quest, need to check amounts that were made on creation
-        totalItemsCount = parseInt(totalItemsCount) + parseInt(questQuantity); 
-        console.log(totalItemsCount)
-    
-        if(questPoints === totalItemsCount){
-            console.log('quest fufilled.')
-            completeQuest();
-    
-            // start honeycomb timer
-    
-        }
+        hiveItems = hiveInventory.filter(item => item.name === questItem );
+        hiveQuantity = hiveItems.length;
     }
+    
+    // console.log("hiveQuantity", hiveQuantity)
+    
+    // console.log(item.name, ": ", itemCount)
+    /*
+    honeycombIngredients = [
+        "sunflower" : 0.5,    
+        "sunflower" : 0.2,    
+        "sunflower" : 0.99,
+        "pumpkin" : 0.5,    
+        ]
+        */
+       
+       // console.log()
+       // honeycombIngredients = hiveItems;
+       
+    if(hiveQuantity === totalItemsCount){
+        console.log('***** quest fufilled. *****')
+        completeQuest();
+        
+        hiveInventory.forEach(item => {
+            console.log(item.
+                
+            )
+            console.log('questRequirment:', quest.itemRequirements[`${item.name}`])
+            // if item is part of the quest, add to ingredients list
+            ingredient = quest.itemRequirements.filter(questItem => questItem.name === item.name );
+            honeycombIngredients.push(ingredient)
+        });
+    
+        console.log('honeycombIngredients: ', honeycombIngredients)
 
-    
-    // console.log('hiveQuantity', hiveQuantity)
-    // console.log('questProgress[questItem]', questProgress)
-    // console.log('quest Requirements: ', quest.itemRequirements)
-    
-    // console.log('questPoints:', questPoints)
+        // start honeycomb timer
+    }
 }
 
 // win quest
@@ -124,6 +123,8 @@ function completeQuest(){
     questcount++;
     level++;
     quest.level++;
+    totalItemsCount = 0;
+    // honeycombIngredients = [];
     createQuest();
     // document.querySelector('.quest-description').innerHTML = 'quest completed!';
     // document.querySelector('.quest-button').removeAttribute('disabled');

@@ -19,7 +19,7 @@ function inGarden(gardenBounds){
 }
 
 
-function spawnRandom(gardenBounds, itemImage, itemName) {
+function spawnRandom(gardenBounds, itemImage, itemName, randomQuality) {
     const x = gardenBounds[0] + Math.random() * (gardenBounds[2] - 30);
     const y = gardenBounds[1] + Math.random() * (gardenBounds[3] - 30);
 
@@ -28,20 +28,26 @@ function spawnRandom(gardenBounds, itemImage, itemName) {
         image: itemImage,
         width: 30,
         height: 30,
-        name: itemName
+        name: itemName,
+        quality: randomQuality
     });
 
     return item;
 }
 
+function getRandomQuality(){
+    return parseFloat(Math.random().toFixed(2));
+}
 
 const items = [];
 function spawnItems(itemImage, quantity, location){
     // if(itemImage === beeImage){  }
     for (let i = 0; i < quantity; i++) {
         const itemName = ((itemImage.src).split('/').pop()).split('.').slice(0, -1).join('');
-        const item = spawnRandom(location, itemImage, itemName);
+        const item = spawnRandom(location, itemImage, itemName, getRandomQuality());
         items.push(item);
         movables.push(item);
     }
 }
+
+
