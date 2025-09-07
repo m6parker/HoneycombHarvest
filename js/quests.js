@@ -5,19 +5,26 @@ let pinkGoal = 0;
 let sunGoal = 0;
 let carrotGoal = 0;
 let questcount = 1;
-const itemCatelog = [
+const beginnerItemCatelog = [
+    'sunflower'
+];
+
+const intermediateItemCatelog=[
+    'sunflower',
+    'pinkflower'
+];
+
+const expertItemCatelog = [
     'sunflower',
     'carrot',
-    'pinkflower', 
+    'pinkflower',
     'pumpkin'
 ];
+ 
+
+let totalItemsCount = 0;
 // give a random quest
 function createQuest(){
-    //testing 
-    // pinkGoal = 2;
-    // sunGoal = 1;
-        
-    
     // determine item types based off level = itemTypes
     // if level = 1 => 1 item
     // if (1 < level < 3) => 2 items 
@@ -26,67 +33,84 @@ function createQuest(){
     // determine quantity of each item = itemQuantity 
     // Math.floor(Math.random() * 10) + 1;
     
-    // add each requirement to the quest object under itemRequirements
-    // const requirement = Object.assign({}, {item:itemTypes, quantity:itemQuantity})
-    // Object.assign(itemRequirements, requirement)
+    // // level =5 // testing 
+
+    console.log('create', quest)
     
-    // pinkGoal = Math.floor(Math.random() * 5) + 1;
-    // sunGoal = Math.floor(Math.random() * 3) + 1;
-    
-    const quest = {
-        level: level,
-        itemRequirements: { // itemType:itemQuantity
-            // 'sunflower':sunGoal,
-            // 'pinkflower':pinkGoal
-        },
-        time: 120000, // 2 minutes
-        reward: 1
-    }
-    
-    const itemsNeeded = [];
+    let itemsNeeded = [];
     let itemAmounts = [];
     if(level < 2){
         // selects a random item for the quest
-        itemsNeeded.push(itemCatelog[Math.floor(Math.random() * itemCatelog.length)]);
-        itemAmounts.push(Math.floor(Math.random() * 10) + 1);
-    }// else ... hjigher levels with loop
-    
+        // itemsNeeded.push(beginnerItemCatelog[Math.floor(Math.random() * beginnerItemCatelog.length)]);
+        itemsNeeded = beginnerItemCatelog;
+        itemAmounts.push(Math.floor(Math.random() * 3) + 1);
+    }else if(level > 1 && level < 5){
+        itemsNeeded = intermediateItemCatelog;
+        for(let i =0; i < intermediateItemCatelog.length; i++){
+            itemAmounts.push(Math.floor(Math.random() * 5) + 1);
+        };
+    }else{ // level: 5+
+        itemsNeeded = expertItemCatelog;
+        for(let i =0; i < expertItemCatelog.length; i++){
+            itemAmounts.push(Math.floor(Math.random() * 10) + 1);
+        };
+    }
+
     for(let i = 0; i < itemsNeeded.length; i++){
-        const requirement = Object.assign({}, {[`${itemsNeeded[i]}`]:itemAmounts[i]})
-        Object.assign(quest.itemRequirements, requirement)
+        Object.assign(quest.itemRequirements, {[`${itemsNeeded[i]}`]:itemAmounts[i]})
     }
     
-    console.log(quest)
+    console.log(quest.itemRequirements)
+
+    let message = 'collect: ';
+    for (const [questItem, questQuantity] of Object.entries(quest.itemRequirements)){
+        message += `<li>${questQuantity} ${questItem}</li>`;
+    };
     
     document.querySelector('.quest-title').innerHTML = `Quest #${quest.level}:`;
-    document.querySelector('.quest-description').innerHTML = `collect ${quest.itemRequirements['sunflower']} sunflowers and ${quest.itemRequirements['pinkflower']} pink flowers.`;
+    document.querySelector('.quest-description').innerHTML = message;
     
-    return quest;
+    // return quest;
 }
 let questPoints = 0;
+let hiveItem;
 let hiveQuantity;
 // check if quest is fufilled
-function checkQuest(quest){
+function checkQuest(){
+    console.log('check', quest)
     
     // check hiveinventory everytime item is added
+    // check how many items it has of each 
+    // remove from available quest requirements
     
     for (const [questItem, questQuantity] of Object.entries(quest.itemRequirements)) {
         
         // if the hive contains any quest items
-        hiveQuantity = hiveInventory.filter(item => item.name === questItem ).length
+        hiveItem = hiveInventory.filter(item => item.name === questItem ).length
         
         // if you all the item types
-        if (hiveQuantity === quest.itemRequirements[questItem]){
-            questPoints++;
+        if (hiveItem === quest.itemRequirements[questItem]){
+            // if you have the correct amounts
+            if(hiveQuantity >= quest.itemRequirements[questQuantity]){
+                questPoints++;
+            }
         }
 
         //if you have enough of the items
-        if(questPoints === Object.entries(quest.itemRequirements).length){
+        // console.log(questQuantity)
+        // todo move to cReateQuest not check quest, need to check amounts that were made on creation
+        totalItemsCount = parseInt(totalItemsCount) + parseInt(questQuantity); 
+        console.log(totalItemsCount)
+    
+        if(questPoints === totalItemsCount){
             console.log('quest fufilled.')
+            completeQuest();
+    
             // start honeycomb timer
-
+    
         }
     }
+
     
     // console.log('hiveQuantity', hiveQuantity)
     // console.log('questProgress[questItem]', questProgress)
@@ -97,12 +121,12 @@ function checkQuest(quest){
 
 // win quest
 function completeQuest(){
-    if(hiveSprite.space){ addToHive(); }
-    // emptyInventory();
     questcount++;
     level++;
-    document.querySelector('.quest-description').innerHTML = 'quest completed!';
-    document.querySelector('.quest-button').removeAttribute('disabled');
+    quest.level++;
+    createQuest();
+    // document.querySelector('.quest-description').innerHTML = 'quest completed!';
+    // document.querySelector('.quest-button').removeAttribute('disabled');
     // document.querySelector('.quest-title').innerHTML = `Quest #${questcount}:`;
     // createQuest();
     // spawnRandom(level, 'bee', hive);

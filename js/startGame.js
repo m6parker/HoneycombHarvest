@@ -15,7 +15,7 @@ createInventorySlots(greenhouseSpace, 'greenhouse');
 createInventorySlots(boxSpace, 'box');
 createInventorySlots(8, 'honeycomb');
 createInventorySlots(8, 'egg');
-const quest = createQuest();
+createQuest();
 
 //put flowers in the garden
 spawnItems(sunflowerImage, 10, flowerGarden);
@@ -52,7 +52,7 @@ slots.forEach(slot => {
 
                 // everytime an item is placed in the hive, check the quest status
                 if(location === hiveSprite){
-                    checkQuest(quest);
+                    checkQuest();
                 }
             }
         });

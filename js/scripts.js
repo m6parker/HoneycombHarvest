@@ -43,6 +43,12 @@ let hiveSpace = 24;
 let greenhouseSpace = 36;
 let boxSpace = 18;
 
+let quest = {
+    level: level,
+    itemRequirements: {},
+    time: 120000, // 2 minutes
+    reward: 1
+}
 
 // Sprites
 
@@ -144,6 +150,8 @@ function animate(){
     beeSprite.draw();
     // add items
     items.forEach(item => item.draw());
+
+    //todo - forgroundItems = [] draw()
     
     
     // TESTING
@@ -338,10 +346,10 @@ resumeButton.addEventListener('click', () => {
 //     location.reload();
 // });
 
-const questButton = document.querySelector('.quest-button')
-questButton.addEventListener('click', () => {
-    const quest = createQuest();
-    questButton.disabled = true;
-});
+// const questButton = document.querySelector('.quest-button')
+// questButton.addEventListener('click', () => {
+//     const quest = createQuest();
+//     questButton.disabled = true;
+// });
 
 
