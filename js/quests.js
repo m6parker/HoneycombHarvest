@@ -77,11 +77,32 @@ function checkQuest(){
     // check how many items it has of each 
     // remove from available quest requirements
     
-    for (const [questItem, questQuantity] of Object.entries(quest.itemRequirements)) {
-        // if the hive contains any quest items
-        hiveItems = hiveInventory.filter(item => item.name === questItem );
-        hiveQuantity = hiveItems.length;
+    // {'sunflower': 2, "pink': 3}
+    const questProgress = [];
+    // for (const [questItem, questQuantity] of Object.entries(quest.itemRequirements)) {
+    //     // if the hive contains any quest items
+    //     // hiveItems = hiveInventory.filter(item => item.name === questItem);
+    //     // hiveQuantity = hiveItems.length;
+
+    //     HiveYamom.push(hiveInventory.filter(item => item.name === questItem && !item.cooking).length >= questQuantity);
+    // }
+
+    for(const inventoryItem of hiveInventory){
+        if(Number.isNaN(quest.itemRequirements[inventoryItem.name])){ continue; } // Quest doesnt require this item
+
+        // if(questProgress.filter(progressItem => progressItem.name)){ continue; }
+        
+
+
+        // if(questProgress.filter(checkItem => checkItem.name === inventoryItem.name && !inventoryItem.cooking).length >= quest.itemRequirements[inventoryItem.name]){ continue; }
+
+        // if(quest.itemRequirements[inventoryItem.name] !== undefined){ questProgress.push(inventoryItem); }
+        
     }
+
+    // console.log('checking if requirements are false', questProgress);
+    
+
     
     // console.log("hiveQuantity", hiveQuantity)
     
@@ -98,23 +119,18 @@ function checkQuest(){
        // console.log()
        // honeycombIngredients = hiveItems;
        
-    if(hiveQuantity === totalItemsCount){
-        console.log('***** quest fufilled. *****')
-        completeQuest();
-        
-        hiveInventory.forEach(item => {
-            console.log(item.
-                
-            )
-            console.log('questRequirment:', quest.itemRequirements[`${item.name}`])
-            // if item is part of the quest, add to ingredients list
-            ingredient = quest.itemRequirements.filter(questItem => questItem.name === item.name );
-            honeycombIngredients.push(ingredient)
-        });
-    
-        console.log('honeycombIngredients: ', honeycombIngredients)
+    if(questProgress.length === totalItemsCount){ // quest complete
+        console.log('***** quest fufilled. *****');
 
-        // start honeycomb timer
+        for(const item of questProgress){ item.cooking = true; }
+        completeQuest();
+        // Start hoeycomb Timer
+
+        // hiveInventory.forEach(item => {
+
+        //     ingredient = quest.itemRequirements.filter(questItem => questItem.name === item.name );
+        //     honeycombIngredients.push(ingredient)
+        // });
     }
 }
 

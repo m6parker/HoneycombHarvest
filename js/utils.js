@@ -50,4 +50,3 @@ function spawnItems(itemImage, quantity, location){
     }
 }
 
-

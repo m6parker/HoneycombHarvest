@@ -18,27 +18,6 @@ window.addEventListener('keydown', (e) => {
     if(key === 'a' || key === 'arrowleft'){ keys.a.pressed = true; }
     else if(key === 'd' || key === 'arrowright'){ keys.d.pressed = true; }
     
-    // // move the bee ten pixels depending on what key was pressed
-    // switch (e.key){
-    //     case 'w':{keys.w.pressed = true; break;}
-    //     case 'a':{keys.a.pressed = true; break;}
-    //     case 's':{keys.s.pressed = true; break;}
-    //     case 'd':{keys.d.pressed = true; break;}
-    // }
-    // switch(e.key){
-    //     case 'ArrowUp':
-    //         keys.w.pressed = true;
-    //         break;
-    //     case 'ArrowDown':
-    //         keys.s.pressed = true;
-    //         break;
-    //     case 'ArrowLeft':
-    //         keys.a.pressed = true;
-    //         break;
-    //     case 'ArrowRight':
-    //         keys.d.pressed = true;
-    //         break;
-    // }
 });
 
 window.addEventListener('keyup', (e) => {

@@ -22,8 +22,12 @@ class Sprite{
         if(this.name === 'beehive'){ hiveInvenotryContainer.classList.toggle('hidden'); }
         if(this.name === 'greenhouse'){ greenhouseContainer.classList.toggle('hidden'); }
         if(this.name === 'box'){ boxContainer.classList.toggle('hidden'); }
-        
     }
+
+    // // selecting items
+    // selectItem(){
+    //     this.selected ? this.image = this.selectedImg : this.image = this.unselectedImg;
+    // }
 
     // closing with the close button to prevent toggle getting messed up
     closeInventory(sprite){

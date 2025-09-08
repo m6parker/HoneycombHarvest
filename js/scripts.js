@@ -259,7 +259,49 @@ canvas.addEventListener('click', (event) => {
 
         }
     });
+
+    // clicking items
+    items.forEach(item => {
+        if (
+            mouseLocation.x >= item.position.x &&
+            mouseLocation.x <= item.position.x + item.width &&
+            mouseLocation.y >= item.position.y &&
+            mouseLocation.y <= item.position.y + item.height
+        ) {
+            item.selected = item.selected ? false : true;
+            tooltip.classList.remove('hidden');
+            tooltip.style.left = `${mouseLocation.x + 10}px`;
+            tooltip.style.top = `${mouseLocation.y + 10}px`;
+
+            tooltip.innerHTML = `${item.name}: ${item.quality}`;
+        }
+    });
 });
+
+
+// --------------- tooltip item info --------------------------
+
+// document.addEventListener('mousemove', (e) => {
+//     const tooltip = document.querySelector('.tooltip');
+//     tooltip.style.left = `${e.clientX + 10}px`;
+//     tooltip.style.top = `${e.clientY + 10}px`;
+//     // console.log('mouse move')
+// });
+
+// items.forEach(item => {
+//     item.addEventListener('mouseenter', () => {
+//         const tooltip = document.querySelector('.tooltip');
+//         tooltip.style.left = `${e.clientX + 10}px`;
+//         tooltip.style.top = `${e.clientY + 10}px`;
+//         // console.log('mouse enter')
+//     });
+
+//     item.addEventListener('mouseleave', () => {
+//         const tooltip = document.querySelector('.tooltip');
+//         tooltip.style.display = 'none';
+//         // console.log('mouseleave')
+//     });
+// });
 
 
 
@@ -305,10 +347,12 @@ dropButton.addEventListener('click', () => {
     // spawnRandom([500,250,200,200], pinkFlowerImage) // todo drop items being held
 });
 
+const tooltip = document.querySelector('.tooltip');
 function hideAll(){
     hiveInvenotryContainer.classList.add('hidden');
     greenhouseContainer.classList.add('hidden');
     boxContainer.classList.add('hidden');
+    tooltip.classList.add('hidden');
 
     selectables.forEach(sprite => {
         sprite.closeInventory(sprite);
