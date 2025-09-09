@@ -273,7 +273,7 @@ canvas.addEventListener('click', (event) => {
             tooltip.style.left = `${mouseLocation.x + 10}px`;
             tooltip.style.top = `${mouseLocation.y + 10}px`;
 
-            tooltip.innerHTML = `${item.name}: ${item.quality}`;
+            tooltip.innerHTML = `${item.name}: ${item.quality}`;a
         }
     });
 });

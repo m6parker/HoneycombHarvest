@@ -65,72 +65,44 @@ function createQuest(){
     document.querySelector('.quest-description').innerHTML = message;
 }
 
-let honeycombIngredients = [];
-let hiveItems;
-let hiveQuantity;
 // check if quest is fufilled
 function checkQuest(){
-    // console.log(hiveInventory)
-    // console.log("items", items)
-    // console.log("hive inventory", hiveInventory)
-    // check hiveinventory everytime item is added
-    // check how many items it has of each 
-    // remove from available quest requirements
-    
-    // {'sunflower': 2, "pink': 3}
-    const questProgress = [];
-    // for (const [questItem, questQuantity] of Object.entries(quest.itemRequirements)) {
-    //     // if the hive contains any quest items
-    //     // hiveItems = hiveInventory.filter(item => item.name === questItem);
-    //     // hiveQuantity = hiveItems.length;
+    const itemsCountingTowardsQuest = [];
 
-    //     HiveYamom.push(hiveInventory.filter(item => item.name === questItem && !item.cooking).length >= questQuantity);
-    // }
-
-    for(const inventoryItem of hiveInventory){
-        if(Number.isNaN(quest.itemRequirements[inventoryItem.name])){ continue; } // Quest doesnt require this item
-
-        // if(questProgress.filter(progressItem => progressItem.name)){ continue; }
+    // for(const item of hiveInventory){
+    for (const [index, item] of hiveInventory.entries()){
+        // Item is not in quest requirements
+        if(quest.itemRequirements[item.name] === undefined){ continue; }
         
+        // Cant count item towards quest since already used
+        if(item.cooking){ continue; }
 
+        // The number of items counting towards the check are already greater than or equal to what the quest requires
+        // ignores all extra items that match the quest.requirements
+        if(itemsCountingTowardsQuest.filter(check => check.name === item.name).length >= quest.itemRequirements[item.name]){ continue; }
 
-        // if(questProgress.filter(checkItem => checkItem.name === inventoryItem.name && !inventoryItem.cooking).length >= quest.itemRequirements[inventoryItem.name]){ continue; }
-
-        // if(quest.itemRequirements[inventoryItem.name] !== undefined){ questProgress.push(inventoryItem); }
-        
+        // Conditions are all met for item to count towards quest
+        itemsCountingTowardsQuest.push({index, item});
     }
+    console.log(itemsCountingTowardsQuest)
 
-    // console.log('checking if requirements are false', questProgress);
-    
+    // Get the total number of items required for the quest
+    const totalQuestItemsRequired = Object.values(quest.itemRequirements).reduce((acc, cur) => acc += cur, 0);
 
-    
-    // console.log("hiveQuantity", hiveQuantity)
-    
-    // console.log(item.name, ": ", itemCount)
-    /*
-    honeycombIngredients = [
-        "sunflower" : 0.5,    
-        "sunflower" : 0.2,    
-        "sunflower" : 0.99,
-        "pumpkin" : 0.5,    
-        ]
-        */
-       
-       // console.log()
-       // honeycombIngredients = hiveItems;
-       
-    if(questProgress.length === totalItemsCount){ // quest complete
-        console.log('***** quest fufilled. *****');
+    // If the number of required items is the same as the eligible items in the inventory, the quest is completed
+    const slots = document.querySelectorAll('.hiveSlot');
+    if(itemsCountingTowardsQuest.length >= totalQuestItemsRequired){
+        console.log('quest complete');
 
-        for(const item of questProgress){ item.cooking = true; }
+        // visually cooking
+        for(const object of itemsCountingTowardsQuest){
+            object.item.cooking = true;
+            slots[object.index].classList.add('cooking');
+        }
+
         completeQuest();
-        // Start hoeycomb Timer
-
-        // hiveInventory.forEach(item => {
-
-        //     ingredient = quest.itemRequirements.filter(questItem => questItem.name === item.name );
-        //     honeycombIngredients.push(ingredient)
-        // });
+        // Check inventory in the case that the hive already contains the requiremnts for the next quest
+        checkQuest();
     }
 }
 
@@ -140,12 +112,7 @@ function completeQuest(){
     level++;
     quest.level++;
     totalItemsCount = 0;
-    // honeycombIngredients = [];
     createQuest();
-    // document.querySelector('.quest-description').innerHTML = 'quest completed!';
-    // document.querySelector('.quest-button').removeAttribute('disabled');
-    // document.querySelector('.quest-title').innerHTML = `Quest #${questcount}:`;
-    // createQuest();
     // spawnRandom(level, 'bee', hive);
 
     //todo - need better / more obvious win screen
