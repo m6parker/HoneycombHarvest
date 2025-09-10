@@ -103,6 +103,11 @@ function checkQuest(){
         completeQuest();
         // Check inventory in the case that the hive already contains the requiremnts for the next quest
         checkQuest();
+
+        // cook 
+        const lifespan = calculateRandomLifespan(itemsCountingTowardsQuest.length)
+        setTimeout(createHoneycomb, lifespan, itemsCountingTowardsQuest);
+        // createHoneycomb(itemsCountingTowardsQuest);
     }
 }
 
@@ -116,4 +121,25 @@ function completeQuest(){
     // spawnRandom(level, 'bee', hive);
 
     //todo - need better / more obvious win screen
+}
+
+function createHoneycomb(items){
+    //remove items / ingredients
+    const slots = document.querySelectorAll('.hiveSlot');
+    for(const item of items){
+        item.item.cooking = true;
+        slots[item.index].firstChild.remove();
+        slots[item.index].classList.add('empty');
+        slots[item.index].classList.remove('cooking');
+        hiveInventory.space += items.length;
+    }
+    // make honey
+    addItemToLocationInventory(honeycombClusterImage, 'honeycombInv');
+}
+
+function calculateRandomLifespan(quantity){
+    console.log(quantity)
+    // more items will take longer
+
+    return Math.floor(Math.random() * 60000) + 1000;
 }

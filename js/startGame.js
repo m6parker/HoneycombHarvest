@@ -4,6 +4,7 @@
 
 let currentInventory = [];
 let hiveInventory = [];
+let honeycombInventory = [];
 let greenhouseInvenotry = [];
 let boxInventory = [];
 

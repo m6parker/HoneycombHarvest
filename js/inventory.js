@@ -141,6 +141,11 @@ function addItemToLocationInventory(item, location){
             inventory = boxInventory
             break;
         }
+        case 'honeycombInv': {
+            slots = document.querySelectorAll('.honeycombSlot');
+            inventory = honeycombInventory
+            break;
+        }
         default: { // put in bee
             slots = document.querySelectorAll('.itemSlot'); 
             inventory = currentInventory;
