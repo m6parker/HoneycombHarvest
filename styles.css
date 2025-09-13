@@ -95,7 +95,6 @@ canvas{
     align-items: center;
     display: flex;
     justify-content: center;
-    flex-direction: column;
 }
 
 button{
@@ -238,12 +237,79 @@ button:disabled{
     color: white;
 }
 
-.tooltip{
+.tooltip, .sprite-info{
     border: 2px solid white;
     border-radius: 5px;
     padding: 10px;
     background-color: aqua;
     position: fixed;
-    top: var();
-    left: var();
+}
+
+.menu{
+    position: fixed;
+    height: 300px;
+    display: flex;
+    flex-direction: row-reverse;
+    top: 20%;
+}
+
+.menu .tabs>div{
+    border: 2px solid rgb(0, 0, 0);
+    width: 40px;
+    padding: 10px;
+    border-left: none;
+    background-color: rgba(0, 0, 0, 0.479);
+    align-items: center;
+}
+
+.menu .tabs{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.menu img{
+    width: 32px;
+    height: auto;
+    image-rendering: pixelated;
+}
+
+.menu .content{
+    padding: 10px;
+    border-right: 2px solid rgb(0, 0, 0);
+    border-top: 2px solid rgb(0, 0, 0);
+    border-bottom: 2px solid rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.479);
+    color: rgb(255, 255, 255);
+    width: 400px;
+    border-radius: 0 10px 10px 0;
+}
+
+#inventory-button{
+    border-radius: 0 10px 0 0;
+    border-top: 2px solid rgb(0, 0, 0);
+    border-bottom:  2px solid transparent;
+}
+
+#quests-button{
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    border-radius: 0 0 10px 0;
+}
+
+.menu .tab-button:hover, .menu .tab-button.selected, #quests-button:hover, #inventory-button:hover{
+    border: 2px solid rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.312);
+    color: black;
+}
+
+.hearts-container{
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    position: fixed;
+    top: 3%;
+    right: 2%;
+    background-color: rgba(0, 0, 0, 0.479);
+
+    align-items: center;
+    height: 58px;
 }

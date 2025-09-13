@@ -107,7 +107,7 @@ function checkQuest(){
         // cook 
         const lifespan = calculateRandomLifespan(itemsCountingTowardsQuest.length)
         setTimeout(createHoneycomb, lifespan, itemsCountingTowardsQuest);
-        // createHoneycomb(itemsCountingTowardsQuest);
+        // createHoneycomb(itemsCountingTowardsQuest);a
     }
 }
 

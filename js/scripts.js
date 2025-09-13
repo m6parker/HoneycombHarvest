@@ -127,14 +127,28 @@ const buyBoxSprite = new Sprite({
     space: boxSpace
 });
 
+const frogSprite = new Sprite({
+    position:{
+        x: 4000,
+        y: 1730
+    },
+    image: frogImage,
+    width: 64,
+    height: 64,
+    name: 'frog',
+    selected: false,
+    selectedImg: selectedFrogImage,
+    space: boxSpace
+});
+
 let cameraOffset = { x: 0, y: 0 };
 let mouseX = 0, mouseY = 0;
 let worldX = 0, worldY = 0;
 const mouseLocation = { x: 0, y: 0};
 
-const movables = [background, hiveSprite, ...items, greenhouseSprite, boxSprite, buyBoxSprite]; // sprites
+const movables = [background, hiveSprite, ...items, greenhouseSprite, boxSprite, buyBoxSprite, frogSprite]; // sprites
 const moveableBoundaries = [flowerGarden, veggieGarden, honeycomb]; // images
-const selectables = [hiveSprite, greenhouseSprite, boxSprite, buyBoxSprite]; // sprites only rn
+const selectables = [hiveSprite, greenhouseSprite, boxSprite, buyBoxSprite, frogSprite]; // sprites only rn
 function animate(){
     window.requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -147,6 +161,7 @@ function animate(){
     greenhouseSprite.draw();
     boxSprite.draw();
     buyBoxSprite.draw();
+    frogSprite.draw();
     beeSprite.draw();
     // add items
     items.forEach(item => item.draw());
@@ -257,6 +272,10 @@ canvas.addEventListener('click', (event) => {
             movable.selected = movable.selected ? false : true;
             movable.selectSprite();
 
+            spriteTooltip.classList.remove('hidden');
+            spriteTooltip.style.left = `${mouseLocation.x + 10}px`;
+            spriteTooltip.style.top = `${mouseLocation.y + 10}px`;
+            spriteTooltip.innerHTML = `${movable.name}: points/health/info`;
         }
     });
 
@@ -273,7 +292,7 @@ canvas.addEventListener('click', (event) => {
             tooltip.style.left = `${mouseLocation.x + 10}px`;
             tooltip.style.top = `${mouseLocation.y + 10}px`;
 
-            tooltip.innerHTML = `${item.name}: ${item.quality}`;a
+            tooltip.innerHTML = `${item.name}: ${item.quality}`;
         }
     });
 });
@@ -348,6 +367,7 @@ dropButton.addEventListener('click', () => {
 });
 
 const tooltip = document.querySelector('.tooltip');
+const spriteTooltip = document.querySelector('.tooltip');
 function hideAll(){
     hiveInvenotryContainer.classList.add('hidden');
     greenhouseContainer.classList.add('hidden');
@@ -394,5 +414,4 @@ resumeButton.addEventListener('click', () => {
 //     const quest = createQuest();
 //     questButton.disabled = true;
 // });
-
 

@@ -50,3 +50,44 @@ function spawnItems(itemImage, quantity, location){
     }
 }
 
+//---------------- player menu -------------------------------
+
+// switch between tabs for each category type
+function openTab(event, tabName) {
+    let tabContents = document.getElementsByClassName("tab-content");
+    let tabButtons = document.getElementsByClassName("tab-button");
+    for (let i = 0; i < tabContents.length; i++) {
+        if(event.currentTarget.classList.contains('selected')){
+            tabContents[i].style.display = "none";
+            event.currentTarget.classList.remove('selected');
+            document.querySelector('.content').classList.add('hidden');
+            document.querySelector('.inv-img').src = 'img/inv_closed.png';
+            document.querySelector('.stats-img').src = 'img/stats_closed.png';
+            document.querySelector('.quests-img').src = 'img/quests_closed.png';
+            return;
+        }
+        
+        // hide all elements with tab-content
+        tabContents[i].style.display = "none";
+    }
+    
+    // remove all selected buttons
+    for (let i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].className = tabButtons[i].className.replace(" selected", "");
+    }
+    
+    // show current tab, add selected to button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    document.querySelector('.content').classList.remove('hidden');
+    event.currentTarget.className += " selected";
+
+    if(tabName === 'inventory'){
+        document.querySelector('.inv-img').src = 'img/inv_open.png';
+    }else if(tabName === 'stats'){
+        document.querySelector('.stats-img').src = 'img/stats_closed.png';
+        document.querySelector('.inv-img').src = 'img/inv_closed.png';
+    }else if(tabName === 'quests'){
+        document.querySelector('.quests-img').src = 'img/quests_closed.png';
+        document.querySelector('.inv-img').src = 'img/inv_closed.png';
+    }
+}

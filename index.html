@@ -34,44 +34,54 @@
         </div>
         <button class="play-button">Play</button>
     </div>
-    
-    <div class="side-panels">
-        
-        <div class="left-container">
-            <div class="health-container">
-                <img src="img/heart.png" class="heart">
-                <img src="img/heart.png" class="heart">
-                <img src="img/heart.png" class="heart">
-            </div>
-            <h3 class="inventory-label">Inventory</h3>
-            <div class="inventory"></div>
-        </div>
-        
-        <div class="right-container">
-            <div class="timer">00:00:00</div>
-            <button class="drop-button">Drop</button>
-            <!-- <button class="open-button">Close Hive</button> -->
-            <!-- <button class="quest-button" disabled>Quest</button> -->
-            <button class="pause-button">Pause</button>
-            <button class="resume-button">Resume</button>
-        </div>
-        </div>
 
+    <div class="hearts-container">
+        <img src="img/heart.png" class="heart">
+        <img src="img/heart.png" class="heart">
+        <img src="img/heart.png" class="heart">
+    </div>
+
+    <div class="menu">
+        <div class="tabs">
+            <div class="tab-button" id="inventory-button" onclick="openTab(event, 'inventory')"><img class="inv-img" src="img/inv_closed.png" alt=""></div>
+            <div class="tab-button" id="stats-button" onclick="openTab(event, 'stats')"><img class="stats-img" src="img/stats_closed.png" alt=""></div>
+            <div class="tab-button" id="quests-button" onclick="openTab(event, 'quests')"><img class="quests-img" src="img/quests_closed.png" alt=""></div>
+        </div>
+        <div class="content hidden">
+            <div id="inventory" class="tab-content">
+                <h3 class="inventory-label">Inventory</h3>
+                <div class="inventory"></div>
+            </div>
+            <div id="stats" class="tab-content" style="display: none;">
+                <div class="health-container">
+                    <img src="img/heart.png" class="heart">
+                    <img src="img/heart.png" class="heart">
+                    <img src="img/heart.png" class="heart">
+                </div>
+                <div>
+                    health, stregnth, level
+                </div>
+            </div>
+            <div id="quests" class="tab-content" style="display: none;">
+                <div class="quests">
+                    <img src="img/queen_bee.png">
+                    <div>
+                        <h3 class="quest-title"></h3>
+                        <div class="quest-description"></div>
+                    </div>
+                </div>
+
+                <div class="timer-container">
+                    <div class="timer">00:00:00</div>
+                    <button class="drop-button">Drop</button>
+                    <button class="pause-button">Pause</button>
+                    <button class="resume-button">Resume</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <canvas></canvas>
-
-    <div class="bottom-container">
-
-        <div class="quests">
-            <img src="img/queen_bee.png">
-            <div>
-                <h3 class="quest-title"></h3>
-                <div class="quest-description"></div>
-            </div>
-        </div>
-
-    </div>
 
     <div class="hive-inventory-container hidden">
         <div>Beehive</div>
@@ -97,6 +107,8 @@
     </div>
 
     <div class="tooltip">item info</div>
+
+    <div class="sprite-info hidden">sprite info</div>
 
 </body>
 

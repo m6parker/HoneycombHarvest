@@ -17,6 +17,11 @@ window.addEventListener('keydown', (e) => {
     // side to side movement
     if(key === 'a' || key === 'arrowleft'){ keys.a.pressed = true; }
     else if(key === 'd' || key === 'arrowright'){ keys.d.pressed = true; }
+
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        document.querySelector('.content').classList.toggle('hidden');
+    }
     
 });
 

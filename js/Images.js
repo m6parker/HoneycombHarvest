@@ -34,6 +34,12 @@ buybox.src = 'img/buybox.png';
 const selectedbuybox = new Image();
 selectedbuybox.src = 'img/buybox_selected.png';
 
+//enemies
+const frogImage = new Image();
+frogImage.src = 'img/frog.png';
+const selectedFrogImage = new Image();
+selectedFrogImage.src = 'img/frog.png';
+
 // items
 const sunflowerImage = new Image();
 sunflowerImage.src = 'img/sunflower.png';
