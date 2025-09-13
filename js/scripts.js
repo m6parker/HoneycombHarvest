@@ -24,7 +24,7 @@ context.fillRect(0,0,canvas.width,canvas.height);
 
 
 // x, y, length, height
-// let flowerGarden = [1350, -100, 650, 200];
+let worldBoundaries = [200, -200, 6500, 5000];
 let flowerGarden = [2650, 850, 650, 200];
 let veggieGarden = [2060, 1160, 300, 250];
 let pumpkinPatch = [3675, 1555, 800, 300]
@@ -147,7 +147,7 @@ let worldX = 0, worldY = 0;
 const mouseLocation = { x: 0, y: 0};
 
 const movables = [background, hiveSprite, ...items, greenhouseSprite, boxSprite, buyBoxSprite, frogSprite]; // sprites
-const moveableBoundaries = [flowerGarden, veggieGarden, honeycomb]; // images
+const moveableBoundaries = [worldBoundaries, flowerGarden, veggieGarden, honeycomb]; // images
 const selectables = [hiveSprite, greenhouseSprite, boxSprite, buyBoxSprite, frogSprite]; // sprites only rn
 function animate(){
     window.requestAnimationFrame(animate);
@@ -170,13 +170,15 @@ function animate(){
     
     
     // TESTING
-    // drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
+    drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
     // context.fillStyle = 'red';
     // context.fillRect(mouseLocation.x - 5, mouseLocation.y - 5, 10, 10);
     // console.log(mouseX, mouseY)
 
 
     // Check collisions
+    checkBoundaries(worldBoundaries);
+    // if (!inGarden(worldBoundaries)) console.log('Bee has left the farm!');
     // if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
     // if (inGarden(veggieGarden)) console.log('Bee is in veggie garden!');
     // if (onSprite(hiveSprite)) console.log('Bee is in the hive!');
@@ -184,35 +186,39 @@ function animate(){
     // context.strokeStyle = 'blue';
     // context.strokeRect(flowerGarden[0], flowerGarden[1], flowerGarden[2], flowerGarden[3]);
     // context.strokeRect(veggieGarden[0], veggieGarden[1], veggieGarden[2], veggieGarden[3]);
-    // context.strokeRect(honeycomb[0], honeycomb[1], honeycomb[2], honeycomb[3]);
+    // context.strokeRect(worldBoundaries[0], worldBoundaries[1], worldBoundaries[2], worldBoundaries[3]);
 
     // move background + stagnant objects when bee moves
     // up and down movement
-    if(keys.w.pressed){
+    if(keys.w.pressed && !preventUp){
         movables.forEach(movable => { movable.position.y += speed });
         moveableBoundaries.forEach(coordinate => { coordinate[1] += speed });
         cameraOffset.y -= speed;
         hideAll(); // close any open inventories
+        preventDown = false;
     }
-    else if(keys.s.pressed){
+    else if(keys.s.pressed && !preventDown){
         movables.forEach(movable => { movable.position.y -= speed });
         moveableBoundaries.forEach(coordinate => { coordinate[1] -= speed });
         cameraOffset.x += speed;
         hideAll();
+        preventUp=false
     }
 
     // side to side movement
-    if(keys.a.pressed){
+    if(keys.a.pressed && !preventLeft){
         movables.forEach(movable => { movable.position.x += speed });
         moveableBoundaries.forEach(coordinate => { coordinate[0] += speed });
         cameraOffset.y -= speed;
         hideAll();
+        preventRight=false;
     }
-    else if(keys.d.pressed){
+    else if(keys.d.pressed && !preventRight){
         movables.forEach(movable => { movable.position.x -= speed });
         moveableBoundaries.forEach(coordinate => { coordinate[0] -= speed });
         cameraOffset.x += speed;
         hideAll();
+        preventLeft=false;
     }
 
     //collecting items, removing image from canvas
@@ -256,8 +262,8 @@ canvas.addEventListener('click', (event) => {
     const screenX = event.clientX - rect.left;
     const screenY = event.clientY - rect.top;
     //testing
-    // console.log(mouseLocation.x, mouseLocation.y)
-    // console.log(cameraOffset.x + mouseLocation.x, cameraOffset.y + mouseLocation.y) // sprite coords
+    // console.log("MONITOR: ", mouseLocation.x, mouseLocation.y)
+    console.log("WORLD: ", cameraOffset.x + mouseLocation.x, cameraOffset.y + mouseLocation.y) // sprite coords
     
     // clicking sprites
     selectables.forEach(movable => {

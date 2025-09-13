@@ -18,6 +18,29 @@ function inGarden(gardenBounds){
     );
 }
 
+let preventUp = false;
+let preventDown = false;
+let preventLeft = false;
+let preventRight = false;
+function checkBoundaries(boundaries){
+    if(beeSprite.position.x + beeSprite.width < boundaries[0]){
+        //prevent movement left
+        preventLeft = true;
+    }
+    if(beeSprite.position.x > boundaries[0] + boundaries[2]){
+        //prevent movement right
+        preventRight = true;
+    }
+    if(beeSprite.position.y > boundaries[1] + boundaries[3]){
+        //prevent movement down
+        preventDown = true;
+    }
+    if(beeSprite.position.y + beeSprite.height < boundaries[1]){
+        //prevent movement up
+        preventUp = true;
+    }
+}
+
 
 function spawnRandom(gardenBounds, itemImage, itemName, randomQuality) {
     const x = gardenBounds[0] + Math.random() * (gardenBounds[2] - 30);
