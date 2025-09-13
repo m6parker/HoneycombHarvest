@@ -340,9 +340,9 @@ playButton.addEventListener('click', () => {
     startGamePanel.classList.add('hidden');
 });
 
-//testing 
-backdrop.classList.add('hidden');
-startGamePanel.classList.add('hidden');
+// //testing 
+// backdrop.classList.add('hidden');
+// startGamePanel.classList.add('hidden');
 
 sellButton.addEventListener('click', () => {
     console.log('todo sell you thingies');
