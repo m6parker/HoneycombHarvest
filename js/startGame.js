@@ -26,13 +26,17 @@ spawnItems(pumpkinImage, 40, pumpkinPatch);
 // spawnItems(honeycombClusterImage, 3, veggieGarden)
 // addItemToLocationInventory(honeycombClusterImage, hiveSprite)
 
-// put drones in hive
+//animate water
 function callSpawn(){
-    // put drones in the hive
-    spawnItems(beeImage, level, honeycomb)
+    const randomAmount = Math.floor(Math.random() * waves.length)
+    for(let i =0; i < randomAmount; i++){    
+        const randomIndex = Math.floor(Math.random() * waves.length);
+        const removedElements = waves.splice(randomIndex, 1);
+    }
+    spawnWaves(wavesImage, randomAmount, waterBoundariesleft)
 }
-//bees buzzing
-// setInterval(callSpawn, 1000);
+spawnWaves(wavesImage, 300, waterBoundariesleft)
+setInterval(callSpawn, 900);
 
 // todo:
 // drawHive()

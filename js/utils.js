@@ -63,6 +63,7 @@ function getRandomQuality(){
 }
 
 const items = [];
+let waves = [];
 function spawnItems(itemImage, quantity, location){
     // if(itemImage === beeImage){  }
     for (let i = 0; i < quantity; i++) {
@@ -70,6 +71,15 @@ function spawnItems(itemImage, quantity, location){
         const item = spawnRandom(location, itemImage, itemName, getRandomQuality());
         items.push(item);
         movables.push(item);
+    }
+}
+
+// aniimate water
+function spawnWaves(image, quantity, location){
+    for (let i = 0; i < quantity; i++) {
+        const wave = spawnRandom(location, image, 'wave', 0);
+        waves.push(wave);
+        movables.push(wave);
     }
 }
 

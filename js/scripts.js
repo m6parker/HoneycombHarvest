@@ -25,6 +25,7 @@ context.fillRect(0,0,canvas.width,canvas.height);
 
 // x, y, length, height
 let worldBoundaries = [200, -200, 6500, 5000];
+let waterBoundariesleft = [0 , 0, 900, 5000]
 let flowerGarden = [2650, 850, 650, 200];
 let veggieGarden = [2060, 1160, 300, 250];
 let pumpkinPatch = [3675, 1555, 800, 300]
@@ -146,8 +147,8 @@ let mouseX = 0, mouseY = 0;
 let worldX = 0, worldY = 0;
 const mouseLocation = { x: 0, y: 0};
 
-const movables = [background, hiveSprite, ...items, greenhouseSprite, boxSprite, buyBoxSprite, frogSprite]; // sprites
-const moveableBoundaries = [worldBoundaries, flowerGarden, veggieGarden, honeycomb]; // images
+const movables = [background, hiveSprite, ...items, ...waves, greenhouseSprite, boxSprite, buyBoxSprite, frogSprite]; // sprites
+const moveableBoundaries = [worldBoundaries, flowerGarden, veggieGarden, honeycomb, waterBoundariesleft]; // images
 const selectables = [hiveSprite, greenhouseSprite, boxSprite, buyBoxSprite, frogSprite]; // sprites only rn
 function animate(){
     window.requestAnimationFrame(animate);
@@ -165,12 +166,13 @@ function animate(){
     beeSprite.draw();
     // add items
     items.forEach(item => item.draw());
+    waves.forEach(wave => wave.draw());
 
     //todo - forgroundItems = [] draw()
     
     
     // TESTING
-    drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
+    // drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
     // context.fillStyle = 'red';
     // context.fillRect(mouseLocation.x - 5, mouseLocation.y - 5, 10, 10);
     // console.log(mouseX, mouseY)
@@ -235,7 +237,6 @@ function animate(){
             addToInventory(item.name, item.quality);
         }
     }
-    
 }
 animate();
 

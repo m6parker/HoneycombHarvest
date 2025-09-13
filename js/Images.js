@@ -4,6 +4,8 @@ const mapImage = new Image();
 // mapImage.src = 'img/tilemapExpanded.png';
 // mapImage.src = 'img/HoneycombHarvest_map(400x).png';
 mapImage.src = 'img/HoneycombHarvest_map(400x-expanded).png';
+const wavesImage = new Image();
+wavesImage.src = 'img/waves.png';
 
 // bee player
 const beeImage = new Image();
