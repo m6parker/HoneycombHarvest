@@ -272,10 +272,12 @@ canvas.addEventListener('click', (event) => {
             movable.selected = movable.selected ? false : true;
             movable.selectSprite();
 
-            spriteTooltip.classList.remove('hidden');
-            spriteTooltip.style.left = `${mouseLocation.x + 10}px`;
-            spriteTooltip.style.top = `${mouseLocation.y + 10}px`;
-            spriteTooltip.innerHTML = `${movable.name}: points/health/info`;
+            if(movable.name === "frog"){
+                spriteTooltip.classList.remove('hidden');
+                spriteTooltip.style.left = `${mouseLocation.x + 10}px`;
+                spriteTooltip.style.top = `${mouseLocation.y + 10}px`;
+                spriteTooltip.innerHTML = `${movable.name}: points/health/info`;
+            }
         }
     });
 
