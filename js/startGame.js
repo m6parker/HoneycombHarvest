@@ -14,8 +14,8 @@ createInventorySlots(inventorySpace, 'inventory');
 createInventorySlots(hiveSpace, 'hive');
 createInventorySlots(greenhouseSpace, 'greenhouse');
 createInventorySlots(boxSpace, 'box');
-createInventorySlots(8, 'honeycomb');
-createInventorySlots(8, 'egg');
+createInventorySlots(6, 'honeycomb');
+createInventorySlots(6, 'egg');
 createQuest();
 
 //put flowers in the garden
@@ -38,6 +38,7 @@ function callSpawn(){
 spawnWaves(wavesImage, 300, waterBoundariesleft)
 setInterval(callSpawn, 900);
 
+setLevelUI(level);
 // todo:
 // drawHive()
 // spawnRandom(level, drones, hive)

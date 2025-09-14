@@ -39,7 +39,7 @@ let carrotCount = 0;
 pumpkinCount = 0;
 
 let level = 1; 
-let inventorySpace = 14;
+let inventorySpace = 15;
 let hiveSpace = 24;
 let greenhouseSpace = 36;
 let boxSpace = 18;

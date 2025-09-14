@@ -13,58 +13,17 @@ body{
 canvas{
     width: -webkit-fill-available;
 }
-/* 
-.left-container, .right-container, .bottom-container{
-    position:fixed;
-    color: white;
-    border: 2px solid rgb(0, 0, 0);
-}
-
-.side-panels>div{
-    background-color: rgba(0, 0, 0, 0.34);
-    display: flex;
-    flex-direction: column;
-    width: 100px;
-    height: calc(100vh - 156px);
-    text-align: center;
-    align-items: center;
-}
-
-.left-container{
-    justify-content: center;
-    left:0;
-    font-size: 10px;
-}
-.right-container{
-    right:0;
-    justify-content: space-evenly;
-    font-size: 14px;
-}
-.bottom-container{
-    background-color: rgb(0, 0, 0);
-    display: flex;
-    width: 100vw;
-    height: 150px;
-    bottom: 0;
-    display: flex;
-    font-family: 'Devin Chavez Font', sans-serif;
-} */
-
-.quests{
-    display: flex;
-    font-family: 'Devin Chavez Font', sans-serif;
-}
 
 .inventory, .box{
     display: flex;
     flex-direction: row;
     flex-flow: wrap;
     justify-content: flex-start;
-    gap: 1px;
+    gap: 32px;
 }
 
 .itemSlot, .greenhouseSlot, .boxSlot{
-    border: 2px solid rgb(255, 255, 255);
+    border: 4px solid rgb(255, 255, 255);
     background-color: #0000008c;
     border-radius: 10px;
     height: 45px;
@@ -75,22 +34,21 @@ canvas{
 }
 
 .hiveSlot, .eggSlot, .honeycombSlot{
-    height: 45px;
-    width: 45px;
+    height: 70px;
+    width: 70px;
     align-items: center;
     display: flex;
     justify-content: center;
 }
 
 .hexagon {
-  width: 45px;
-  aspect-ratio: 1/cos(30deg);
-  background-color: #ffe600;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    aspect-ratio: 1/cos(30deg);
+    background-color: #ffe600;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 
 .itemSlot.empty, .greenhouseSlot.empty, .boxSlot.empty{
-    background-color: #00000000;
+    background-color: rgba(139, 139, 139, 0.35);
 }
 
 .hiveSlot.empty, .eggSlot.empty, .honeycombSlot.empty{
@@ -101,25 +59,83 @@ canvas{
     background-color: #ff6a25;
 }
 
-.heart{
-    width: 70px;
-    image-rendering: pixelated;
+.tab-content{
+
+    height: 100%;
 }
 
 .health-container{
-    border: 2px solid rgb(255, 104, 104);
+    align-items: center;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    height: 100%;
+}
+
+.health-container .bottom-section{
+    flex-direction: row;
+    display: flex;
+}
+
+.health-content, .bee-close-up{
+    border: 4px solid rgb(0, 0, 0);
+    background-color: rgba(139, 139, 139, 0.35);
+    border-radius: 10px;
+    align-items: end;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    height: 100%;
+    margin: 10px;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.health-container .beeImg{
+    width: 120px;
+    height: auto;
+}
+
+.health-content input{
+    margin: 5px;
+    text-align: end;
+    width: 50px;
+    background-color: rgba(0, 0, 0, 0.479);
+    color: white;
+    font-size: 20px;
+}
+
+.heart-container{
+    border: 4px solid rgb(255, 104, 104);
     background-color: rgb(255 104 104 / 35%);
     border-radius: 10px;
     align-items: center;
     display: flex;
     justify-content: center;
+    width: 367px;
+    height: 92px;
+}
+
+.heart-container .heart-img{
+    width: auto;
+    height: 120px;
+}
+
+.quests{
+    display: flex;
+    font-family: 'Devin Chavez Font', sans-serif;
+}
+
+.heart{
+    width: 70px;
+    image-rendering: pixelated;
 }
 
 button{
     width: 80px;
     padding: 5px;
     background-color: rgba(255, 196, 0, 0.564);
-    border: 2px solid rgb(255, 196, 0);
+    border: 4px solid rgb(255, 196, 0);
     border-radius: 5px;
     cursor: pointer;
     color: white;
@@ -131,7 +147,7 @@ button:hover, button.active{
 }
 
 button:disabled{
-    border: 2px solid rgb(47, 47, 47);
+    border: 4px solid rgb(47, 47, 47);
     background-color: #6161619e;
     color: black;
 }
@@ -153,7 +169,7 @@ button:disabled{
     align-items: center;
     left: 30%;
     border-radius: 10px;
-    border: 2px solid black;
+    border: 4px solid black;
     flex-direction: column;
 }
 
@@ -176,7 +192,7 @@ button:disabled{
     align-items: center;
     left: 30%;
     border-radius: 10px;
-    border: 2px solid rgb(67, 92, 255);
+    border: 4px solid rgb(67, 92, 255);
     flex-direction: column;
     color: white;
 }
@@ -201,7 +217,7 @@ button:disabled{
     align-items: center;
     left: 30%;
     border-radius: 10px;
-    border: 2px solid rgb(150, 90, 0);
+    border: 4px solid rgb(150, 90, 0);
     flex-direction: column;
     color: white;
 }
@@ -236,7 +252,7 @@ button:disabled{
     display: flex;
     flex-direction: row;
     align-items: center;
-    border: 2px solid black;
+    border: 4px solid black;
     background-color: rgba(255, 183, 0, 0.676);
     padding: 5px;
     border-radius: 10px;
@@ -245,7 +261,7 @@ button:disabled{
 }
 
 .start-game-panel button{
-    border: 2px solid black;
+    border: 4px solid black;
     color: black;
     background-color: rgba(0, 0, 0, 0.41);
 }
@@ -256,7 +272,7 @@ button:disabled{
 }
 
 .tooltip, .sprite-info{
-    border: 2px solid white;
+    border: 4px solid white;
     border-radius: 5px;
     padding: 10px;
     background-color: aqua;
@@ -265,14 +281,14 @@ button:disabled{
 
 .menu{
     position: fixed;
-    height: 300px;
+    height: 350px;
     display: flex;
     flex-direction: row-reverse;
     top: 20%;
 }
 
 .menu .tabs>div{
-    border: 2px solid rgb(0, 0, 0);
+    border: 4px solid rgb(0, 0, 0);
     width: 40px;
     padding: 10px;
     border-left: none;
@@ -286,16 +302,16 @@ button:disabled{
     flex-direction: column;
 }
 .menu img{
-    width: 32px;
+    width: 34px;
     height: auto;
     image-rendering: pixelated;
 }
 
 .menu .content{
     padding: 10px;
-    border-right: 2px solid rgb(0, 0, 0);
-    border-top: 2px solid rgb(0, 0, 0);
-    border-bottom: 2px solid rgb(0, 0, 0);
+    border-right: 4px solid rgb(0, 0, 0);
+    border-top: 4px solid rgb(0, 0, 0);
+    border-bottom: 4px solid rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.479);
     color: rgb(255, 255, 255);
     width: 400px;
@@ -304,24 +320,24 @@ button:disabled{
 
 #inventory-button{
     border-radius: 0 10px 0 0;
-    border-top: 2px solid rgb(0, 0, 0);
-    border-bottom:  2px solid transparent;
+    border-top: 4px solid rgb(0, 0, 0);
+    border-bottom:  4px solid transparent;
 }
 
 #quests-button{
-    border-top: 2px solid transparent;
-    border-bottom: 2px solid rgb(0, 0, 0);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid rgb(0, 0, 0);
     border-radius: 0 0 10px 0;
 }
 
 .menu .tab-button:hover, .menu .tab-button.selected, #quests-button:hover, #inventory-button:hover{
-    border: 2px solid rgb(255, 255, 255);
+    border: 4px solid rgb(255, 255, 255);
     background-color: rgba(255, 255, 255, 0.312);
     color: black;
 }
 
 .hearts-container{
-    border: 2px solid rgb(0, 0, 0);
+    border: 4px solid rgb(0, 0, 0);
     border-radius: 10px;
     position: fixed;
     top: 3%;

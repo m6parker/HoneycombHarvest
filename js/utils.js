@@ -124,3 +124,7 @@ function openTab(event, tabName) {
         document.querySelector('.inv-img').src = 'img/inv_closed.png';
     }
 }
+
+function setLevelUI(level){
+    document.querySelector('.level-input').value = level;
+}
