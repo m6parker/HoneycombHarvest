@@ -118,6 +118,7 @@ function createInventorySlots(size, location){
         const slot = document.createElement('div');
         slot.className = slotType;
         slot.classList.add('empty');
+        if(location === 'hive' || location === 'honeycomb' || location === 'egg'){slot.classList.add('hexagon')}
         document.querySelector(inventoryDiv).appendChild(slot);
     }
 }

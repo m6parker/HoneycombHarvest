@@ -13,7 +13,7 @@ body{
 canvas{
     width: -webkit-fill-available;
 }
-
+/* 
 .left-container, .right-container, .bottom-container{
     position:fixed;
     color: white;
@@ -48,7 +48,7 @@ canvas{
     bottom: 0;
     display: flex;
     font-family: 'Devin Chavez Font', sans-serif;
-}
+} */
 
 .quests{
     display: flex;
@@ -63,7 +63,7 @@ canvas{
     gap: 1px;
 }
 
-.itemSlot, .hiveSlot, .greenhouseSlot, .boxSlot, .eggSlot, .honeycombSlot{
+.itemSlot, .greenhouseSlot, .boxSlot{
     border: 2px solid rgb(255, 255, 255);
     background-color: #0000008c;
     border-radius: 10px;
@@ -74,13 +74,31 @@ canvas{
     justify-content: center;
 }
 
-.itemSlot.empty, .hiveSlot.empty, .greenhouseSlot.empty, .boxSlot.empty, .eggSlot.empty, .honeycombSlot.empty{
+.hiveSlot, .eggSlot, .honeycombSlot{
+    height: 45px;
+    width: 45px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.hexagon {
+  width: 45px;
+  aspect-ratio: 1/cos(30deg);
+  background-color: #ffe600;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.itemSlot.empty, .greenhouseSlot.empty, .boxSlot.empty{
     background-color: #00000000;
 }
 
+.hiveSlot.empty, .eggSlot.empty, .honeycombSlot.empty{
+    background-color: #ffb700;
+}
+
 .hiveSlot.cooking{
-    background-color: #ffffff7c;
-    border: 2px solid rgb(255, 221, 0);
+    background-color: #ff6a25;
 }
 
 .heart{
