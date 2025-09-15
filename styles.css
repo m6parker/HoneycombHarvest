@@ -1,3 +1,9 @@
+/* 
+========================================
+||              GENERAL               ||
+========================================
+*/
+
 body{
     margin: 0;
     overflow: hidden;
@@ -13,6 +19,113 @@ body{
 canvas{
     width: -webkit-fill-available;
 }
+
+button{
+    width: 80px;
+    padding: 5px;
+    background-color: rgba(255, 196, 0, 0.564);
+    border: 4px solid rgb(255, 196, 0);
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    margin: 5px;
+}
+
+button:hover, button.active{
+    background-color:rgb(255, 196, 0);
+}
+
+button:disabled{
+    border: 4px solid rgb(47, 47, 47);
+    background-color: #6161619e;
+    color: black;
+}
+
+/* 
+========================================
+||              WORLD UI              ||
+========================================
+*/
+
+.hearts-container{
+    border: 4px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    position: fixed;
+    top: 3%;
+    right: 2%;
+    background-color: rgba(0, 0, 0, 0.479);
+    align-items: center;
+    height: 58px;
+}
+
+.heart{
+    width: 70px;
+    image-rendering: pixelated;
+}
+
+.tooltip, .sprite-info{
+    border: 4px solid white;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgb(39, 87, 0);
+    position: fixed;
+}
+
+
+.start-game-panel{
+    width: 600px;
+    position: fixed;
+    top: 10%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    left: 30vw;
+    border-radius: 10px;
+    border: 3px solid rgb(0, 0, 0);
+    flex-direction: column;
+    color: black;
+    padding: 5px;
+    background-image: url(img/honeycomb.png);
+}
+
+.backdrop{
+    top:0;
+    bottom: 0;
+    margin: 0;
+    backdrop-filter: blur(10px);
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+}
+
+.start-game-panel .description{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 4px solid black;
+    background-color: rgba(255, 183, 0, 0.676);
+    padding: 5px;
+    border-radius: 10px;
+    margin: 10px;
+    width: 80%;
+}
+
+.start-game-panel button{
+    border: 4px solid black;
+    color: black;
+    background-color: rgba(0, 0, 0, 0.41);
+}
+
+.start-game-panel button:hover{
+    background-color: black;
+    color: white;
+}
+
+/* 
+==========================================
+||              INVENTORY               ||
+==========================================
+*/
 
 .inventory, .box{
     display: flex;
@@ -34,8 +147,8 @@ canvas{
 }
 
 .hiveSlot, .eggSlot, .honeycombSlot{
-    height: 70px;
-    width: 70px;
+    height: 59px;
+    width: 59px;
     align-items: center;
     display: flex;
     justify-content: center;
@@ -59,10 +172,79 @@ canvas{
     background-color: #ff6a25;
 }
 
-.tab-content{
+/* 
+========================================
+||                MENU                ||
+========================================
+*/
 
+.tab-content{
     height: 100%;
 }
+
+.menu{
+    position: fixed;
+    height: 350px;
+    display: flex;
+    flex-direction: row-reverse;
+    top: 20%;
+}
+
+.menu .tabs>div{
+    border: 4px solid rgb(0, 0, 0);
+    width: 40px;
+    padding: 10px;
+    border-left: none;
+    background-color: rgba(0, 0, 0, 0.479);
+    align-items: center;
+    cursor: pointer;
+}
+
+.menu .tabs{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.menu img{
+    width: 34px;
+    height: auto;
+    image-rendering: pixelated;
+}
+
+.menu .content{
+    padding: 10px;
+    border-right: 4px solid rgb(0, 0, 0);
+    border-top: 4px solid rgb(0, 0, 0);
+    border-bottom: 4px solid rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.479);
+    color: rgb(255, 255, 255);
+    width: 400px;
+    border-radius: 0 10px 10px 0;
+}
+
+.menu .tab-button:hover, .menu .tab-button.selected, #quests-button:hover, #inventory-button:hover{
+    border: 4px solid rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.312);
+    color: black;
+}
+
+#inventory-button{
+    border-radius: 0 10px 0 0;
+    border-top: 4px solid rgb(0, 0, 0);
+    border-bottom:  4px solid transparent;
+}
+
+#quests-button{
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid rgb(0, 0, 0);
+    border-radius: 0 0 10px 0;
+}
+
+/* 
+========================================
+||        MENU - HEALTH/STATS         ||
+========================================
+*/
 
 .health-container{
     align-items: center;
@@ -121,35 +303,15 @@ canvas{
     height: 120px;
 }
 
+/* 
+========================================
+||           MENU - QUESTS            ||
+========================================
+*/
+
 .quests{
     display: flex;
     font-family: 'Devin Chavez Font', sans-serif;
-}
-
-.heart{
-    width: 70px;
-    image-rendering: pixelated;
-}
-
-button{
-    width: 80px;
-    padding: 5px;
-    background-color: rgba(255, 196, 0, 0.564);
-    border: 4px solid rgb(255, 196, 0);
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
-    margin: 5px;
-}
-
-button:hover, button.active{
-    background-color:rgb(255, 196, 0);
-}
-
-button:disabled{
-    border: 4px solid rgb(47, 47, 47);
-    background-color: #6161619e;
-    color: black;
 }
 
 .quests img{
@@ -158,6 +320,32 @@ button:disabled{
     margin: 0 40px 0 0;
     background-color: #616161;
 }
+
+/* 
+========================================
+||              INVENTORY             ||
+========================================
+*/
+
+.hive-inventory, .honeycomb-inventory, .egg-inventory{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 5px;
+    justify-content: space-around;
+    border: 4px solid black;
+    padding: 10px;
+    margin: 5px;
+    background-color: #8b650692;
+    border-radius: 10px;
+    width: 86%;
+}
+
+/* 
+========================================
+||          INVENTORY - HIVE          ||
+========================================
+*/
 
 .hive-inventory-container{
     width: 500px;
@@ -173,13 +361,11 @@ button:disabled{
     flex-direction: column;
 }
 
-.hive-inventory, .honeycomb-inventory, .egg-inventory{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 5px;
-    justify-content: space-around;
-}
+/* 
+========================================
+||        INVENTORY - GREENHOSUE      ||
+========================================
+*/
 
 .greenhouse-container{
     height: 300px;
@@ -206,6 +392,12 @@ button:disabled{
 
 }
 
+/* 
+========================================
+||     INVENTORY - BUY/SELL BOXES     ||
+========================================
+*/
+
 .box-container{
     height: 300px;
     width: 500px;
@@ -220,130 +412,4 @@ button:disabled{
     border: 4px solid rgb(150, 90, 0);
     flex-direction: column;
     color: white;
-}
-
-.start-game-panel{
-    width: 600px;
-    position: fixed;
-    top: 10%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    left: 30vw;
-    border-radius: 10px;
-    border: 3px solid rgb(0, 0, 0);
-    flex-direction: column;
-    color: black;
-    padding: 5px;
-    background-image: url(img/honeycomb.png);
-}
-
-.backdrop{
-    top:0;
-    bottom: 0;
-    margin: 0;
-    backdrop-filter: blur(10px);
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-}
-
-.start-game-panel .description{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border: 4px solid black;
-    background-color: rgba(255, 183, 0, 0.676);
-    padding: 5px;
-    border-radius: 10px;
-    margin: 10px;
-    width: 80%;
-}
-
-.start-game-panel button{
-    border: 4px solid black;
-    color: black;
-    background-color: rgba(0, 0, 0, 0.41);
-}
-
-.start-game-panel button:hover{
-    background-color: black;
-    color: white;
-}
-
-.tooltip, .sprite-info{
-    border: 4px solid white;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: aqua;
-    position: fixed;
-}
-
-.menu{
-    position: fixed;
-    height: 350px;
-    display: flex;
-    flex-direction: row-reverse;
-    top: 20%;
-}
-
-.menu .tabs>div{
-    border: 4px solid rgb(0, 0, 0);
-    width: 40px;
-    padding: 10px;
-    border-left: none;
-    background-color: rgba(0, 0, 0, 0.479);
-    align-items: center;
-}
-
-.menu .tabs{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-.menu img{
-    width: 34px;
-    height: auto;
-    image-rendering: pixelated;
-}
-
-.menu .content{
-    padding: 10px;
-    border-right: 4px solid rgb(0, 0, 0);
-    border-top: 4px solid rgb(0, 0, 0);
-    border-bottom: 4px solid rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.479);
-    color: rgb(255, 255, 255);
-    width: 400px;
-    border-radius: 0 10px 10px 0;
-}
-
-#inventory-button{
-    border-radius: 0 10px 0 0;
-    border-top: 4px solid rgb(0, 0, 0);
-    border-bottom:  4px solid transparent;
-}
-
-#quests-button{
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid rgb(0, 0, 0);
-    border-radius: 0 0 10px 0;
-}
-
-.menu .tab-button:hover, .menu .tab-button.selected, #quests-button:hover, #inventory-button:hover{
-    border: 4px solid rgb(255, 255, 255);
-    background-color: rgba(255, 255, 255, 0.312);
-    color: black;
-}
-
-.hearts-container{
-    border: 4px solid rgb(0, 0, 0);
-    border-radius: 10px;
-    position: fixed;
-    top: 3%;
-    right: 2%;
-    background-color: rgba(0, 0, 0, 0.479);
-
-    align-items: center;
-    height: 58px;
 }
