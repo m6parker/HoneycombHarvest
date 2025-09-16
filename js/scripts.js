@@ -58,7 +58,7 @@ const background = new Sprite({
         x: -500,
         y: -500
     },
-    image: mapImage
+    images: mapImage
 });
 
 const beeSprite = new Sprite({
@@ -66,7 +66,7 @@ const beeSprite = new Sprite({
         x: canvas.width/2,
         y: canvas.height/3.5
     },
-    image: beeImage,
+    images: [beeImage, beeImage1, beeImage2, beeImage3],
     width: 16,
     height: 16,
     space: inventorySpace
@@ -77,7 +77,7 @@ const hiveSprite = new Sprite({
         x: 1225,
         y: 820
     },
-    image: hiveImage,
+    images: hiveImage,
     width: 100,
     height: 100,
     name: 'beehive',
@@ -91,7 +91,7 @@ const greenhouseSprite = new Sprite({
         x: 5030,
         y: 1050
     },
-    image: greenhouseImage,
+    images: greenhouseImage,
     width: 400,
     height: 400,
     name: 'greenhouse',
@@ -105,7 +105,7 @@ const boxSprite = new Sprite({
         x: 3613,
         y: 3730
     },
-    image: box,
+    images: box,
     width: 64,
     height: 64,
     name: 'box',
@@ -119,7 +119,7 @@ const buyBoxSprite = new Sprite({
         x: 3700,
         y: 3730
     },
-    image: buybox,
+    images: buybox,
     width: 64,
     height: 64,
     name: 'buybox',
@@ -133,7 +133,7 @@ const frogSprite = new Sprite({
         x: 4000,
         y: 1730
     },
-    image: frogImage,
+    images: frogImage,
     width: 64,
     height: 64,
     name: 'frog',
@@ -234,7 +234,7 @@ function animate(){
                 movables.splice(indexInMovables, 1);
             }
             // console.log(`${item.name} collected!`);
-            addToInventory(item.name, item.quality);
+            playerInventory.addToInventory(item.name, item.quality);
         }
     }
 }

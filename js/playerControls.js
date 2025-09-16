@@ -15,8 +15,8 @@ window.addEventListener('keydown', (e) => {
     else if(key === 's' || key === 'arrowdown'){ keys.s.pressed = true; }
 
     // side to side movement
-    if(key === 'a' || key === 'arrowleft'){ keys.a.pressed = true; }
-    else if(key === 'd' || key === 'arrowright'){ keys.d.pressed = true; }
+    if(key === 'a' || key === 'arrowleft'){ keys.a.pressed = true; beeSprite.direction = 0; }
+    else if(key === 'd' || key === 'arrowright'){ keys.d.pressed = true; beeSprite.direction = 1; }
 
     if (e.key === 'Tab') {
         e.preventDefault();

@@ -1,19 +1,29 @@
 class Sprite{
-    constructor({position, image, height, width, name, selected, selectedImg, space, quality}){
+    constructor({position, images, height, width, name, selected, selectedImg, space, quality}){
+        const passedImages = Array.isArray(images) ? images : [images];
         this.position = position;
-        this.image = image;
+        this.images = passedImages;
         this.height = height;
         this.width = width;
         this.name = name;
         this.selected = selected;
         this.selectedImg = selectedImg;
-        this.unselectedImg = image;
+        this.unselectedImg = passedImages[0];
         this.space = space;
         this.quality = quality;
+
+        if(this.images.length !== 1){
+            this.currentImageIndex = 0;
+            this.direction = 0;
+            this.animateImageInterval = setInterval(() => this.currentImageIndex = (this.currentImageIndex + 1) % 2, speed * 5);
+        }
+        
     }
 
     draw(){
-        context.drawImage(this.image,this.position.x, this.position.y);
+        // console.log(this.images)
+        if(this.images.length === 1){ context.drawImage(this.images[0],this.position.x, this.position.y); return; }
+        context.drawImage(this.images[(this.currentImageIndex ?? 0) + (this.direction * 2)],this.position.x, this.position.y);
     }
 
     // selecting image

@@ -48,7 +48,7 @@ function spawnRandom(gardenBounds, itemImage, itemName, randomQuality) {
 
     const item = new Sprite({
         position: { x, y },
-        image: itemImage,
+        images: itemImage,
         width: 30,
         height: 30,
         name: itemName,

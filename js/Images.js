@@ -9,7 +9,16 @@ wavesImage.src = 'img/waves.png';
 
 // bee player
 const beeImage = new Image();
-beeImage.src = 'img/bee.png';
+beeImage.src = 'img/b1.png';
+
+const beeImage1 = new Image();
+beeImage1.src = 'img/b2.png';
+
+const beeImage2 = new Image();
+beeImage2.src = 'img/b3.png';
+
+const beeImage3 = new Image();
+beeImage3.src = 'img/b4.png';
 
 // beehive spawnpoint
 const hiveImage = new Image();

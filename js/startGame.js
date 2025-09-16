@@ -1,22 +1,18 @@
-// ------------- begins the game -------------------- //
+// -------------------------------------------------- //
+//                  begins the game                   //
+// -------------------------------------------------- //
 
-// todo - level defines how many drones you have and the wieght you can carry back
+//create all invenotries
+const playerInventory     = new Inventory('bee', 15);
+const hiveInventory       = new Inventory('hive', 24);
+const honeycombInventory  = new Inventory('honeycomb', 6);
+const eggInventory        = new Inventory('egg', 6);
+const greenhouseInventory = new Inventory('greenhouse', 36);
+// const sellboxInventory    = new Inventory('sellbox', 12);
+// const buyboxInventory     = new Inventory('buybox', 6);
 
-let currentInventory = [];
-let hiveInventory = [];
-let honeycombInventory = [];
-let greenhouseInvenotry = [];
-let boxInventory = [];
-
-let questProgress = {};
-
-createInventorySlots(inventorySpace, 'inventory');
-createInventorySlots(hiveSpace, 'hive');
-createInventorySlots(greenhouseSpace, 'greenhouse');
-createInventorySlots(boxSpace, 'box');
-createInventorySlots(6, 'honeycomb');
-createInventorySlots(6, 'egg');
 createQuest();
+let questProgress = {};
 
 //put flowers in the garden
 spawnItems(sunflowerImage, 10, flowerGarden);
