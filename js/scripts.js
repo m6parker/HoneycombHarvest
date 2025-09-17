@@ -72,6 +72,8 @@ const beeSprite = new Sprite({
     space: inventorySpace
 });
 
+const player = new Player('bee', beeSprite, 16, 16, 10, 100, 50, 1);
+
 const hiveSprite = new Sprite({
     position:{
         x: 1225,

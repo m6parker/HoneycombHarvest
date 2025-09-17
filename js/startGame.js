@@ -3,10 +3,10 @@
 // -------------------------------------------------- //
 
 //create all invenotries
-const playerInventory     = new Inventory('bee', 15);
-const hiveInventory       = new Inventory('hive', 24);
-const honeycombInventory  = new Inventory('honeycomb', 6);
-const eggInventory        = new Inventory('egg', 6);
+// const playerInventory     = new Inventory('bee', 15);
+const hiveInventory       = new Inventory('hive', 24, 'hexagon');
+const honeycombInventory  = new Inventory('honeycomb', 6, false, 'hexagon');
+const eggInventory        = new Inventory('egg', 6, false, 'hexagon');
 const greenhouseInventory = new Inventory('greenhouse', 36);
 // const sellboxInventory    = new Inventory('sellbox', 12);
 // const buyboxInventory     = new Inventory('buybox', 6);

@@ -114,7 +114,7 @@ function openTab(event, tabName) {
     document.querySelector('.content').classList.remove('hidden');
     event.currentTarget.className += " selected";
 
-    if(tabName === 'inventory'){
+    if(tabName === 'bee-inventory'){
         document.querySelector('.inv-img').src = 'img/inv_open.png';
     }else if(tabName === 'stats'){
         document.querySelector('.stats-img').src = 'img/stats_closed.png';

@@ -21,7 +21,6 @@ class Sprite{
     }
 
     draw(){
-        // console.log(this.images)
         if(this.images.length === 1){ context.drawImage(this.images[0],this.position.x, this.position.y); return; }
         context.drawImage(this.images[(this.currentImageIndex ?? 0) + (this.direction * 2)],this.position.x, this.position.y);
     }

@@ -45,14 +45,14 @@
 
     <div class="menu">
         <div class="tabs">
-            <div class="tab-button" id="inventory-button" onclick="openTab(event, 'inventory')"><img class="inv-img" src="img/inv_closed.png" alt=""></div>
+            <div class="tab-button" id="inventory-button" onclick="openTab(event, 'bee-inventory')"><img class="inv-img" src="img/inv_closed.png" alt=""></div>
             <div class="tab-button" id="stats-button" onclick="openTab(event, 'stats')"><img class="stats-img" src="img/stats_closed.png" alt=""></div>
             <div class="tab-button" id="quests-button" onclick="openTab(event, 'quests')"><img class="quests-img" src="img/quests_closed.png" alt=""></div>
         </div>
         <div class="content hidden">
-            <div id="inventory" class="tab-content">
+            <div id="bee-inventory" class="tab-content">
                 <h3 class="inventory-label">Inventory</h3>
-                <div class="inventory"></div>
+                <div class="bee-inventory"></div>
             </div>
             <div id="stats" class="tab-content" style="display: none;">
                 <div class="health-container">
@@ -105,7 +105,7 @@
     
     <div class="greenhouse-container hidden">
         <div>greenhouse</div>
-        <div class="greenhouse"></div>
+        <div class="greenhouse-inventory"></div>
         <button class="close-button">close</button>
     </div>
     
@@ -123,10 +123,13 @@
 </body>
 
 <script src="js/utils.js"></script>
-<script src="js/inventory.js"></script>
+<script src="js/Inventory.js"></script>
 <script src="js/quests.js"></script>
 <script src="js/timer.js"></script>
 <script src="js/Images.js"></script>
+<script src="js/Character.js"></script>
+<script src="js/NPC.js"></script>
+<script src="js/Player.js"></script>
 <script src="js/Sprite.js"></script>
 <script src="js/playerControls.js"></script>
 <script src="js/grid.js"></script>

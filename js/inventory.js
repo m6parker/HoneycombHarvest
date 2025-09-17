@@ -1,19 +1,34 @@
 class Inventory{
-    constructor(name, size){
+    constructor(name, size, canAdd=true, shape='square'){
         this.name = name;
         this.size = size;
+        this.shape = shape;
+        this.canAdd = canAdd;
 
-        this.createInventorySlots(this.size, this.name);
+        //store items
+        let inventory = [];
+
+        this.createInventorySlots(this.size, this.name, this.shape);
     }
 
-    // put item in oprn inventory
+    
+    // creates all inventory grids ui
+    createInventorySlots(size, location, shape){
+        for(let i = 0; i < size; i++){
+            const slot = document.createElement('div');
+            slot.className = `${location}Slot`;
+            slot.classList.add('empty');
+            if(shape==='hexagon'){slot.classList.add('hexagon')}
+            document.querySelector(`.${location}-inventory`).appendChild(slot);
+        }
+    }
+
+    // item from bee inventory to location inv
     moveItem(slot, location){
-        for (const [index, item] of currentInventory.entries()) {
-            // console.log(`Index: ${index}, Value: ${item.name}`);
+        for (const [index, item] of playerInventory.entries()) {
             if(slot.firstChild && item.src === slot.firstChild.src){
-                
                 if(location.space){
-                    currentInventory.splice(index, 1);
+                    playerInventory.splice(index, 1);
                     // ui
                     addItemToLocationInventory(item, location); // pass in location to reuse for other inv
                     slot.firstChild.remove()
@@ -71,7 +86,7 @@ class Inventory{
             slots[i].classList.add('empty');
         }
     
-        currentInventory = [];
+        playerInventory = [];
         // resetCurrentInventory();
     }
 
@@ -101,7 +116,7 @@ class Inventory{
             }
             default: { // put in bee
                 slots = document.querySelectorAll('.itemSlot'); 
-                inventory = currentInventory;
+                inventory = playerInventory;
             }
         }
         
@@ -119,51 +134,4 @@ class Inventory{
         location.space--;
     }
 
-    // creates all inventory grids ui
-    createInventorySlots(size, location){
-        let slotType, inventoryDiv;
-        switch(location){
-            case 'hive': { 
-                slotType = 'hiveSlot';
-                inventoryDiv = '.hive-inventory';
-                break;
-            }
-            case 'honeycomb': { 
-                slotType = 'honeycombSlot';
-                inventoryDiv = '.honeycomb-inventory';
-                break;
-            }
-            case 'egg': { 
-                slotType = 'eggSlot';
-                inventoryDiv = '.egg-inventory';
-                break;
-            }
-            case 'greenhouse': {
-                slotType = 'greenhouseSlot';
-                inventoryDiv = '.greenhouse';
-                break; 
-            }
-            case 'sellbox': {
-                slotType = 'sellboxSlot';
-                inventoryDiv = '.sellbox';
-                break;
-            }
-            case 'buybox': {
-                slotType = 'buyboxSlot';
-                inventoryDiv = '.buybox';
-                break;
-            }
-            case 'bee': {
-                slotType = 'itemSlot';
-                inventoryDiv = '.inventory';
-            }
-        }
-        for(let i = 0; i < size; i++){
-            const slot = document.createElement('div');
-            slot.className = slotType;
-            slot.classList.add('empty');
-            if(location === 'hive' || location === 'honeycomb' || location === 'egg'){slot.classList.add('hexagon')}
-            document.querySelector(inventoryDiv).appendChild(slot);
-        }
-    }   
 }
