@@ -1,14 +1,31 @@
 class Inventory{
-    constructor(name, size, canAdd=true, shape='square'){
+    constructor(name, size, canAdd=true, items, shape='square'){
         this.name = name;
         this.size = size;
         this.shape = shape;
         this.canAdd = canAdd;
+        this.items = items;
 
         //store items
-        let inventory = [];
 
         this.createInventorySlots(this.size, this.name, this.shape);
+
+        // click each item in bee inventory to other inventories
+        const slots = document.querySelectorAll('.beeSlot');
+        slots.forEach(slot => {
+            slot.addEventListener('click', ()=> {
+                selectables.forEach(location => {
+                    if(location.selected){
+                        this.moveItem(slot, location);
+
+                        // everytime an item is placed in the hive, check the quest status
+                        if(location === hiveSprite){
+                            checkQuest();
+                        }
+                    }
+                });
+            })
+        });
     }
 
     
@@ -25,15 +42,15 @@ class Inventory{
 
     // item from bee inventory to location inv
     moveItem(slot, location){
-        for (const [index, item] of playerInventory.entries()) {
+        for (const [index, item] of player.inventory.items.entries()) {
             if(slot.firstChild && item.src === slot.firstChild.src){
                 if(location.space){
-                    playerInventory.splice(index, 1);
+                    player.inventory.items.splice(index, 1);
                     // ui
-                    addItemToLocationInventory(item, location); // pass in location to reuse for other inv
+                    this.addItemToLocationInventory(item, location); // pass in location to reuse for other inv
                     slot.firstChild.remove()
                     slot.classList.add('empty');
-                    beeSprite.space++;
+                    player.sprite.space++;
                 }
                 break;
             }
@@ -44,9 +61,9 @@ class Inventory{
     takeItem(slot, location, inventory){
         for (const [index, item] of inventory.entries()) {
             if(slot.firstChild && item.src === slot.firstChild.src){
-                if(beeSprite.space){
+                if(player.sprite.space){
                     // ui
-                    addToInventory(item.name); // pass in bee 
+                    this.addToInventory(item.name); // pass in bee 
                     slot.firstChild.remove()
                     slot.classList.add('empty');
                     location.space++;
@@ -58,7 +75,8 @@ class Inventory{
     
     // pace in inventory
     addToInventory(itemType, itemQuality){
-        const slots = document.querySelectorAll('.itemSlot');
+        console.log(player.inventory)
+        const slots = document.querySelectorAll('.beeSlot');
         const item = document.createElement('img');
         item.src = `img/${itemType}.png`;
         item.className = `inv-${itemType}`;
@@ -66,16 +84,16 @@ class Inventory{
             if(slots[i].classList.contains('empty')){
                 slots[i].appendChild(item);
                 slots[i].classList.remove('empty');
-                playerInventory.push(Object.assign({}, {name:itemType, src:item.src, quality:itemQuality}));
+                player.inventory.items.push(Object.assign({}, {name:itemType, src:item.src, quality:itemQuality}));
                 break;
             }
         };
-        beeSprite.space--;
+        player.sprite.space--;
     }
     
     //empty inventory
     emptyInventory(){
-        const slots = document.querySelectorAll('.itemSlot');
+        const slots = document.querySelectorAll('.beeSlot');
         slots.forEach(slot => {
             while(slot.firstChild){ 
                 slot.removeChild(slot.firstChild); }
@@ -86,7 +104,7 @@ class Inventory{
             slots[i].classList.add('empty');
         }
     
-        playerInventory = [];
+        player.inventory.items = [];
         // resetCurrentInventory();
     }
 
@@ -115,8 +133,8 @@ class Inventory{
                 break;
             }
             default: { // put in bee
-                slots = document.querySelectorAll('.itemSlot'); 
-                inventory = playerInventory;
+                slots = document.querySelectorAll('.beeSlot'); 
+                inventory = player.inventory.items;
             }
         }
         

@@ -1,27 +1,16 @@
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 context.imageSmoothingEnabled = false;
+context.fillStyle = 'black';
+context.fillRect(0,0,canvas.width,canvas.height);
 
-// canvas.width = 1024;
-// canvas.height = 576;
-// canvas.width = 1280;
-// canvas.height = 960;
 const ResizeCanvas = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
-    // if(window.innerWidth > STATIC_PAGE_WIDTH){ STATIC_PAGE_WIDTH = window.innerWidth; }
-    // if(window.innerHeight > STATIC_PAGE_HEIGHT){ STATIC_PAGE_HEIGHT = window.innerHeight; }
 };
 ResizeCanvas();
 
 window.addEventListener("resize", () => ResizeCanvas());
-
-let offsetX = 0, offsetY = 0;
-
-context.fillStyle = 'black';
-context.fillRect(0,0,canvas.width,canvas.height);
-
 
 // x, y, length, height
 let worldBoundaries = [200, -200, 6500, 5000];
@@ -31,12 +20,6 @@ let veggieGarden = [2060, 1160, 300, 250];
 let pumpkinPatch = [3675, 1555, 800, 300]
 let honeycomb = [-200, -200, 130, 130];
 let speed = 20;
-// let inventoryItems = [];
-//inventory items
-let pinkCount = 0;
-let suncount = 0;
-let carrotCount = 0;
-pumpkinCount = 0;
 
 let level = 1; 
 let inventorySpace = 15;
@@ -52,8 +35,7 @@ let quest = {
 }
 
 // Sprites
-
-const background = new Sprite({
+const backgroundSprite = new Sprite({
     position:{
         x: -500,
         y: -500
@@ -61,18 +43,7 @@ const background = new Sprite({
     images: mapImage
 });
 
-const beeSprite = new Sprite({
-    position: {
-        x: canvas.width/2,
-        y: canvas.height/3.5
-    },
-    images: [beeImage, beeImage1, beeImage2, beeImage3],
-    width: 16,
-    height: 16,
-    space: inventorySpace
-});
-
-const player = new Player('bee', beeSprite, 16, 16, 10, 100, 50, 1);
+const player = new Player('bee', 16, 16, 10, 100, 50, 1);
 
 const hiveSprite = new Sprite({
     position:{
@@ -149,97 +120,48 @@ let mouseX = 0, mouseY = 0;
 let worldX = 0, worldY = 0;
 const mouseLocation = { x: 0, y: 0};
 
-const movables = [background, hiveSprite, ...items, ...waves, greenhouseSprite, boxSprite, buyBoxSprite, frogSprite]; // sprites
+const movables = [backgroundSprite, hiveSprite, ...items, ...waves, greenhouseSprite, boxSprite, buyBoxSprite, frogSprite]; // sprites
 const moveableBoundaries = [worldBoundaries, flowerGarden, veggieGarden, honeycomb, waterBoundariesleft]; // images
 const selectables = [hiveSprite, greenhouseSprite, boxSprite, buyBoxSprite, frogSprite]; // sprites only rn
 function animate(){
+
     window.requestAnimationFrame(animate);
     context.clearRect(0, 0, canvas.width, canvas.height);
-    //testing
-    // context.fillStyle = 'green';
-    // context.fillRect(0, 0, 10, 10);
+
     // add images
-    background.draw();
+    backgroundSprite.draw();
     hiveSprite.draw();
     greenhouseSprite.draw();
     boxSprite.draw();
     buyBoxSprite.draw();
     frogSprite.draw();
-    beeSprite.draw();
+    player.sprite.draw();
+
     // add items
     items.forEach(item => item.draw());
     waves.forEach(wave => wave.draw());
-
-    //todo - forgroundItems = [] draw()
     
+    // Check collisions
+    checkBoundaries(worldBoundaries);
+    movePlayer();
     
     // TESTING
+    // context.fillStyle = 'green';
+    // context.fillRect(0, 0, 10, 10);
+
     // drawGrid(context, canvas, 50, 'rgba(200, 200, 200, 0.5)');
     // context.fillStyle = 'red';
     // context.fillRect(mouseLocation.x - 5, mouseLocation.y - 5, 10, 10);
     // console.log(mouseX, mouseY)
 
-
-    // Check collisions
-    checkBoundaries(worldBoundaries);
-    // if (!inGarden(worldBoundaries)) console.log('Bee has left the farm!');
     // if (inGarden(flowerGarden)) console.log('Bee is in flower garden!');
-    // if (inGarden(veggieGarden)) console.log('Bee is in veggie garden!');
-    // if (onSprite(hiveSprite)) console.log('Bee is in the hive!');
 
     // context.strokeStyle = 'blue';
     // context.strokeRect(flowerGarden[0], flowerGarden[1], flowerGarden[2], flowerGarden[3]);
     // context.strokeRect(veggieGarden[0], veggieGarden[1], veggieGarden[2], veggieGarden[3]);
     // context.strokeRect(worldBoundaries[0], worldBoundaries[1], worldBoundaries[2], worldBoundaries[3]);
 
-    // move background + stagnant objects when bee moves
-    // up and down movement
-    if(keys.w.pressed && !preventUp){
-        movables.forEach(movable => { movable.position.y += speed });
-        moveableBoundaries.forEach(coordinate => { coordinate[1] += speed });
-        cameraOffset.y -= speed;
-        hideAll(); // close any open inventories
-        preventDown = false;
-    }
-    else if(keys.s.pressed && !preventDown){
-        movables.forEach(movable => { movable.position.y -= speed });
-        moveableBoundaries.forEach(coordinate => { coordinate[1] -= speed });
-        cameraOffset.x += speed;
-        hideAll();
-        preventUp=false
-    }
-
-    // side to side movement
-    if(keys.a.pressed && !preventLeft){
-        movables.forEach(movable => { movable.position.x += speed });
-        moveableBoundaries.forEach(coordinate => { coordinate[0] += speed });
-        cameraOffset.y -= speed;
-        hideAll();
-        preventRight=false;
-    }
-    else if(keys.d.pressed && !preventRight){
-        movables.forEach(movable => { movable.position.x -= speed });
-        moveableBoundaries.forEach(coordinate => { coordinate[0] -= speed });
-        cameraOffset.x += speed;
-        hideAll();
-        preventLeft=false;
-    }
-
-    //collecting items, removing image from canvas
-    for (let i = items.length - 1; i >= 0; i--) {
-        const item = items[i];
-        // if bee collides with item and has space to carry it
-        if (onSprite(item) && beeSprite.space) {
-            items.splice(i, 1);
-            const indexInMovables = movables.indexOf(item);
-            if (indexInMovables !== -1) {
-                movables.splice(indexInMovables, 1);
-            }
-            // console.log(`${item.name} collected!`);
-            playerInventory.addToInventory(item.name, item.quality);
-        }
-    }
-}
+};
 animate();
 
 document.addEventListener('mousemove', (e) => {

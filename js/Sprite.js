@@ -1,16 +1,13 @@
 class Sprite{
-    constructor({position, images, height, width, name, selected, selectedImg, space, quality}){
+    constructor({position, images, height, width, selected, selectedImg}){
         const passedImages = Array.isArray(images) ? images : [images];
         this.position = position;
         this.images = passedImages;
         this.height = height;
         this.width = width;
-        this.name = name;
         this.selected = selected;
         this.selectedImg = selectedImg;
         this.unselectedImg = passedImages[0];
-        this.space = space;
-        this.quality = quality;
 
         if(this.images.length !== 1){
             this.currentImageIndex = 0;
@@ -28,9 +25,9 @@ class Sprite{
     // selecting image
     selectSprite(){
         this.selected ? this.image = this.selectedImg : this.image = this.unselectedImg;
-        if(this.name === 'beehive'){ hiveInvenotryContainer.classList.toggle('hidden'); }
-        if(this.name === 'greenhouse'){ greenhouseContainer.classList.toggle('hidden'); }
-        if(this.name === 'box'){ boxContainer.classList.toggle('hidden'); }
+        // if(this.name === 'beehive'){ hiveInvenotryContainer.classList.toggle('hidden'); }
+        // if(this.name === 'greenhouse'){ greenhouseContainer.classList.toggle('hidden'); }
+        // if(this.name === 'box'){ boxContainer.classList.toggle('hidden'); }
     }
 
     // // selecting items

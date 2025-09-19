@@ -44,22 +44,22 @@ setLevelUI(level);
 
 
 
-// click each item in bee inventory to other inventories
-const slots = document.querySelectorAll('.itemSlot');
-slots.forEach(slot => {
-    slot.addEventListener('click', ()=> {
-        selectables.forEach(location => {
-            if(location.selected){
-                moveItem(slot, location);
+// // click each item in bee inventory to other inventories
+// const slots = document.querySelectorAll('.beeSlot');
+// slots.forEach(slot => {
+//     slot.addEventListener('click', ()=> {
+//         selectables.forEach(location => {
+//             if(location.selected){
+//                 moveItem(slot, location);
 
-                // everytime an item is placed in the hive, check the quest status
-                if(location === hiveSprite){
-                    checkQuest();
-                }
-            }
-        });
-    })
-});
+//                 // everytime an item is placed in the hive, check the quest status
+//                 if(location === hiveSprite){
+//                     checkQuest();
+//                 }
+//             }
+//         });
+//     })
+// });
 
 // move back into bee from greenhouse
 const greenhouseSlots = document.querySelectorAll('.greenhouseSlot');

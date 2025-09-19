@@ -1,20 +1,20 @@
 // if bee is in another sprite such as the hive
 function onSprite(sprite){
     return (
-        beeSprite.position.x + beeSprite.width >= sprite.position.x  &&
-        beeSprite.position.x <= sprite.position.x + sprite.width     &&
-        beeSprite.position.y <= sprite.position.y + sprite.height    &&
-        beeSprite.position.y + beeSprite.height >= sprite.position.y 
+        player.sprite.position.x + player.sprite.width >= sprite.position.x  &&
+        player.sprite.position.x <= sprite.position.x + sprite.width     &&
+        player.sprite.position.y <= sprite.position.y + sprite.height    &&
+        player.sprite.position.y + player.sprite.height >= sprite.position.y 
     );
 }
 
 // if bee is in a certain location in the canvas such as a garden 
 function inGarden(gardenBounds){
     return (
-        beeSprite.position.x + beeSprite.width >= gardenBounds[0] &&
-        beeSprite.position.x <= gardenBounds[0] + gardenBounds[2] &&
-        beeSprite.position.y <= gardenBounds[1] + gardenBounds[3] &&
-        beeSprite.position.y + beeSprite.height >= gardenBounds[1]
+        player.sprite.position.x + player.sprite.width >= gardenBounds[0] &&
+        player.sprite.position.x <= gardenBounds[0] + gardenBounds[2] &&
+        player.sprite.position.y <= gardenBounds[1] + gardenBounds[3] &&
+        player.sprite.position.y + player.sprite.height >= gardenBounds[1]
     );
 }
 
@@ -23,19 +23,19 @@ let preventDown = false;
 let preventLeft = false;
 let preventRight = false;
 function checkBoundaries(boundaries){
-    if(beeSprite.position.x + beeSprite.width < boundaries[0]){
+    if(player.sprite.position.x + player.sprite.width < boundaries[0]){
         //prevent movement left
         preventLeft = true;
     }
-    if(beeSprite.position.x > boundaries[0] + boundaries[2]){
+    if(player.sprite.position.x > boundaries[0] + boundaries[2]){
         //prevent movement right
         preventRight = true;
     }
-    if(beeSprite.position.y > boundaries[1] + boundaries[3]){
+    if(player.sprite.position.y > boundaries[1] + boundaries[3]){
         //prevent movement down
         preventDown = true;
     }
-    if(beeSprite.position.y + beeSprite.height < boundaries[1]){
+    if(player.sprite.position.y + player.sprite.height < boundaries[1]){
         //prevent movement up
         preventUp = true;
     }
